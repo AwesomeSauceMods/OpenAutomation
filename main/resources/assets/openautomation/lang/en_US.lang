@@ -1,0 +1,29 @@
+itemGroup.OpenAutomation=OpenAutomation
+
+tile.openautomation:itemIO.name=OA Item I/O
+tile.openautomation:workbench.name=OA Workbench
+tile.openautomation:pressureCrusher.name=OA Pressure Crusher
+
+item.openautomation:toolBase.name=OA Tool Base
+item.openautomation:toolHeadSideDefiner.name=OA Side Definer Tool Head
+item.openautomation:sideDefiner.name=OA Side Definer Tool
+item.openautomation:addressSelector.name=OA Address Selector Tool
+item.openautomation:recipeEncoder.name=OA Recipe Encoder Tool
+item.openautomation:craftingTableTool.name=OA Crafting Table Tool
+
+item.openautomation:codeBundle.name=OA Code Bundle
+item.openautomation:inputCode.name=OA Input Code
+item.openautomation:itemCode.name=OA Item Code
+item.openautomation:fluidCode.name=OA Fluid Code
+item.openautomation:outputCode.name=OA Output Code
+
+openautomation.codeBundle.desc=A bundle of codes.
+openautomation.codeBundle.usage=Gives you 5 random codes.
+openautomation.code.desc=A raw code for usage in crafting.
+openautomation.inputCode.desc=This code is input into the network.
+openautomation.itemCode.desc=This code is for items.
+openautomation.fluidCode.desc=This code is for fluids.
+openautomation.outputCode.desc=This code is for output from the network.
+openautomation.tools.sideDefiner.usage=Set the side on an automation machine.
+openautomation.tools.disassemble.usage=Split the tool into the head and base.
+openautomation.toolBase.desc=The handle and base for the tools.

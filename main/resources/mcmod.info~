@@ -1,0 +1,30 @@
+[
+{
+  "modid": "AwesomeSauceCore",
+  "name": "AwesomeSauce Core",
+  "description": "The core mod for AwesomeSauceMods.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["gjgfuj", "others"],
+  "credits": "Created by gjgfuj, with help from #minecraftforge.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+},
+{
+  "modid": "AwesomeSauceComponents",
+  "name": "AwesomeSauce Components",
+  "description": "Basic components for AwesomeSauce.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["gjgfuj", "others"],
+  "credits": "Created by gjgfuj, with help from #minecraftforge.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

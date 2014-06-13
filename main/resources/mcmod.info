@@ -1,0 +1,16 @@
+[
+{
+  "modid": "OpenAutomation",
+  "name": "OpenAutomation",
+  "description": "Automate all the things with computers!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["gjgfuj", "others"],
+  "credits": "Thanks to Sangar for the original mod. Created by gjgfuj, with help from #minecraftforge and #oc.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["AwesomeSauceCore", "OpenComputers"]
+}
+]

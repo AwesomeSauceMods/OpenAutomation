@@ -15,9 +15,7 @@ import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import net.minecraft.nbt.NBTTagCompound
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.SideDefinable
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
-import com.awesomesauce.minecraft.forge.core.lib.util.ReadOnlyInventory
 import com.awesomesauce.minecraft.forge.core.lib.util.InventoryWrapper
-import li.cil.oc.api.network.Node
 import com.awesomesauce.minecraft.forge.openautomation.api.ItemStorage
 
 class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideDefinable with AddressPastable {
@@ -27,21 +25,33 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   var filter: String = "*"
   var address: String = "xxx"
   var slot: Int = -1
+  var customX: Int = 0
+  var customY: Int = 0
+  var customZ: Int = 0
   //AddressPastable
   def pasteAddress(a: String) = address = a
   //SideDefinable
   def setSide(s: ForgeDirection) = side = s
   def inventoryy: IInventory = {
-    val x = xCoord + side.offsetX
-    val y = yCoord + side.offsetY
-    val z = zCoord + side.offsetZ
+    var x = 0
+    var y = 0
+    var z = 0
+    if (customX != 0 || customY != 0 || customZ != 0) {
+      x = customX
+      y = customY
+      z = customZ
+    } else {
+      x = xCoord + side.offsetX
+      y = yCoord + side.offsetY
+      z = zCoord + side.offsetZ
+    }
     if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
       return worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
     else return null
   }
   //ItemStorage
   def inventory = new InventoryWrapper(inventoryy)
-  def sendItem(i:Int) = {
+  def sendItem(i: Int) = {
     inventoryy.setInventorySlotContents(i, null)
   }
   def recieveItem(item: ItemStack): Boolean = InventoryUtil.addStackToSlotInInventory(inventoryy, item, slot)

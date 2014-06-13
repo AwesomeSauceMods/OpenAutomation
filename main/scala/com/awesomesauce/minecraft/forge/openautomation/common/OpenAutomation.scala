@@ -1,36 +1,35 @@
 package com.awesomesauce.minecraft.forge.openautomation.common
 
+import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
+import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
+import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
+import com.awesomesauce.minecraft.forge.core.components.AwesomeSauceComponents
+import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemAddressCopier
+import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemCodeBundle
+import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemSideDefiner
+import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemToolHead
+import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityFluidIO
+import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityItemAutoCore
+import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityItemIO
+import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityWorkbench
+import com.awesomesauce.minecraft.forge.rndtech.api.Research
+import com.awesomesauce.minecraft.forge.rndtech.api.RnDRecipeBasic
+import com.awesomesauce.minecraft.forge.rndtech.api.RnDTechAPI
+import cpw.mods.fml.common.Loader
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
-import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.common.Mod.EventHandler
-import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
-import net.minecraft.block.Block
-import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
-import net.minecraft.block.material.Material
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityItemIO
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemSideDefiner
-import net.minecraft.item.Item
-import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
-import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
-import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraftforge.oredict.ShapedOreRecipe
-import net.minecraft.item.ItemStack
 import li.cil.oc.api.Items
-import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.common.ForgeHooks
-import net.minecraftforge.common.ChestGenHooks
-import net.minecraft.util.WeightedRandomChestContent
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemCodeBundle
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemToolHead
+import net.minecraft.block.Block
+import net.minecraft.block.material.Material
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.oredict.ShapedOreRecipe
 import net.minecraftforge.oredict.ShapelessOreRecipe
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemAddressCopier
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityItemAutoCore
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityWorkbench
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityFluidIO
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityPressureCrusher
+import cpw.mods.fml.common.Mod.EventHandler
+import com.awesomesauce.minecraft.forge.rndtech.RnDTech
 
 @Mod(modid = OpenAutomation.MODID, name = OpenAutomation.MODNAME, modLanguage = "scala")
 object OpenAutomation extends TAwesomeSauceMod {
@@ -43,11 +42,10 @@ object OpenAutomation extends TAwesomeSauceMod {
   final val MODID = "OpenAutomation"
   final val MODNAME = "OpenAutomation"
   var itemIO: Block = null
-  var pressureCrusher: Block = null
   var itemAutoCore: Block = null
   var fluidIO: Block = null
   var workbench: Block = null
-  
+
   var toolSideDefiner: Item = null
   var toolAddressCopier: Item = null
 
@@ -61,16 +59,18 @@ object OpenAutomation extends TAwesomeSauceMod {
   var itemCode: Item = null
   var fluidCode: Item = null
   var outputCode: Item = null
+  var RnDSupport = false
   def getModID: String = MODID
   def getModName: String = MODNAME
   def getTabIconItem: () => net.minecraft.item.Item = () => codeBundle
   def getTextureDomain: String = "openautomation"
-  def preInit() = {}
+  def preInit() = {
+    RnDSupport = config.get(Configuration.CATEGORY_GENERAL, "RnDTech Support", true).getBoolean(true) && Loader.isModLoaded("RnDTech")
+  }
   def init() = {
     toolBase = ItemUtil.makeItem(this, "toolBase")
       .addDescriptionLine("openautomation.toolBase.desc").indev
     itemIO = ItemUtil.makeBlock(this, "itemIO", Material.iron, () => new TileEntityItemIO)
-    pressureCrusher = ItemUtil.makeBlock(this, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
     fluidIO = ItemUtil.makeBlock(this, "fluidIO", Material.iron, () => new TileEntityFluidIO)
     itemAutoCore = ItemUtil.makeBlock(this, "itemAutoCore", Material.iron, () => new TileEntityItemAutoCore)
     workbench = ItemUtil.makeBlock(this, "workbench", Material.iron, () => new TileEntityWorkbench)
@@ -97,12 +97,23 @@ object OpenAutomation extends TAwesomeSauceMod {
     codeBundle = ItemUtil.makeItem(this, "codeBundle", new ItemCodeBundle).asInstanceOf[ItemDescription]
       .addDescriptionLine("openautomation.codeBundle.desc")
       .addUsage("awesomesauce.rightclick", "openautomation.codeBundle.usage")
-    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xyx",
+    /*if (RnDSupport) {
+      RnDTechAPI.addResearch(new Research(new RnDRecipeBasic(
+        new ItemStack(itemCode),
+        Set(new ItemStack(AwesomeSauceComponents.ingotAwesomeite, 1),
+          new ItemStack(Items.PrintedCircuitBoard.getItem(), 4), new ItemStack(inputCode), new ItemStack(itemCode, 2), new ItemStack(outputCode)),
+        new ItemStack(RnDTech.researchDust, 2)), new RnDRecipeBasic(
+            new ItemStack(itemCode),
+            Set(new ItemStack(AwesomeSauceComponents.ingotAwesomeite, 3)), new ItemStack(itemIO)), "itemIO", "OA Item IO", "You have discovered how to digitize,\nand remake items through a computer."))
+    } else {*/
+
+    ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xyx",
       Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.PrintedCircuitBoard,
       Character.valueOf('a'), inputCode, Character.valueOf('b'), itemCode, Character.valueOf('c'), outputCode))
-    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(codeBundle),Items.MicrochipTier1, "blockAwesomeite"))
-    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(codeBundle), Items.MicroChipTier2, "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
-    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(codeBundle),Items.MicroChipTier3, "nuggetAwesomeite"))
+    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.MicrochipTier1, "blockAwesomeite"))
+    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.MicroChipTier2, "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
+    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.MicroChipTier3, "nuggetAwesomeite"))
+    //}
   }
   def postInit() = {}
 }

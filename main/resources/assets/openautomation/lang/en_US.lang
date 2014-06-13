@@ -1,21 +1,20 @@
 itemGroup.OpenAutomation=OpenAutomation
 
-tile.openautomation:itemIO.name=OA Item I/O
-tile.openautomation:workbench.name=OA Workbench
-tile.openautomation:pressureCrusher.name=OA Pressure Crusher
+tile.openautomation.itemIO.name=OA Item I/O
+tile.openautomation.workbench.name=OA Workbench
 
-item.openautomation:toolBase.name=OA Tool Base
-item.openautomation:toolHeadSideDefiner.name=OA Side Definer Tool Head
-item.openautomation:sideDefiner.name=OA Side Definer Tool
-item.openautomation:addressSelector.name=OA Address Selector Tool
-item.openautomation:recipeEncoder.name=OA Recipe Encoder Tool
-item.openautomation:craftingTableTool.name=OA Crafting Table Tool
+item.openautomation.toolBase.name=OA Tool Base
+item.openautomation.toolHeadSideDefiner.name=OA Side Definer Tool Head
+item.openautomation.sideDefiner.name=OA Side Definer Tool
+item.openautomation.addressSelector.name=OA Address Selector Tool
+item.openautomation.recipeEncoder.name=OA Recipe Encoder Tool
+item.openautomation.craftingTableTool.name=OA Crafting Table Tool
 
-item.openautomation:codeBundle.name=OA Code Bundle
-item.openautomation:inputCode.name=OA Input Code
-item.openautomation:itemCode.name=OA Item Code
-item.openautomation:fluidCode.name=OA Fluid Code
-item.openautomation:outputCode.name=OA Output Code
+item.openautomation.codeBundle.name=OA Code Bundle
+item.openautomation.inputCode.name=OA Input Code
+item.openautomation.itemCode.name=OA Item Code
+item.openautomation.fluidCode.name=OA Fluid Code
+item.openautomation.outputCode.name=OA Output Code
 
 openautomation.codeBundle.desc=A bundle of codes.
 openautomation.codeBundle.usage=Gives you 5 random codes.

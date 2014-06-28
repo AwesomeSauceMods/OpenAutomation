@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.FluidTankInfo
 import net.minecraftforge.fluids.IFluidHandler
 import scala.Array.canBuildFrom
+import scala.collection.JavaConversions._
 
 class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with SideDefinable with AddressPastable {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
@@ -93,7 +94,7 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     return false
   }
   @Callback
-  def sendItem(context: Context, arguments: Arguments): Array[AnyRef] = {
+  def sendFluid(context: Context, arguments: Arguments): Array[AnyRef] = {
     context.pause(0.5)
     val oldAddress = address
     val oldFilter = filter
@@ -133,7 +134,7 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   @Callback
   def getFluids(context: Context, arguments: Arguments): Array[AnyRef] = {
     val tankInfo = fluidHandler.getTankInfo(drainSide)
-    tankInfo.map((a: FluidTankInfo) => Map("fluid" -> a.fluid.getFluid().getName(), "amount" -> a.fluid.amount.asInstanceOf[Integer]).asInstanceOf[java.util.Map[AnyRef, AnyRef]])
+    return Array(tankInfo.map((a: FluidTankInfo) => Map("fluid" -> a.fluid.getFluid().getName(), "amount" -> a.fluid.amount.asInstanceOf[Integer])).asInstanceOf[java.util.Map[AnyRef, AnyRef]])
   }
   //Save/Load
   override def readFromNBT(tag: NBTTagCompound) = {

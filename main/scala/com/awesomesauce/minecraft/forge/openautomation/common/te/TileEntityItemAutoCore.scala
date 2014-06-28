@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
 import net.minecraft.nbt.NBTTagString
+import com.awesomesauce.minecraft.forge.openautomation.api.ItemInput
 
 class TileEntityItemAutoCore extends TileEntityEnvironment with ItemDestination with AddressPastable {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("itemAutoCore").withConnector(500).create()
@@ -54,6 +55,24 @@ class TileEntityItemAutoCore extends TileEntityEnvironment with ItemDestination 
   def resetAddresses(context: Context, arguments: Arguments): Array[AnyRef] = {
     inventories = scala.collection.mutable.Set[ItemDestination]()
     Array(true.asInstanceOf[java.lang.Boolean])
+  }
+  @Callback
+  def retrieveItem(context: Context, arguments: Arguments): Array[AnyRef] = {
+    for (inv <- inventories) {
+      if (inv.isInstanceOf[ItemInput]) {
+        val inven = inv.inventory
+        for (i <- Range(0, inv.inventory.getSizeInventory())) {
+          if (inven.getStackInSlot(i).getItem().getUnlocalizedName().contains(arguments.checkString(0))) {
+            val stack = inven.getStackInSlot(i)
+            if (node.network().node(arguments.checkString(1)).host().asInstanceOf[ItemDestination].recieveItem(stack))
+            {
+              inv.asInstanceOf[ItemInput].sendItem(i)
+            }
+          }
+        }
+      }
+    }
+    return Array(true.asInstanceOf[java.lang.Boolean])
   }
   def sendItem(item: ItemStack): Boolean = {
     for (inv <- inventories) {

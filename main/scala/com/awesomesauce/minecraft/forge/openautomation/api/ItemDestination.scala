@@ -7,7 +7,6 @@ import com.awesomesauce.minecraft.forge.core.lib.util.ReadOnlyInventory
 /**
  * Able to recieve items from the network.
  */
-trait ItemDestination extends TileEntityEnvironment {
+trait ItemDestination extends TileEntityEnvironment with ItemInventory {
 	def recieveItem(item : ItemStack) : Boolean
-	def inventory: ReadOnlyInventory
 }

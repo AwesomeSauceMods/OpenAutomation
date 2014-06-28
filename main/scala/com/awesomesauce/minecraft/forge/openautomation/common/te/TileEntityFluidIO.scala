@@ -130,6 +130,7 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     address = oldAddress
     filter = oldFilter
     Array(true.asInstanceOf[java.lang.Boolean])
+
   }
   @Callback
   def getFluids(context: Context, arguments: Arguments): Array[AnyRef] = {

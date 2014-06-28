@@ -35,18 +35,20 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
   }
   @Callback
   def crush(context: Context, arguments: Arguments): Array[AnyRef] = {
-    val ore = OreDictionary.getOreName(OreDictionary.getOreID(crushingSlot))
-    context.pause(5)
-    if (node_.tryChangeBuffer(-100)) {
-      if (crushedSlot == null)
-        crushedSlot = recipes(ore).copy()
-      else if (crushedSlot.getItem() == recipes(ore).getItem())
-        crushedSlot.stackSize += 2
-      else
-        return Array(null, "Target stack full")
-      return Array(true.asInstanceOf[java.lang.Boolean])
+    for (oid <- OreDictionary.getOreIDs(crushingSlot)) {
+      val ore = OreDictionary.getOreName()
+      context.pause(5)
+      if (node_.tryChangeBuffer(-100)) {
+        if (crushedSlot == null)
+          crushedSlot = recipes(ore).copy()
+        else if (crushedSlot.getItem() == recipes(ore).getItem())
+          crushedSlot.stackSize += 2
+        else
+          return Array(null, "Target stack full")
+        return Array(true.asInstanceOf[java.lang.Boolean])
+      }
+      return Array(null, "Not enough power")
     }
-    return Array(null, "Not enough power")
   }
   def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
     if (destination.recieveItem(stack)) {

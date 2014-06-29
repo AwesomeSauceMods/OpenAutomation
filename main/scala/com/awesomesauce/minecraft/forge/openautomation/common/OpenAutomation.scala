@@ -3,42 +3,29 @@ package com.awesomesauce.minecraft.forge.openautomation.common
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
-import com.awesomesauce.minecraft.forge.core.components.AwesomeSauceComponents
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemAddressCopier
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemCodeBundle
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemSideDefiner
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemToolHead
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityFluidIO
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityItemAutoCore
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityItemIO
-import com.awesomesauce.minecraft.forge.openautomation.common.te.TileEntityWorkbench
-import com.awesomesauce.minecraft.forge.rndtech.api.Research
-import com.awesomesauce.minecraft.forge.rndtech.api.RnDRecipeBasic
-import com.awesomesauce.minecraft.forge.rndtech.api.RnDTechAPI
-import cpw.mods.fml.common.Loader
-import cpw.mods.fml.common.Mod
-import cpw.mods.fml.common.event.FMLInitializationEvent
-import cpw.mods.fml.common.event.FMLPostInitializationEvent
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemAddressCopier, ItemCodeBundle, ItemSideDefiner, ItemToolHead}
+import com.awesomesauce.minecraft.forge.openautomation.common.te.{TileEntityFluidIO, TileEntityItemAutoCore, TileEntityItemIO, TileEntityWorkbench}
+import cpw.mods.fml.common.{Loader, Mod}
+import cpw.mods.fml.common.Mod.EventHandler
+import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import li.cil.oc.api.Items
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraftforge.common.config.Configuration
-import net.minecraftforge.oredict.ShapedOreRecipe
-import net.minecraftforge.oredict.ShapelessOreRecipe
-import cpw.mods.fml.common.Mod.EventHandler
-import com.awesomesauce.minecraft.forge.rndtech.RnDTech
+import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
 
 @Mod(modid = OpenAutomation.MODID, name = OpenAutomation.MODNAME, modLanguage = "scala")
 object OpenAutomation extends TAwesomeSauceMod {
   @EventHandler
   def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
+
   @EventHandler
   def asi(e: FMLInitializationEvent) = super.awesomesauceinit(e)
+
   @EventHandler
   def aspoi(e: FMLPostInitializationEvent) = super.awesomesaucepostinit(e)
+
   final val MODID = "OpenAutomation"
   final val MODNAME = "OpenAutomation"
   var itemIO: Block = null
@@ -60,13 +47,21 @@ object OpenAutomation extends TAwesomeSauceMod {
   var fluidCode: Item = null
   var outputCode: Item = null
   var RnDSupport = false
+
   def getModID: String = MODID
+
   def getModName: String = MODNAME
+
+  override def getVersion = "0.3.0"
+
   def getTabIconItem: () => net.minecraft.item.Item = () => codeBundle
+
   def getTextureDomain: String = "openautomation"
+
   def preInit() = {
     RnDSupport = config.get(Configuration.CATEGORY_GENERAL, "RnDTech Support", true).getBoolean(true) && Loader.isModLoaded("RnDTech")
   }
+
   def init() = {
     toolBase = ItemUtil.makeItem(this, "toolBase")
       .addDescriptionLine("openautomation.toolBase.desc").indev
@@ -115,5 +110,6 @@ object OpenAutomation extends TAwesomeSauceMod {
     ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip3").item(), "nuggetAwesomeite"))
     //}
   }
+
   def postInit() = {}
 }

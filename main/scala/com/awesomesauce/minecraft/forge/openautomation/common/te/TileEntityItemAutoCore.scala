@@ -62,7 +62,7 @@ class TileEntityItemAutoCore extends TileEntityEnvironment with ItemDestination 
       if (inv.isInstanceOf[ItemInput]) {
         val inven = inv.inventory
         for (i <- Range(0, inv.inventory.getSizeInventory())) {
-          if (inven.getStackInSlot(i).getItem().getUnlocalizedName().contains(arguments.checkString(0))) {
+          if (inven.getStackInSlot(i) != null && inven.getStackInSlot(i).getItem().getUnlocalizedName().contains(arguments.checkString(0))) {
             val stack = inven.getStackInSlot(i)
             if (node.network().node(arguments.checkString(1)).host().asInstanceOf[ItemDestination].recieveItem(stack))
             {

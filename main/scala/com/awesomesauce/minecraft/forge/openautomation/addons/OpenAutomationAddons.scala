@@ -3,7 +3,7 @@ package com.awesomesauce.minecraft.forge.openautomation.addons
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.addons.tile.TileEntityPressureCrusher
-import cpw.mods.fml.common.Mod
+import cpw.mods.fml.common.{ModMetadata, Mod}
 import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
@@ -37,6 +37,8 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
   def getModName: String = MODNAME
   def getTabIconItem: () => net.minecraft.item.Item = () => OpenAutomation.toolBase
   def getTextureDomain: String = "openautomationaddons"
+  @Mod.Metadata(MODID)
+  var metadata : ModMetadata = null
   def preInit() = {}
   def init() = {
     pressureCrusher = ItemUtil.makeBlock(this, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)

@@ -5,7 +5,7 @@ import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemAddressCopier, ItemCodeBundle, ItemSideDefiner, ItemToolHead}
 import com.awesomesauce.minecraft.forge.openautomation.common.te.{TileEntityFluidIO, TileEntityItemAutoCore, TileEntityItemIO, TileEntityWorkbench}
-import cpw.mods.fml.common.{Loader, Mod}
+import cpw.mods.fml.common.{ModMetadata, Loader, Mod}
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import li.cil.oc.api.Items
@@ -53,6 +53,8 @@ object OpenAutomation extends TAwesomeSauceMod {
   def getModName: String = MODNAME
 
   override def getVersion = "0.3.0"
+  @Mod.Metadata(MODID)
+  var metadata : ModMetadata = null
 
   def getTabIconItem: () => net.minecraft.item.Item = () => codeBundle
 

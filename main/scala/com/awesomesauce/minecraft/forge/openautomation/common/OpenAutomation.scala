@@ -105,11 +105,11 @@ object OpenAutomation extends TAwesomeSauceMod {
     } else {*/
 
     ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xyx",
-      Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").item(),
+      Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
       Character.valueOf('a'), inputCode, Character.valueOf('b'), itemCode, Character.valueOf('c'), outputCode))
-    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip1").item(), "blockAwesomeite"))
-    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip2").item(), "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
-    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip3").item(), "nuggetAwesomeite"))
+    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip1").createItemStack(1), "blockAwesomeite"))
+    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip2").createItemStack(1), "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
+    ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip3").createItemStack(1), "nuggetAwesomeite"))
     //}
   }
 

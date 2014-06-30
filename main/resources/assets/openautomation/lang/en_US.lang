@@ -11,10 +11,10 @@ item.openautomation.recipeEncoder.name=OA Recipe Encoder Tool
 item.openautomation.craftingTableTool.name=OA Crafting Table Tool
 
 item.openautomation.codeBundle.name=OA Code Bundle
-item.openautomation.inputCode.name=OA Input Code
-item.openautomation.itemCode.name=OA Item Code
-item.openautomation.fluidCode.name=OA Fluid Code
-item.openautomation.outputCode.name=OA Output Code
+item.openautomation.oaInputCode.name=OA Input Code
+item.openautomation.oaItemCode.name=OA Item Code
+item.openautomation.oaFluidCode.name=OA Fluid Code
+item.openautomation.oaOutputCode.name=OA Output Code
 
 openautomation.codeBundle.desc=A bundle of codes.
 openautomation.codeBundle.usage=Gives you 5 random codes.

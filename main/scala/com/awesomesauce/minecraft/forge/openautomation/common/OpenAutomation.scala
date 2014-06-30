@@ -79,16 +79,16 @@ object OpenAutomation extends TAwesomeSauceMod {
       .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")
       .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
     toolHeadAddressCopier = ItemUtil.makeItem(this, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
-    inputCode = ItemUtil.makeItem(this, "inputCode")
+    inputCode = ItemUtil.makeItem(this, "oaInputCode", true)
       .addDescriptionLine("openautomation.code.desc")
       .addDescriptionLine("openautomation.inputCode.desc")
-    itemCode = ItemUtil.makeItem(this, "itemCode")
+    itemCode = ItemUtil.makeItem(this, "oaItemCode", true)
       .addDescriptionLine("openautomation.code.desc")
       .addDescriptionLine("openautomation.itemCode.desc")
-    outputCode = ItemUtil.makeItem(this, "outputCode")
+    outputCode = ItemUtil.makeItem(this, "oaOutputCode", true)
       .addDescriptionLine("openautomation.code.desc")
       .addDescriptionLine("openautomation.outputCode.desc")
-    fluidCode = ItemUtil.makeItem(this, "fluidCode")
+    fluidCode = ItemUtil.makeItem(this, "oaFluidCode", true)
       .addDescriptionLine("openautomation.code.desc")
       .addDescriptionLine("openautomation.fluidCode.desc")
     codeBundle = ItemUtil.makeItem(this, "codeBundle", new ItemCodeBundle).asInstanceOf[ItemDescription]
@@ -104,9 +104,14 @@ object OpenAutomation extends TAwesomeSauceMod {
             Set(new ItemStack(AwesomeSauceComponents.ingotAwesomeite, 3)), new ItemStack(itemIO)), "itemIO", "OA Item IO", "You have discovered how to digitize,\nand remake items through a computer."))
     } else {*/
 
-    ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xyx",
+    ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xzx",
       Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
-      Character.valueOf('a'), inputCode, Character.valueOf('b'), itemCode, Character.valueOf('c'), outputCode))
+      Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaItemCode", Character.valueOf('c'), "oaOutputCode",
+      Character.valueOf('z'), "awesomeCore"))
+    ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(fluidIO), "xyx", "abc", "xzx",
+      Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
+      Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaFluidCode", Character.valueOf('c'), "oaOutputCode",
+      Character.valueOf('z'), "awesomeCore"))
     ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip1").createItemStack(1), "blockAwesomeite"))
     ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip2").createItemStack(1), "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
     ItemUtil.addRecipe(this, new ShapelessOreRecipe(new ItemStack(codeBundle), Items.get("chip3").createItemStack(1), "nuggetAwesomeite"))

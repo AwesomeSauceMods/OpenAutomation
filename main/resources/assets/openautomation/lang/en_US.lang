@@ -1,6 +1,7 @@
 itemGroup.OpenAutomation=OpenAutomation
 
 tile.openautomation.itemIO.name=OA Item I/O
+tile.openautomation.fluidIO.name=OA Fluid I/O
 tile.openautomation.workbench.name=OA Workbench
 
 item.openautomation.toolBase.name=OA Tool Base

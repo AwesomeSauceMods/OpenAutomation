@@ -1,22 +1,16 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.te
 
-import com.awesomesauce.minecraft.forge.core.lib.util.InventoryUtil
-import com.awesomesauce.minecraft.forge.openautomation.api.ItemDestination
+import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryUtil, InventoryWrapper}
+import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
+import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
+import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.Arguments
-import li.cil.oc.api.network.Callback
-import li.cil.oc.api.network.Context
-import li.cil.oc.api.network.Visibility
+import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.util.ForgeDirection
-import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import net.minecraft.nbt.NBTTagCompound
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.SideDefinable
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
-import com.awesomesauce.minecraft.forge.core.lib.util.InventoryWrapper
-import com.awesomesauce.minecraft.forge.openautomation.api.ItemStorage
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideDefinable with AddressPastable {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
@@ -28,6 +22,8 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   var customX: Int = 0
   var customY: Int = 0
   var customZ: Int = 0
+
+  def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) return 1 else if (ForgeDirection.getOrientation(side) == side) return 2 else return 0
   //AddressPastable
   def pasteAddress(a: String) = address = a
   //SideDefinable

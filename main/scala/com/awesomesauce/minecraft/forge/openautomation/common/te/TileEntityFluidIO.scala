@@ -1,24 +1,18 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.te
-import com.awesomesauce.minecraft.forge.openautomation.api.FluidDestination
-import com.awesomesauce.minecraft.forge.openautomation.api.FluidStorage
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.SideDefinable
+
+import com.awesomesauce.minecraft.forge.core.lib.item.TCustomTexture
+import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, FluidStorage}
+import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.Arguments
-import li.cil.oc.api.network.Callback
-import li.cil.oc.api.network.Context
-import li.cil.oc.api.network.Visibility
+import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
-import net.minecraftforge.fluids.FluidRegistry
-import net.minecraftforge.fluids.FluidStack
-import net.minecraftforge.fluids.FluidTankInfo
-import net.minecraftforge.fluids.IFluidHandler
-import scala.Array.canBuildFrom
-import scala.collection.JavaConversions._
+import net.minecraftforge.fluids.{FluidRegistry, FluidStack, FluidTankInfo, IFluidHandler}
 
-class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with SideDefinable with AddressPastable {
+import scala.Array.canBuildFrom
+
+class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with SideDefinable with AddressPastable with TCustomTexture {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
   node = node_
   var side: ForgeDirection = ForgeDirection.UNKNOWN
@@ -31,6 +25,8 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   def pasteAddress(a: String) = address = a
   //SideDefinable
   def setSide(s: ForgeDirection) = side = s
+
+  def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) return 1 else if (ForgeDirection.getOrientation(side) == drainSide) return 2 else return 0
   def fluidHandler: IFluidHandler = {
     val x = xCoord + side.offsetX
     val y = yCoord + side.offsetY

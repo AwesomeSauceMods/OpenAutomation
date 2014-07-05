@@ -1,8 +1,8 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.te
 
 import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryUtil, InventoryWrapper}
-import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
+import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
 import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
@@ -23,7 +23,7 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   var customY: Int = 0
   var customZ: Int = 0
 
-  def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) return 1 else if (ForgeDirection.getOrientation(side) == side) return 2 else return 0
+  def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) return 1 else if (ForgeDirection.getOrientation(side) == this.side.getOpposite) return 2 else return 0
   //AddressPastable
   def pasteAddress(a: String) = address = a
   //SideDefinable

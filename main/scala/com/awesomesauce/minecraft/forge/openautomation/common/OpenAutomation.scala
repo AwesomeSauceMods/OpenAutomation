@@ -5,9 +5,9 @@ import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemAddressCopier, ItemCodeBundle, ItemSideDefiner, ItemToolHead}
 import com.awesomesauce.minecraft.forge.openautomation.common.te.{TileEntityFluidIO, TileEntityItemAutoCore, TileEntityItemIO, TileEntityWorkbench}
-import cpw.mods.fml.common.{ModMetadata, Loader, Mod}
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.{Loader, Mod, ModMetadata}
 import li.cil.oc.api.Items
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -67,8 +67,8 @@ object OpenAutomation extends TAwesomeSauceMod {
   def init() = {
     toolBase = ItemUtil.makeItem(this, "toolBase")
       .addDescriptionLine("openautomation.toolBase.desc").indev
-    itemIO = ItemUtil.makeBlock(this, "itemIO", Material.iron, () => new TileEntityItemIO)
-    fluidIO = ItemUtil.makeBlock(this, "fluidIO", Material.iron, () => new TileEntityFluidIO)
+    itemIO = ItemUtil.makeBlock(this, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
+    fluidIO = ItemUtil.makeBlock(this, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
     itemAutoCore = ItemUtil.makeBlock(this, "itemAutoCore", Material.iron, () => new TileEntityItemAutoCore)
     workbench = ItemUtil.makeBlock(this, "workbench", Material.iron, () => new TileEntityWorkbench)
     toolSideDefiner = ItemUtil.makeItem(this, "sideDefiner", new ItemSideDefiner).asInstanceOf[ItemDescription]

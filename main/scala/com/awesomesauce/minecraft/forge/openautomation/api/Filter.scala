@@ -4,12 +4,12 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary
 
 class Filter(val filterString: String) {
-  setFilterString(filterString)
+  setFilter(filterString)
   var filterText: String = ""
   var oreDict: Boolean = false
 
-  def setFilterString(str: String) = {
-    if (str.charAt(0) == "@") {
+  def setFilter(str: String) = {
+    if (str.charAt(0) == '@') {
       oreDict = true
       filterText = str.substring(1)
     }
@@ -20,9 +20,9 @@ class Filter(val filterString: String) {
 
   def doesFilterMatch(stack: ItemStack): Boolean = {
     if (oreDict) {
-      val oreNames = OreDictionary.getOreNames(stack)
-      for (ore <- oreNames) {
-        if (ore.contains(filterText)) {
+      val oreIds = OreDictionary.getOreIDs(stack)
+      for (ore <- oreIds) {
+        if (OreDictionary.getOreName(ore).contains(filterText)) {
           return true
         }
       }

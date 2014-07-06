@@ -72,7 +72,7 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
       return Array(false.asInstanceOf[java.lang.Boolean])
     val destination = node.network().node(address).host().asInstanceOf[ItemDestination]
     if (!node_.tryChangeBuffer(-20))
-      return (null, "Not enough power.")
+      return Array(null, "Not enough power.")
     Array({
       val res = doSendItem(this.getStackInSlot(0), 0, destination)
       address = oldAddress

@@ -1,13 +1,13 @@
 package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 
+import com.awesomesauce.minecraft.forge.openautomation.api.Filter
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
-import com.awesomesauce.minecraft.forge.openautomation.api.{Filter, ItemInput}
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
 
 
-class TileEntityMiner extends TileEntityEnvironment with AddressPastable with ItemInput {
+class TileEntityMiner extends TileEntityEnvironment with AddressPastable {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("miner").withConnector(1000).create()
   node = node_
   var address: String = "xxx"
@@ -53,7 +53,7 @@ class TileEntityMiner extends TileEntityEnvironment with AddressPastable with It
 
   @Callback
   def getMin(context: Context, arguments: Arguments): Array[AnyRef] = {
-    Array(minX, minY, minZ)
+    Array(minX.asInstanceOf[Integer], minY.asInstanceOf[Integer], minZ.asInstanceOf[Integer])
   }
 
   @Callback
@@ -66,7 +66,7 @@ class TileEntityMiner extends TileEntityEnvironment with AddressPastable with It
 
   @Callback
   def getMax(context: Context, arguments: Arguments): Array[AnyRef] = {
-    Array(maxX, maxY, maxZ)
+    Array(maxX.asInstanceOf[Integer], maxY.asInstanceOf[Integer], maxZ.asInstanceOf[Integer])
   }
 
   @Callback

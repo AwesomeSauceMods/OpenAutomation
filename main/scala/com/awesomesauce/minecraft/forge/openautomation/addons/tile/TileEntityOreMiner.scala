@@ -2,9 +2,6 @@ package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 
 import com.awesomesauce.minecraft.forge.openautomation.api.ItemInput
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
-import li.cil.oc.api.Network
-import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
-import li.cil.oc.api.prefab.TileEntityEnvironment
 
 
 class TileEntityOreMiner extends TileEntityEnvironment with AddressPastable with ItemInput {
@@ -59,6 +56,6 @@ class TileEntityOreMiner extends TileEntityEnvironment with AddressPastable with
 
   @Callback
   def mine(context: Context, arguments: Arguments): Array[AnyRef] = {
-    #TODO
+    //TODO
   }
 }

@@ -2,8 +2,8 @@ package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 
 import com.awesomesauce.minecraft.forge.core.components.AwesomeSauceComponents
 import com.awesomesauce.minecraft.forge.core.lib.util.InventoryWrapper
-import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary
 
 class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastable with ItemStorage with IInventory {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("pressurecrusher").withConnector(1000).create()
+  val node_ = Network.newNode(this, Visibility.Network).withComponent("pressurecrusher").withConnector(2000).create()
   node = node_
   val recipes = AwesomeSauceComponents.grinderRecipes
   var address: String = "xxx"
@@ -38,12 +38,11 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
     for (oid <- OreDictionary.getOreIDs(crushingSlot)) {
       val ore = OreDictionary.getOreName(oid)
       if (recipes(ore) != null) {
-
         context.pause(5)
-        if (node_.tryChangeBuffer(-100)) {
+        if (node_.tryChangeBuffer(-400)) {
           if (crushedSlot == null)
             crushedSlot = recipes(ore).copy()
-          else if (crushedSlot.getItem() == recipes(ore).getItem())
+          else if (crushedSlot.getItem == recipes(ore).getItem)
             crushedSlot.stackSize += 2
           else
             return Array(null, "Target stack full")
@@ -52,7 +51,7 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
         return Array(null, "Not enough power")
       }
     }
-    return Array(null, "Not Crushable Ore.")
+    Array(null, "Not Crushable Ore.")
   }
 
   def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
@@ -60,7 +59,7 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
       this.setInventorySlotContents(s, null)
       return true
     }
-    return false
+    false
   }
 
   @Callback
@@ -72,33 +71,34 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
     if (!node.network().node(address).host().isInstanceOf[ItemDestination])
       return Array(false.asInstanceOf[java.lang.Boolean])
     val destination = node.network().node(address).host().asInstanceOf[ItemDestination]
-    return Array({
+    if (!node_.tryChangeBuffer(-20))
+      return (null, "Not enough power.")
+    Array({
       val res = doSendItem(this.getStackInSlot(0), 0, destination)
       address = oldAddress
       res
     }.asInstanceOf[java.lang.Boolean])
-    Array(true.asInstanceOf[java.lang.Boolean])
   }
 
   def closeInventory(): Unit = {}
 
   def decrStackSize(i: Int, amount: Int): net.minecraft.item.ItemStack = if (i == 0) {
-    return crushedSlot.splitStack(amount)
-  } else return crushingSlot.splitStack(amount)
+    crushedSlot.splitStack(amount)
+  } else crushingSlot.splitStack(amount)
 
-  def getInventoryName(): String = "Pressure Crusher"
+  def getInventoryName: String = "Pressure Crusher"
 
-  def getInventoryStackLimit(): Int = 64
+  def getInventoryStackLimit: Int = 64
 
-  def getSizeInventory(): Int = 2
+  def getSizeInventory: Int = 2
 
-  def getStackInSlot(i: Int): net.minecraft.item.ItemStack = if (i == 0) return crushedSlot else return crushingSlot
+  def getStackInSlot(i: Int): net.minecraft.item.ItemStack = if (i == 0) crushedSlot else crushingSlot
 
   def getStackInSlotOnClosing(i: Int): net.minecraft.item.ItemStack = null
 
-  def hasCustomInventoryName(): Boolean = false
+  def hasCustomInventoryName: Boolean = false
 
-  def isItemValidForSlot(i: Int, stack: net.minecraft.item.ItemStack): Boolean = if (i == 0) return false else return true
+  def isItemValidForSlot(i: Int, stack: net.minecraft.item.ItemStack): Boolean = if (i == 0) false else true
 
   def isUseableByPlayer(player: net.minecraft.entity.player.EntityPlayer): Boolean = true
 
@@ -109,11 +109,11 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
   def recieveItem(item: net.minecraft.item.ItemStack): Boolean =
     if (crushingSlot == null) {
       crushingSlot = item
-      return true
+      true
     } else if (item.isItemEqual(crushingSlot)) {
       crushingSlot.stackSize += item.stackSize
-      return true
-    } else return false
+      true
+    } else false
 
   def inventory: com.awesomesauce.minecraft.forge.core.lib.util.ReadOnlyInventory = new InventoryWrapper(this)
 

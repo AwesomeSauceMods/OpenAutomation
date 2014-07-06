@@ -44,17 +44,6 @@ class TileEntityMiner extends TileEntityEnvironment with AddressPastable with It
   }
 
   @Callback
-  def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
-    filter.setFilter(arguments.checkString(0))
-    Array(true.asInstanceOf[java.lang.Boolean])
-  }
-
-  @Callback
-  def getFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
-    Array(filter.toString)
-  }
-
-  @Callback
   def setMin(context: Context, arguments: Arguments): Array[AnyRef] = {
     minX = arguments.checkInteger(0)
     minY = arguments.checkInteger(1)

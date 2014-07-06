@@ -1,8 +1,8 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.te
 
 import com.awesomesauce.minecraft.forge.core.lib.item.TCustomTexture
-import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, FluidStorage}
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
+import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, FluidStorage}
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
@@ -17,16 +17,21 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   node = node_
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var drainSide: ForgeDirection = ForgeDirection.UNKNOWN
+
   def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite() else drainSide
-  var filter: String = "*"
+
+  var filter = ""
   var address: String = "xxx"
   var drainAmount: Int = 1000
+
   //AddressPastable
   def pasteAddress(a: String) = address = a
+
   //SideDefinable
   def setSide(s: ForgeDirection) = side = s
 
   def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) return 1 else if (ForgeDirection.getOrientation(side) == drainSide) return 2 else return 0
+
   def fluidHandler: IFluidHandler = {
     val x = xCoord + side.offsetX
     val y = yCoord + side.offsetY
@@ -35,53 +40,66 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
       return worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
     else return null
   }
+
   //FluidStorage
   def recieveFluid(stack: FluidStack): Boolean = if (fluidHandler.fill(drainSide, stack, false) == stack.amount) {
     fluidHandler.fill(drainSide, stack, true)
     return true
   }
   else return false
+
   def getTankInfo(): Array[FluidTankInfo] = fluidHandler.getTankInfo(drainSide)
+
   def sendFluid(fluid: FluidStack): Unit = fluidHandler.drain(drainSide, fluid, true)
+
   //Callbacks
   @Callback
   def ping(context: Context, arguments: Arguments): Array[AnyRef] = Array(this.node.address(), "pong")
+
   @Callback
   def setSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     side = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase())
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(side.toString())
   }
+
   @Callback
   def setDrainSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     drainSide = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase())
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getDrainSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(getDrainSide.toString())
   }
+
   @Callback
   def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
     filter = arguments.checkString(0)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(filter)
   }
+
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     address = arguments.checkString(0)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(address)
   }
+
   def doSendFluid(stack: FluidStack, destination: FluidDestination): Boolean = {
     if (destination.recieveFluid(stack)) {
       fluidHandler.drain(getDrainSide, stack, true)
@@ -89,6 +107,7 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     }
     return false
   }
+
   @Callback
   def sendFluid(context: Context, arguments: Arguments): Array[AnyRef] = {
     context.pause(0.5)
@@ -112,13 +131,13 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
       return Array(null, "Not a fluid destination")
     val destination = node.network().node(address).host().asInstanceOf[FluidDestination]
     var stackToDrain: FluidStack = null
-    if (filter == "*")
+    if (filter == "")
       stackToDrain = fluidHandler.drain(drainSide, drainAmount, false)
     else
       stackToDrain = fluidHandler.drain(drainSide, new FluidStack(FluidRegistry.getFluid(filter), drainAmount), false)
     if (doSendFluid(stackToDrain, destination)) {
       context.pause(0.5)
-      node_.tryChangeBuffer(-10+drainAmount*0.05)
+      node_.tryChangeBuffer(-10 + drainAmount * 0.05)
       address = oldAddress
       filter = oldFilter
       return Array(true.asInstanceOf[java.lang.Boolean])
@@ -128,11 +147,13 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     Array(true.asInstanceOf[java.lang.Boolean])
 
   }
+
   @Callback
   def getFluids(context: Context, arguments: Arguments): Array[AnyRef] = {
     val tankInfo = fluidHandler.getTankInfo(drainSide)
     return Array(tankInfo.map((a: FluidTankInfo) => Map("fluid" -> a.fluid.getFluid().getName(), "amount" -> a.fluid.amount.asInstanceOf[Integer])).asInstanceOf[java.util.Map[AnyRef, AnyRef]])
   }
+
   //Save/Load
   override def readFromNBT(tag: NBTTagCompound) = {
     super.readFromNBT(tag)
@@ -142,6 +163,7 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     drainSide = ForgeDirection.valueOf(tag.getString("drainSide"))
     drainAmount = tag.getInteger("drainAmount")
   }
+
   override def writeToNBT(tag: NBTTagCompound) = {
     super.writeToNBT(tag)
     tag.setString("filter", filter)

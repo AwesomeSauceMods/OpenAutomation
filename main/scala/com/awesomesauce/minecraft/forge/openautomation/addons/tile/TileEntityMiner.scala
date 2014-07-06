@@ -1,16 +1,17 @@
 package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 
-import com.awesomesauce.minecraft.forge.openautomation.api.ItemInput
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.{Filter, ItemInput}
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
 
 
-class TileEntityOreMiner extends TileEntityEnvironment with AddressPastable with ItemInput {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("pressurecrusher").withConnector(1000).create()
+class TileEntityMiner extends TileEntityEnvironment with AddressPastable with ItemInput {
+  val node_ = Network.newNode(this, Visibility.Network).withComponent("miner").withConnector(1000).create()
   node = node_
   var address: String = "xxx"
+  var filter: Filter = new Filter("")
   var maxX: Int = 100
   var maxY: Int = 100
   var maxZ: Int = 100
@@ -29,6 +30,28 @@ class TileEntityOreMiner extends TileEntityEnvironment with AddressPastable with
   @Callback
   def getAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(address)
+  }
+
+  @Callback
+  def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
+    filter.setFilter(arguments.checkString(0))
+    Array(true.asInstanceOf[java.lang.Boolean])
+  }
+
+  @Callback
+  def getFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
+    Array(filter.toString)
+  }
+
+  @Callback
+  def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
+    filter.setFilter(arguments.checkString(0))
+    Array(true.asInstanceOf[java.lang.Boolean])
+  }
+
+  @Callback
+  def getFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
+    Array(filter.toString)
   }
 
   @Callback
@@ -59,7 +82,7 @@ class TileEntityOreMiner extends TileEntityEnvironment with AddressPastable with
 
   @Callback
   def mine(context: Context, arguments: Arguments): Array[AnyRef] = {
-    //TODO
+
     Array(null, "Unknown Error")
   }
 }

@@ -3,17 +3,14 @@ package com.awesomesauce.minecraft.forge.openautomation.addons
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.addons.tile.TileEntityPressureCrusher
-import cpw.mods.fml.common.{ModMetadata, Mod}
-import cpw.mods.fml.common.event.FMLInitializationEvent
-import cpw.mods.fml.common.event.FMLPostInitializationEvent
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import com.awesomesauce.minecraft.forge.openautomation.common.OpenAutomation
+import cpw.mods.fml.common.Mod.EventHandler
+import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.{Mod, ModMetadata}
+import li.cil.oc.api.FileSystem
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.Item
-import cpw.mods.fml.common.Mod.EventHandler
-import com.awesomesauce.minecraft.forge.openautomation.common.OpenAutomation
-import com.awesomesauce.minecraft.forge.core.components.AwesomeSauceComponents
-import net.minecraft.item.ItemStack
 
 @Mod(modid = OpenAutomationAddons.MODID, name = OpenAutomationAddons.MODNAME, modLanguage = "scala")
 object OpenAutomationAddons extends TAwesomeSauceMod {
@@ -31,6 +28,7 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
   var reactorController: Block = null
   var reactorTurbine: Block = null
   var elements: scala.collection.mutable.Map[Int, Item] = scala.collection.mutable.Map[Int, Item]()
+  var autoOSFS: li.cil.oc.api.fs.FileSystem = null
   final val MODID = "OpenAutomationAddons"
   final val MODNAME = "OpenAutomation Addons"
   def getModID: String = MODID
@@ -46,6 +44,9 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
     for (i <- Range(1, 83)) {
       elements.put(i, ItemUtil.makeItem(this, "element" + i))
     }
+    autoOSFS = FileSystem.fromClass(Class.forName("com.awesomesauce.minecraft.forge.openautomation.addons.OpenAutomationAddons"), "openautomationaddons", "lua/autoos")
+
+
   }
   def postInit() = {}
 }

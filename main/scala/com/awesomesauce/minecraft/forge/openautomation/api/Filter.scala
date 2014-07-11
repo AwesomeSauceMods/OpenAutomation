@@ -9,12 +9,17 @@ class Filter(val filterString: String) {
   var oreDict: Boolean = false
 
   def setFilter(str: String) = {
-    if (str.charAt(0) == '@') {
-      oreDict = true
-      filterText = str.substring(1)
+    try {
+      if (str.charAt(0) == '@') {
+        oreDict = true
+        filterText = str.substring(1)
+      }
+      else {
+        filterText = str
+      }
     }
-    else {
-      filterText = str
+    catch {
+      case e: StringIndexOutOfBoundsException => filterText = str
     }
   }
 

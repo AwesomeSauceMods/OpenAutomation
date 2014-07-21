@@ -3,6 +3,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.te
 import com.awesomesauce.minecraft.forge.core.lib.item.TCustomTexture
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
 import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, FluidStorage}
+import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
@@ -127,9 +128,9 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
       drainAmount = arguments.checkInteger(1)
     if (arguments.isInteger(2))
       drainAmount = arguments.checkInteger(2)
-    if (!node.network().node(address).host().isInstanceOf[FluidDestination])
+    if (!Util.isFluidDestination(node, address))
       return Array(null, "Not a fluid destination")
-    val destination = node.network().node(address).host().asInstanceOf[FluidDestination]
+    val destination = Util.getFluidDestination(node, address)
     var stackToDrain: FluidStack = null
     if (filter == "")
       stackToDrain = fluidHandler.drain(drainSide, drainAmount, false)

@@ -24,10 +24,13 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   var customZ: Int = 0
 
   def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) 1 else if (ForgeDirection.getOrientation(side) == this.side.getOpposite) 2 else 0
+
   //AddressPastable
   def pasteAddress(a: String) = address = a
+
   //SideDefinable
   def setSide(s: ForgeDirection) = side = s
+
   def inventoryy: IInventory = {
     var x = 0
     var y = 0
@@ -45,51 +48,64 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
       worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
     else null
   }
+
   //ItemStorage
   def inventory = new InventoryWrapper(inventoryy)
+
   def sendItem(i: Int) = {
     inventoryy.setInventorySlotContents(i, null)
   }
+
   def recieveItem(item: ItemStack): Boolean = InventoryUtil.addStackToSlotInInventory(inventoryy, item, slot)
+
   //Callbacks
   @Callback
   def ping(context: Context, arguments: Arguments): Array[AnyRef] = Array(this.node.address(), "pong")
+
   @Callback
   def setSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     side = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(side.toString)
   }
+
   @Callback
   def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
     filter.setFilter(arguments.checkString(0))
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(filter.toString)
   }
+
   @Callback
   def getInventoryName(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(inventory.getInventoryName())
   }
+
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     address = arguments.checkString(0)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(address)
   }
+
   @Callback
   def setSlot(context: Context, arguments: Arguments): Array[AnyRef] = {
     slot = arguments.checkInteger(0)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getSlot(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(slot.asInstanceOf[Integer])
@@ -102,6 +118,7 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     }
     false
   }
+
   @Callback
   def sendItem(context: Context, arguments: Arguments): Array[AnyRef] = {
     context.pause(0.5)
@@ -122,9 +139,9 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
       slot = arguments.checkInteger(1)
     if (arguments.isInteger(2))
       slot = arguments.checkInteger(2)
-    if (!node.network().node(address).host().isInstanceOf[ItemDestination])
+    if (!Util.isItemDestination(node, address))
       return Array(false.asInstanceOf[java.lang.Boolean])
-    val destination = node.network().node(address).host().asInstanceOf[ItemDestination]
+    val destination = Util.getItemDestination(node, address)
     if (slot != -1) return Array(doSendItem(inventory.getStackInSlot(slot), slot, destination).asInstanceOf[java.lang.Boolean])
     for (i <- Range(0, inventory.getSizeInventory())) {
       if (inventory.getStackInSlot(i) != null && doSendItem(inventory.getStackInSlot(i), i, destination)) {
@@ -141,11 +158,13 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     slot = oldSlot
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
   @Callback
   def getItem(context: Context, arguments: Arguments): Array[AnyRef] = {
     val item = inventory.getStackInSlot(arguments.checkInteger(0))
     Array(Util.itemData(item))
   }
+
   //Save/Load
   override def readFromNBT(tag: NBTTagCompound) = {
     super.readFromNBT(tag)
@@ -154,6 +173,7 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     side = ForgeDirection.valueOf(tag.getString("side"))
     slot = tag.getInteger("slot")
   }
+
   override def writeToNBT(tag: NBTTagCompound) = {
     super.writeToNBT(tag)
     tag.setString("filter", filter.toString)

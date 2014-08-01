@@ -4,9 +4,11 @@ import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, It
 import li.cil.oc.api.network.Node
 import net.minecraft.item.ItemStack
 
+//import scala.collection.JavaConversions
+
 object Util {
-  def itemData(item: ItemStack) = {
-    Map("displayName" -> item.getDisplayName(), "name" -> item.getUnlocalizedName(), "damage" -> item.getItemDamage().asInstanceOf[Integer]).asInstanceOf[java.util.Map[AnyRef, AnyRef]]
+  def itemData(item: ItemStack): java.util.Map[AnyRef, AnyRef] = {
+    Map("displayName" -> item.getDisplayName, "name" -> item.getUnlocalizedName, "damage" -> item.getItemDamage.asInstanceOf[Integer]).asInstanceOf[java.util.Map[AnyRef, AnyRef]]
   }
 
   def isItemDestination(node: Node, address: String) = node.network().node(address).host().isInstanceOf[ItemDestination]

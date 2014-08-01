@@ -31,6 +31,10 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   //SideDefinable
   def setSide(s: ForgeDirection) = side = s
 
+  def sendItem(i: Int) = {
+    inventoryy.setInventorySlotContents(i, null)
+  }
+
   def inventoryy: IInventory = {
     var x = 0
     var y = 0
@@ -47,13 +51,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
       worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
     else null
-  }
-
-  //ItemStorage
-  def inventory = new InventoryWrapper(inventoryy)
-
-  def sendItem(i: Int) = {
-    inventoryy.setInventorySlotContents(i, null)
   }
 
   def recieveItem(item: ItemStack): Boolean = InventoryUtil.addStackToSlotInInventory(inventoryy, item, slot)
@@ -89,6 +86,9 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     Array(inventory.getInventoryName())
   }
 
+  //ItemStorage
+  def inventory = new InventoryWrapper(inventoryy)
+
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     address = arguments.checkString(0)
@@ -109,14 +109,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   @Callback
   def getSlot(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(slot.asInstanceOf[Integer])
-  }
-
-  def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
-    if (destination.recieveItem(stack)) {
-      inventoryy.setInventorySlotContents(s, null)
-      return true
-    }
-    false
   }
 
   @Callback
@@ -146,7 +138,7 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     for (i <- Range(0, inventory.getSizeInventory())) {
       if (inventory.getStackInSlot(i) != null && doSendItem(inventory.getStackInSlot(i), i, destination)) {
         context.pause(0.5)
-        node_.tryChangeBuffer(-20)
+        node_.tryChangeBuffer(-1000)
         address = oldAddress
         filter = oldFilter
         slot = oldSlot
@@ -159,9 +151,19 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     Array(true.asInstanceOf[java.lang.Boolean])
   }
 
+  def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
+    if (destination.recieveItem(stack)) {
+      inventoryy.setInventorySlotContents(s, null)
+      return true
+    }
+    false
+  }
+
   @Callback
   def getItem(context: Context, arguments: Arguments): Array[AnyRef] = {
     val item = inventory.getStackInSlot(arguments.checkInteger(0))
+    if (item == null)
+      return Array(null, "No Item.")
     Array(Util.itemData(item))
   }
 

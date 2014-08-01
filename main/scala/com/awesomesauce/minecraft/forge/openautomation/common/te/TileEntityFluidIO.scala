@@ -14,13 +14,10 @@ import net.minecraftforge.fluids.{FluidRegistry, FluidStack, FluidTankInfo, IFlu
 import scala.Array.canBuildFrom
 
 class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with SideDefinable with AddressPastable with TCustomTexture {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
+  val node_ = Network.newNode(this, Visibility.Network).withComponent("fluidIO").withConnector(200).create()
   node = node_
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var drainSide: ForgeDirection = ForgeDirection.UNKNOWN
-
-  def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite() else drainSide
-
   var filter = ""
   var address: String = "xxx"
   var drainAmount: Int = 1000
@@ -31,23 +28,14 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   //SideDefinable
   def setSide(s: ForgeDirection) = side = s
 
-  def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) return 1 else if (ForgeDirection.getOrientation(side) == drainSide) return 2 else return 0
-
-  def fluidHandler: IFluidHandler = {
-    val x = xCoord + side.offsetX
-    val y = yCoord + side.offsetY
-    val z = zCoord + side.offsetZ
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IFluidHandler])
-      return worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
-    else return null
-  }
+  def getTextureForSide(side: Int): Int = if (ForgeDirection.getOrientation(side) == this.side) 1 else if (ForgeDirection.getOrientation(side) == drainSide) return 2 else return 0
 
   //FluidStorage
   def recieveFluid(stack: FluidStack): Boolean = if (fluidHandler.fill(drainSide, stack, false) == stack.amount) {
     fluidHandler.fill(drainSide, stack, true)
-    return true
+    true
   }
-  else return false
+  else false
 
   def getTankInfo(): Array[FluidTankInfo] = fluidHandler.getTankInfo(drainSide)
 
@@ -59,24 +47,24 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
 
   @Callback
   def setSide(context: Context, arguments: Arguments): Array[AnyRef] = {
-    side = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase())
+    side = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
 
   @Callback
   def getSide(context: Context, arguments: Arguments): Array[AnyRef] = {
-    Array(side.toString())
+    Array(side.toString)
   }
 
   @Callback
   def setDrainSide(context: Context, arguments: Arguments): Array[AnyRef] = {
-    drainSide = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase())
+    drainSide = ForgeDirection.valueOf(arguments.checkString(0).toUpperCase)
     Array(true.asInstanceOf[java.lang.Boolean])
   }
 
   @Callback
   def getDrainSide(context: Context, arguments: Arguments): Array[AnyRef] = {
-    Array(getDrainSide.toString())
+    Array(getDrainSide.toString)
   }
 
   @Callback
@@ -99,14 +87,6 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   @Callback
   def getAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(address)
-  }
-
-  def doSendFluid(stack: FluidStack, destination: FluidDestination): Boolean = {
-    if (destination.recieveFluid(stack)) {
-      fluidHandler.drain(getDrainSide, stack, true)
-      return true
-    }
-    return false
   }
 
   @Callback
@@ -149,10 +129,31 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
 
   }
 
+  def doSendFluid(stack: FluidStack, destination: FluidDestination): Boolean = {
+    if (destination.recieveFluid(stack)) {
+      fluidHandler.drain(getDrainSide, stack, true)
+      return true
+    }
+    false
+  }
+
+  def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite else drainSide
+
   @Callback
   def getFluids(context: Context, arguments: Arguments): Array[AnyRef] = {
     val tankInfo = fluidHandler.getTankInfo(drainSide)
-    return Array(tankInfo.map((a: FluidTankInfo) => Map("fluid" -> a.fluid.getFluid().getName(), "amount" -> a.fluid.amount.asInstanceOf[Integer])).asInstanceOf[java.util.Map[AnyRef, AnyRef]])
+    if (tankInfo == null)
+      return Array(null, "No tank?")
+    Array(tankInfo.map((a: FluidTankInfo) => Map("fluid" -> a.fluid.getFluid.getName, "amount" -> a.fluid.amount.asInstanceOf[Integer])).asInstanceOf[java.util.Map[AnyRef, AnyRef]])
+  }
+
+  def fluidHandler: IFluidHandler = {
+    val x = xCoord + side.offsetX
+    val y = yCoord + side.offsetY
+    val z = zCoord + side.offsetZ
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IFluidHandler])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
+    else null
   }
 
   //Save/Load
@@ -169,8 +170,8 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     super.writeToNBT(tag)
     tag.setString("filter", filter)
     tag.setString("address", address)
-    tag.setString("side", side.toString())
-    tag.setString("drainSide", drainSide.toString())
+    tag.setString("side", side.toString)
+    tag.setString("drainSide", drainSide.toString)
     tag.setInteger("drainAmount", drainAmount)
   }
 }

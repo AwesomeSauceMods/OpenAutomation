@@ -83,7 +83,7 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
 
   @Callback
   def getInventoryName(context: Context, arguments: Arguments): Array[AnyRef] = {
-    Array(inventory.getInventoryName())
+    Array(inventory.getInventoryName)
   }
 
   //ItemStorage

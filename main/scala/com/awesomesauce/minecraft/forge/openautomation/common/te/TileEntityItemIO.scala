@@ -35,24 +35,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     inventoryy.setInventorySlotContents(i, null)
   }
 
-  def inventoryy: IInventory = {
-    var x = 0
-    var y = 0
-    var z = 0
-    if (customX != 0 || customY != 0 || customZ != 0) {
-      x = customX
-      y = customY
-      z = customZ
-    } else {
-      x = xCoord + side.offsetX
-      y = yCoord + side.offsetY
-      z = zCoord + side.offsetZ
-    }
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
-      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
-    else null
-  }
-
   def recieveItem(item: ItemStack): Boolean = InventoryUtil.addStackToSlotInInventory(inventoryy, item, slot)
 
   //Callbacks
@@ -85,9 +67,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   def getInventoryName(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(inventory.getInventoryName)
   }
-
-  //ItemStorage
-  def inventory = new InventoryWrapper(inventoryy)
 
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
@@ -135,7 +114,7 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
       return Array(false.asInstanceOf[java.lang.Boolean])
     val destination = Util.getItemDestination(node, address)
     if (slot != -1) return Array(doSendItem(inventory.getStackInSlot(slot), slot, destination).asInstanceOf[java.lang.Boolean])
-    for (i <- Range(0, inventory.getSizeInventory())) {
+    for (i <- Range(0, inventory.getSizeInventory)) {
       if (inventory.getStackInSlot(i) != null && doSendItem(inventory.getStackInSlot(i), i, destination)) {
         context.pause(0.5)
         node_.tryChangeBuffer(-1000)
@@ -151,12 +130,33 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     Array(true.asInstanceOf[java.lang.Boolean])
   }
 
+  //ItemStorage
+  def inventory = new InventoryWrapper(inventoryy)
+
   def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
     if (destination.recieveItem(stack)) {
       inventoryy.setInventorySlotContents(s, null)
       return true
     }
     false
+  }
+
+  def inventoryy: IInventory = {
+    var x = 0
+    var y = 0
+    var z = 0
+    if (customX != 0 || customY != 0 || customZ != 0) {
+      x = customX
+      y = customY
+      z = customZ
+    } else {
+      x = xCoord + side.offsetX
+      y = yCoord + side.offsetY
+      z = zCoord + side.offsetZ
+    }
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
+    else null
   }
 
   @Callback

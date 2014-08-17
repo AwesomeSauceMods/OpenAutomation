@@ -15,3 +15,4 @@ for c, t in component.list() do
     components[i] = { driver, component.proxy(c) }
     driver.register(components[i][1])
 end
+io.write("Components loaded.")

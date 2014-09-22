@@ -2,7 +2,7 @@ package com.awesomesauce.minecraft.forge.openautomation.addons
 
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
-import com.awesomesauce.minecraft.forge.openautomation.addons.tile.TileEntityPressureCrusher
+import com.awesomesauce.minecraft.forge.openautomation.addons.tile._
 import com.awesomesauce.minecraft.forge.openautomation.common.OpenAutomation
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
@@ -19,6 +19,7 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
   final val MODID = "OpenAutomationAddons"
   final val MODNAME = "OpenAutomation Addons"
   var pressureCrusher: Block = null
+  var powerOutput: Block = null
   var reactorCore: Block = null
   var reactorInput: Block = null
   var reactorOutput: Block = null
@@ -50,6 +51,7 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
 
   def init() = {
     pressureCrusher = ItemUtil.makeBlock(this, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
+    powerOutput = ItemUtil.makeBlock(this, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
     if (this.config.getBoolean(Configuration.CATEGORY_GENERAL, "enableChemistry", false, "Enable the chemistry component. NON COMPLETE")) {
       for (i <- Range(1, 83)) {
         elements.put(i, ItemUtil.makeItem(this, "element" + i))

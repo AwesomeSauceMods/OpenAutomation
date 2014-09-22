@@ -8,18 +8,30 @@ import net.minecraftforge.common.util.ForgeDirection
 
 
 class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("powerOutput").withConnector(10000).create()
+  val node_ = Network.newNode(this, Visibility.Network).withComponent("powerOutput").withConnector(1000).create()
   node = node_
 
   def canConnectEnergy(side: ForgeDirection) = true
 
   override def updateEntity() = {
     super.updateEntity()
-    for (side <- ForgeDirection.VALID_DIRECTIONS) {
-      val te = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ)
-      if (te.isInstanceOf[IEnergyHandler]) {
-        val energyHandler = te.asInstanceOf[IEnergyHandler]
-        energyHandler.receiveEnergy(side.getOpposite, (this.node_.changeBuffer(energyHandler.getMaxEnergyStored(side.getOpposite) - energyHandler.getEnergyStored(side.getOpposite).toDouble / 10) * 10).toInt, false)
+    if (node_ != null) {
+      for (side <- ForgeDirection.VALID_DIRECTIONS) {
+        val te = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ)
+        if (te.isInstanceOf[IEnergyHandler]) {
+          val energyHandler = te.asInstanceOf[IEnergyHandler]
+          val amountOfEnergyToDrain = energyHandler.receiveEnergy(side.getOpposite, 10000, true).toDouble / 10
+          val bufferChanged = this.node_.changeBuffer(-amountOfEnergyToDrain)
+          val amountDrained = ((amountOfEnergyToDrain + bufferChanged) * 10).toInt
+          val transferred = energyHandler.receiveEnergy(side.getOpposite, amountDrained, false)
+          /*
+          println("aOETD:"+amountOfEnergyToDrain)
+          println("bC:"+bufferChanged)
+          println("aD:"+amountDrained)
+          println("t:"+transferred)
+          println("s:"+side.toString)
+          */
+        }
       }
     }
   }

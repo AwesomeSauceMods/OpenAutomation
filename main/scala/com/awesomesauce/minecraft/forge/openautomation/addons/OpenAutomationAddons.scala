@@ -7,11 +7,12 @@ import com.awesomesauce.minecraft.forge.openautomation.common.OpenAutomation
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.{Mod, ModMetadata}
-import li.cil.oc.api.FileSystem
+import li.cil.oc.api.{FileSystem, Items}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.item.Item
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.oredict.ShapedOreRecipe
 
 @Mod(modid = OpenAutomationAddons.MODID, name = OpenAutomationAddons.MODNAME, modLanguage = "scala")
 object OpenAutomationAddons extends TAwesomeSauceMod {
@@ -58,6 +59,13 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
       }
     }
     autoOSFS = FileSystem.fromClass(Class.forName("com.awesomesauce.minecraft.forge.openautomation.addons.OpenAutomationAddons"), "openautomationaddons", "lua/autoos")
+    ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(powerOutput),
+      "xyx",
+      "jad",
+      "xyx",
+      Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
+      Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
+      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1)))
   }
 
   def postInit() = {}

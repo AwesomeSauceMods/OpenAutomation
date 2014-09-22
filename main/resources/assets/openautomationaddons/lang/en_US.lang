@@ -1,5 +1,6 @@
 itemGroup.OpenAutomationAddons=OA Addons
 tile.openautomationaddons.pressureCrusher.name=OA Pressure Crusher
+tile.openautomationaddons.powerOutput.name=Power Out-Converter
 tile.openautomationaddons.reactorCore.name=OA Atomic Reactor
 tile.openautomationaddons.reactorInput.name=OA Atomic Reactor Input
 tile.openautomationaddons.reactorOutput.name=OA Atomic Reactor Output

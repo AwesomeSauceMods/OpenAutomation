@@ -53,7 +53,7 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
   def init() = {
     pressureCrusher = ItemUtil.makeBlock(this, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
     powerOutput = ItemUtil.makeBlock(this, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
-    if (this.config.getBoolean(Configuration.CATEGORY_GENERAL, "enableChemistry", false, "Enable the chemistry component. NON COMPLETE")) {
+    if (this.config.getBoolean("enableChemistry", Configuration.CATEGORY_GENERAL, false, "Enable the chemistry component. NON COMPLETE")) {
       for (i <- Range(1, 83)) {
         elements.put(i, ItemUtil.makeItem(this, "element" + i))
       }

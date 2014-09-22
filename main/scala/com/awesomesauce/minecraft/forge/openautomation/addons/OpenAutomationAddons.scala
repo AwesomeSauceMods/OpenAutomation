@@ -11,16 +11,13 @@ import li.cil.oc.api.FileSystem
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.Item
+import net.minecraftforge.common.config.Configuration
 
 @Mod(modid = OpenAutomationAddons.MODID, name = OpenAutomationAddons.MODNAME, modLanguage = "scala")
 object OpenAutomationAddons extends TAwesomeSauceMod {
 
-  @EventHandler
-  def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
-  @EventHandler
-  def asi(e: FMLInitializationEvent) = super.awesomesauceinit(e)
-  @EventHandler
-  def aspoi(e: FMLPostInitializationEvent) = super.awesomesaucepostinit(e)
+  final val MODID = "OpenAutomationAddons"
+  final val MODNAME = "OpenAutomation Addons"
   var pressureCrusher: Block = null
   var reactorCore: Block = null
   var reactorInput: Block = null
@@ -29,24 +26,37 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
   var reactorTurbine: Block = null
   var elements: scala.collection.mutable.Map[Int, Item] = scala.collection.mutable.Map[Int, Item]()
   var autoOSFS: li.cil.oc.api.fs.FileSystem = null
-  final val MODID = "OpenAutomationAddons"
-  final val MODNAME = "OpenAutomation Addons"
-  def getModID: String = MODID
-  def getModName: String = MODNAME
-  def getTabIconItem: () => net.minecraft.item.Item = () => OpenAutomation.toolBase
-  def getTextureDomain: String = "openautomationaddons"
   @Mod.Metadata(MODID)
-  var metadata : ModMetadata = null
+  var metadata: ModMetadata = null
+
+  @EventHandler
+  def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
+
+  @EventHandler
+  def asi(e: FMLInitializationEvent) = super.awesomesauceinit(e)
+
+  @EventHandler
+  def aspoi(e: FMLPostInitializationEvent) = super.awesomesaucepostinit(e)
+
+  def getModID: String = MODID
+
+  def getModName: String = MODNAME
+
+  def getTabIconItem: () => net.minecraft.item.Item = () => OpenAutomation.toolBase
+
+  def getTextureDomain: String = "openautomationaddons"
+
   def preInit() = {}
+
   def init() = {
     pressureCrusher = ItemUtil.makeBlock(this, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
-
-    for (i <- Range(1, 83)) {
-      elements.put(i, ItemUtil.makeItem(this, "element" + i))
+    if (this.config.getBoolean(Configuration.CATEGORY_GENERAL, "enableChemistry", false, "Enable the chemistry component. NON COMPLETE")) {
+      for (i <- Range(1, 83)) {
+        elements.put(i, ItemUtil.makeItem(this, "element" + i))
+      }
     }
     autoOSFS = FileSystem.fromClass(Class.forName("com.awesomesauce.minecraft.forge.openautomation.addons.OpenAutomationAddons"), "openautomationaddons", "lua/autoos")
-
-
   }
+
   def postInit() = {}
 }

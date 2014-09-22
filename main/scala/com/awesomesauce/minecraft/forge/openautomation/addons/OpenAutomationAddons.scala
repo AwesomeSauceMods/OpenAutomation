@@ -62,10 +62,10 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
     ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(powerOutput),
       "xyx",
       "jad",
-      "xyx",
+      "xmx",
       Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
-      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1)))
+      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1)), Character.valueOf('m'), "oaOutputCode")
   }
 
   def postInit() = {}

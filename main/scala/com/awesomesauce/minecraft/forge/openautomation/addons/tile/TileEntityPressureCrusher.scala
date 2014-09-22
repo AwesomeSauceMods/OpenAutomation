@@ -1,25 +1,65 @@
 package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 
 import com.awesomesauce.minecraft.forge.core.components.AwesomeSauceComponents
-import com.awesomesauce.minecraft.forge.core.lib.util.InventoryWrapper
+import com.awesomesauce.minecraft.forge.core.lib.item.TActivatedTileEntity
+import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryWrapper, PlayerUtil}
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
 import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
 import li.cil.oc.api.Network
 import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
 import li.cil.oc.api.prefab.TileEntityEnvironment
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary
 
-class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastable with ItemStorage with IInventory {
+class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastable with ItemStorage with IInventory with TActivatedTileEntity {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("pressurecrusher").withConnector(2000).create()
   node = node_
   val recipes = AwesomeSauceComponents.grinderRecipes
   var address: String = "xxx"
   var crushingSlot: ItemStack = null
   var crushedSlot: ItemStack = null
+  var cooldown = 200
+
+  override def updateEntity() = {
+    super.updateEntity()
+    if (cooldown > 0)
+      cooldown -= 1
+  }
 
   def pasteAddress(add: String) = address = add
+
+  def activate(player: EntityPlayer, side: Int, partx: Float, party: Float, partz: Float): Boolean = {
+    val results = crush()
+    if (results(0) == null) {
+      PlayerUtil.sendChatMessage(player, results(1).toString)
+    }
+    true
+  }
+
+  def crush(): Array[AnyRef] = {
+    if (cooldown > 0) {
+      return Array(null, "Cooldown not empty. " + cooldown / 20 + "seconds remaining.")
+    }
+    for (oid <- OreDictionary.getOreIDs(crushingSlot)) {
+      val ore = OreDictionary.getOreName(oid)
+      if (recipes(ore) != null) {
+        if (node_.tryChangeBuffer(-4000)) {
+          if (crushedSlot == null)
+            crushedSlot = recipes(ore).copy()
+          else if (crushedSlot.getItem == recipes(ore).getItem)
+            crushedSlot.stackSize += 2
+          else
+            return Array(null, "Target stack full")
+          cooldown = 200
+          return Array(true.asInstanceOf[java.lang.Boolean])
+        }
+        return Array(null, "Not enough power")
+      }
+    }
+    Array(null, "Not Crushable Ore.")
+  }
 
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
@@ -34,23 +74,8 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
 
   @Callback
   def crush(context: Context, arguments: Arguments): Array[AnyRef] = {
-    for (oid <- OreDictionary.getOreIDs(crushingSlot)) {
-      val ore = OreDictionary.getOreName(oid)
-      if (recipes(ore) != null) {
-        context.pause(5)
-        if (node_.tryChangeBuffer(-400)) {
-          if (crushedSlot == null)
-            crushedSlot = recipes(ore).copy()
-          else if (crushedSlot.getItem == recipes(ore).getItem)
-            crushedSlot.stackSize += 2
-          else
-            return Array(null, "Target stack full")
-          return Array(true.asInstanceOf[java.lang.Boolean])
-        }
-        return Array(null, "Not enough power")
-      }
-    }
-    Array(null, "Not Crushable Ore.")
+    context.pause(5)
+    crush()
   }
 
   @Callback

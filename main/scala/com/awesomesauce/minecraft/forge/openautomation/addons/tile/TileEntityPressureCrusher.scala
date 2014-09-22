@@ -16,11 +16,10 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
   node = node_
   val recipes = AwesomeSauceComponents.grinderRecipes
   var address: String = "xxx"
-
-  def pasteAddress(add: String) = address = add
-
   var crushingSlot: ItemStack = null
   var crushedSlot: ItemStack = null
+
+  def pasteAddress(add: String) = address = add
 
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
@@ -54,14 +53,6 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
     Array(null, "Not Crushable Ore.")
   }
 
-  def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
-    if (destination.recieveItem(stack)) {
-      this.setInventorySlotContents(s, null)
-      return true
-    }
-    false
-  }
-
   @Callback
   def sendItem(context: Context, arguments: Arguments): Array[AnyRef] = {
     context.pause(0.5)
@@ -69,7 +60,7 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
     if (arguments.isString(0))
       address = arguments.checkString(0)
     if (!node.network().node(address).host().isInstanceOf[ItemDestination])
-      return Array(false.asInstanceOf[java.lang.Boolean])
+      return Array(null, "Not a valid destination.")
     val destination = node.network().node(address).host().asInstanceOf[ItemDestination]
     if (!node_.tryChangeBuffer(-20))
       return Array(null, "Not enough power.")
@@ -79,6 +70,18 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
       res
     }.asInstanceOf[java.lang.Boolean])
   }
+
+  def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
+    if (destination.recieveItem(stack)) {
+      this.setInventorySlotContents(s, null)
+      return true
+    }
+    false
+  }
+
+  def setInventorySlotContents(i: Int, stack: net.minecraft.item.ItemStack): Unit = if (i == 1) crushingSlot = stack else crushedSlot = stack
+
+  def getStackInSlot(i: Int): net.minecraft.item.ItemStack = if (i == 0) crushedSlot else crushingSlot
 
   def closeInventory(): Unit = {}
 
@@ -92,8 +95,6 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
 
   def getSizeInventory: Int = 2
 
-  def getStackInSlot(i: Int): net.minecraft.item.ItemStack = if (i == 0) crushedSlot else crushingSlot
-
   def getStackInSlotOnClosing(i: Int): net.minecraft.item.ItemStack = null
 
   def hasCustomInventoryName: Boolean = false
@@ -102,9 +103,7 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
 
   def isUseableByPlayer(player: net.minecraft.entity.player.EntityPlayer): Boolean = true
 
-  def openInventory(): Unit = {}
-
-  def setInventorySlotContents(i: Int, stack: net.minecraft.item.ItemStack): Unit = if (i == 1) crushingSlot = stack else crushedSlot = stack
+  def openInventory() = {}
 
   def recieveItem(item: net.minecraft.item.ItemStack): Boolean =
     if (crushingSlot == null) {
@@ -117,5 +116,5 @@ class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastab
 
   def inventory: com.awesomesauce.minecraft.forge.core.lib.util.ReadOnlyInventory = new InventoryWrapper(this)
 
-  def sendItem(slot: Int): Unit = if (slot == 0) crushedSlot = null else crushingSlot = null
+  def sendItem(slot: Int) = if (slot == 0) crushedSlot = null else crushingSlot = null
 }

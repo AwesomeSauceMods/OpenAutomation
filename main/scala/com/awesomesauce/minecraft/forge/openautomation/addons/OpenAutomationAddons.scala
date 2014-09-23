@@ -65,7 +65,7 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
       "xmx",
       Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
-      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1)), Character.valueOf('m'), "oaOutputCode")
+      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "oaOutputCode"))
   }
 
   def postInit() = {}

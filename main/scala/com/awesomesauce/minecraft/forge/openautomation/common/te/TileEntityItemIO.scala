@@ -5,7 +5,8 @@ import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastabl
 import com.awesomesauce.minecraft.forge.openautomation.api.{Filter, ItemDestination, ItemStorage}
 import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
+import li.cil.oc.api.machine.{Arguments, Callback, Context}
+import li.cil.oc.api.network.Visibility
 import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -66,6 +67,27 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   @Callback
   def getInventoryName(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(inventory.getInventoryName)
+  }
+
+  //ItemStorage
+  def inventory = new InventoryWrapper(inventoryy)
+
+  def inventoryy: IInventory = {
+    var x = 0
+    var y = 0
+    var z = 0
+    if (customX != 0 || customY != 0 || customZ != 0) {
+      x = customX
+      y = customY
+      z = customZ
+    } else {
+      x = xCoord + side.offsetX
+      y = yCoord + side.offsetY
+      z = zCoord + side.offsetZ
+    }
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
+    else null
   }
 
   @Callback
@@ -130,33 +152,12 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     Array(true.asInstanceOf[java.lang.Boolean])
   }
 
-  //ItemStorage
-  def inventory = new InventoryWrapper(inventoryy)
-
   def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
     if (destination.recieveItem(stack)) {
       inventoryy.setInventorySlotContents(s, null)
       return true
     }
     false
-  }
-
-  def inventoryy: IInventory = {
-    var x = 0
-    var y = 0
-    var z = 0
-    if (customX != 0 || customY != 0 || customZ != 0) {
-      x = customX
-      y = customY
-      z = customZ
-    } else {
-      x = xCoord + side.offsetX
-      y = yCoord + side.offsetY
-      z = zCoord + side.offsetZ
-    }
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
-      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
-    else null
   }
 
   @Callback

@@ -5,7 +5,8 @@ import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastabl
 import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, FluidStorage}
 import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
+import li.cil.oc.api.machine.{Arguments, Callback, Context}
+import li.cil.oc.api.network.Visibility
 import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
@@ -36,6 +37,15 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     true
   }
   else false
+
+  def fluidHandler: IFluidHandler = {
+    val x = xCoord + side.offsetX
+    val y = yCoord + side.offsetY
+    val z = zCoord + side.offsetZ
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IFluidHandler])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
+    else null
+  }
 
   def getTankInfo(): Array[FluidTankInfo] = fluidHandler.getTankInfo(drainSide)
 
@@ -145,15 +155,6 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     if (tankInfo == null)
       return Array(null, "No tank?")
     Array(tankInfo.map((a: FluidTankInfo) => Map("fluid" -> a.fluid.getFluid.getName, "amount" -> a.fluid.amount.asInstanceOf[Integer])).asInstanceOf[java.util.Map[AnyRef, AnyRef]])
-  }
-
-  def fluidHandler: IFluidHandler = {
-    val x = xCoord + side.offsetX
-    val y = yCoord + side.offsetY
-    val z = zCoord + side.offsetZ
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IFluidHandler])
-      worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
-    else null
   }
 
   //Save/Load

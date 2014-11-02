@@ -2,7 +2,8 @@ package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 
 import cofh.api.energy.{IEnergyConnection, IEnergyHandler}
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
+import li.cil.oc.api.machine.{Arguments, Callback, Context}
+import li.cil.oc.api.network.Visibility
 import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -20,6 +21,7 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection
       maxOutput = arguments.checkInteger(0)
     Array(maxOutput.asInstanceOf[Integer])
   }
+
   override def updateEntity() = {
     super.updateEntity()
     if (node_ != null) {

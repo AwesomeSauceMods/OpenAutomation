@@ -3,7 +3,8 @@ package com.awesomesauce.minecraft.forge.openautomation.addons.tile
 import com.awesomesauce.minecraft.forge.openautomation.api.Filter
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
+import li.cil.oc.api.machine.{Arguments, Callback, Context}
+import li.cil.oc.api.network.Visibility
 import li.cil.oc.api.prefab.TileEntityEnvironment
 
 

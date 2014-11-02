@@ -1,10 +1,11 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.te
 
 import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryUtil, ReadOnlyInventory}
-import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemInput}
 import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemInput}
 import li.cil.oc.api.Network
-import li.cil.oc.api.network.{Arguments, Callback, Context, Visibility}
+import li.cil.oc.api.machine.{Arguments, Callback, Context}
+import li.cil.oc.api.network.Visibility
 import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList, NBTTagString}

@@ -1,6 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.addons.oalang
 
 class OAlangInterpreter(val components: ComponentInterface) {
+  components.interpreter = this
   val script = scala.collection.mutable.ArrayBuffer[ScriptPart]()
   val variableMap = scala.collection.mutable.HashMap[String, AnyRef]()
   var index = 0

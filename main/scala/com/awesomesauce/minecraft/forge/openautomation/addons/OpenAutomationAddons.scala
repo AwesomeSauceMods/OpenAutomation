@@ -2,12 +2,13 @@ package com.awesomesauce.minecraft.forge.openautomation.addons
 
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
+import com.awesomesauce.minecraft.forge.openautomation.addons.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.addons.tile._
 import com.awesomesauce.minecraft.forge.openautomation.common.OpenAutomation
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.{Mod, ModMetadata}
-import li.cil.oc.api.{FileSystem, Items}
+import li.cil.oc.api.{Driver, FileSystem, Items}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
@@ -21,13 +22,11 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
   final val MODNAME = "OpenAutomation Addons"
   var pressureCrusher: Block = null
   var powerOutput: Block = null
-  var reactorCore: Block = null
-  var reactorInput: Block = null
-  var reactorOutput: Block = null
-  var reactorController: Block = null
-  var reactorTurbine: Block = null
   var elements: scala.collection.mutable.Map[Int, Item] = scala.collection.mutable.Map[Int, Item]()
   var autoOSFS: li.cil.oc.api.fs.FileSystem = null
+  var oalangt1: Item = null
+  var oalangt2: Item = null
+  var oalangt3: Item = null
   @Mod.Metadata(MODID)
   var metadata: ModMetadata = null
 
@@ -59,6 +58,12 @@ object OpenAutomationAddons extends TAwesomeSauceMod {
       }
     }
     autoOSFS = FileSystem.fromClass(Class.forName("com.awesomesauce.minecraft.forge.openautomation.addons.OpenAutomationAddons"), "openautomationaddons", "lua/autoos")
+    oalangt1 = ItemUtil.makeItem(this, "oalangt1")
+    oalangt2 = ItemUtil.makeItem(this, "oalangt2")
+    oalangt3 = ItemUtil.makeItem(this, "oalangt3")
+    Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt1), 16))
+    Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt2), 32))
+    Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt3), 64))
     ItemUtil.addRecipe(this, new ShapedOreRecipe(new ItemStack(powerOutput),
       "xyx",
       "jad",

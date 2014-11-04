@@ -26,7 +26,9 @@ class OAlangArchitecture(val machine: Machine) extends Architecture {
   }
 
   def runSynchronized() = {
-    interpreter.runCall()
+    if (!interpreter.runCall()) {
+      machine.stop()
+    }
   }
 
   def runThreaded(isSynchronizedReturn: Boolean): ExecutionResult = {

@@ -19,9 +19,15 @@ class OAlangInterpreter(val components: ComponentInterface) {
     components.invoke(component, callback, arguments)
   }
 
-  def runCall() = {
-    script(index).execute(this)
-    index += 1
+  def runCall(): Boolean = {
+    try {
+      script(index).execute(this)
+      index += 1
+      true
+    }
+    catch {
+      case e: ArrayIndexOutOfBoundsException => false
+    }
   }
 
   def handleArgument(a: String): AnyRef = {

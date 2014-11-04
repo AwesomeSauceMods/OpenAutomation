@@ -8,6 +8,7 @@ class ComponentInterface(val machine: Machine) {
   def invoke(address: String, callback: String, arguments: Array[AnyRef]): Array[AnyRef] = {
     if (address == "interpreter") {
       if (callback == "load") {
+        interpreter.index = 0
         try {
           val script = arguments(0)
           val bootAddress = machine.getBootAddress
@@ -19,8 +20,8 @@ class ComponentInterface(val machine: Machine) {
             string = machine.invoke(bootAddress, "read", Array[AnyRef](handle, 10.asInstanceOf[Integer]))(0).asInstanceOf[String]
           }
           val lines = fullString.split("\n")
+          interpreter.script.clear()
           for (line <- lines) {
-            interpreter.script.clear()
             interpreter.script.append(new ScriptPart(line))
           }
           return Array[AnyRef](java.lang.Boolean.TRUE)

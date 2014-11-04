@@ -20,6 +20,7 @@ class ComponentInterface(val machine: Machine) {
           }
           val lines = fullString.split("\n")
           for (line <- lines) {
+            interpreter.script.clear()
             interpreter.script.append(new ScriptPart(line))
           }
           return Array[AnyRef](java.lang.Boolean.TRUE)

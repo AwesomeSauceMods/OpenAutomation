@@ -17,6 +17,7 @@ class OAlangArchitecture(val machine: Machine) extends Architecture {
 
   def initialize() = {
     interpreter = new OAlangInterpreter(new ComponentInterface(machine))
+    interpreter.script.append(new ScriptPart("interpreter load init.oa"))
     true
   }
 
@@ -33,9 +34,6 @@ class OAlangArchitecture(val machine: Machine) extends Architecture {
   }
 
   def onConnect() = {
-    if (interpreter.script.length == 0) {
-      interpreter.invoke("interpreter", "load", Array[AnyRef]("init.oa"))
-    }
   }
 
   def load(nbt: NBTTagCompound) = {

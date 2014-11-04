@@ -7,8 +7,18 @@ class OAlangInterpreter(val components: ComponentInterface) {
   var index = 0
 
   def invoke(component: String, callback: String, arguments: Array[AnyRef]): Array[AnyRef] = {
+    if (component == "interpreter") {
+      if (callback == "setIndex") {
+        index = arguments(0).asInstanceOf[Integer].toInt
+        return Array[AnyRef](java.lang.Boolean.TRUE)
+      }
+      else if (callback == "getIndex") {
+        return Array[AnyRef](index.asInstanceOf[Integer])
+      }
+    }
     components.invoke(component, callback, arguments)
   }
+
   def runCall() = {
     script(index).execute(this)
     index += 1
@@ -17,6 +27,18 @@ class OAlangInterpreter(val components: ComponentInterface) {
   def handleArgument(a: String): AnyRef = {
     if (a.charAt(0) == '@') {
       return variableMap(a.substring(1))
+    }
+    try {
+      return a.toDouble.asInstanceOf[java.lang.Double]
+    }
+    catch {
+      case e: NumberFormatException => None
+    }
+    try {
+      return a.toInt.asInstanceOf[Integer]
+    }
+    catch {
+      case e: NumberFormatException => None
     }
     handleComponent(a)
   }
@@ -30,8 +52,10 @@ class OAlangInterpreter(val components: ComponentInterface) {
           return comp
         }
       }
-      if (comp.startsWith(c)) {
-        return comp
+      if (c.startsWith("c.")) {
+        if (comp.startsWith(c.substring(2))) {
+          return comp
+        }
       }
     }
     c

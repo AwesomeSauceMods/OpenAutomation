@@ -8,19 +8,32 @@ class ComponentInterface(val machine: Machine) {
   def invoke(address: String, callback: String, arguments: Array[AnyRef]): Array[AnyRef] = {
     if (address == "interpreter") {
       if (callback == "load") {
-        val script = arguments(0)
-        val bootAddress = machine.getBootAddress
-        var string = ""
-        var fullString = ""
-        val handle = machine.invoke(bootAddress, "open", Array[AnyRef](script))(0)
-        while (string != null) {
-          fullString = fullString + string
-          string = machine.invoke(bootAddress, "read", Array[AnyRef](handle, 10.asInstanceOf[Integer]))(0).asInstanceOf[String]
+        try {
+          val script = arguments(0)
+          val bootAddress = machine.getBootAddress
+          var string = ""
+          var fullString = ""
+          val handle = machine.invoke(bootAddress, "open", Array[AnyRef](script))(0)
+          while (string != null) {
+            fullString = fullString + string
+            string = machine.invoke(bootAddress, "read", Array[AnyRef](handle, 10.asInstanceOf[Integer]))(0).asInstanceOf[String]
+          }
+          val lines = fullString.split("\n")
+          for (line <- lines) {
+            interpreter.script.append(new ScriptPart(line))
+          }
+          return Array[AnyRef](java.lang.Boolean.TRUE)
         }
-        val lines = fullString.split("\n")
-        for (line <- lines) {
-          interpreter.script.append(new ScriptPart(line))
+        catch {
+          case e: Exception => return Array[AnyRef](null, e.toString)
         }
+      }
+      if (callback == "setBootAddress") {
+        if (list().get(arguments(0).asInstanceOf[String]) == "filesystem") {
+          machine.setBootAddress(arguments(0).asInstanceOf[String])
+          return Array[AnyRef](java.lang.Boolean.TRUE)
+        }
+        return Array[AnyRef](java.lang.Boolean.FALSE)
       }
     }
     machine.invoke(address, callback, arguments)

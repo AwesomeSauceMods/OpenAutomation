@@ -33,6 +33,9 @@ class OAlangArchitecture(val machine: Machine) extends Architecture {
   }
 
   def onConnect() = {
+    if (interpreter.script.length == 0) {
+      interpreter.invoke("interpreter", "load", Array[AnyRef]("init.oa"))
+    }
   }
 
   def load(nbt: NBTTagCompound) = {

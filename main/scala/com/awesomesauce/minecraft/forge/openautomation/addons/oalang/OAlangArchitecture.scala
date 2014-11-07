@@ -32,6 +32,14 @@ class OAlangArchitecture(val machine: Machine) extends Architecture {
   }
 
   def runThreaded(isSynchronizedReturn: Boolean): ExecutionResult = {
+    if (isSynchronizedReturn) {
+      return new ExecutionResult.Sleep(2)
+    }
+    val signal = machine.popSignal()
+    interpreter.variableMap("signal") = signal.name()
+    for (i <- Range(1, signal.args.length + 1)) {
+      interpreter.variableMap("arg" + i) = signal.args()(i)
+    }
     new ExecutionResult.SynchronizedCall()
   }
 

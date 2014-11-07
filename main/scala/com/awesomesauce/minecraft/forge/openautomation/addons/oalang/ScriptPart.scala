@@ -14,9 +14,11 @@ class ScriptPart(line: String) {
 
   override def toString = line
   def execute(int: OAlangInterpreter) = {
-    if (component == "interpreter") {
-    }
-    val results = int.invoke(int.handleArgument(component).toString, int.handleArgument(callback).toString, arguments.map((a: String) => int.handleArgument(a)))
+    val c = int.handleArgument(component).toString
+    val ca = int.handleArgument(callback).toString
+    val a = arguments.map((a: String) => int.handleArgument(a))
+    val results = int.invoke(c, ca, a)
+    println(c + "." + ca + a)
     for (result <- Range(0, results.length)) {
       int.variableMap.put(resultVars(result), results(result))
     }

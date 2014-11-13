@@ -5,6 +5,7 @@ import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemCodeBundle, ItemSideDefiner, ItemToolHead}
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.OpenAutomationOC
+import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAutomationTConstruct
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.{Loader, Mod, ModMetadata}
@@ -48,6 +49,9 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
   def preInit() = {
     if (Loader.isModLoaded("OpenComputers")) {
       modules.add(OpenAutomationOC)
+    }
+    if (Loader.isModLoaded("TConstruct")) {
+      modules.add(OpenAutomationTConstruct)
     }
     inputCode = ItemUtil.makeItem(oa, "oaInputCode", true)
       .addDescriptionLine("openautomation.code.desc")

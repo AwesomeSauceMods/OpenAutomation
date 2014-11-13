@@ -23,7 +23,6 @@ class OpenAutomationOC extends OAModule {
   var toolSideDefiner: Item = null
   var toolAddressCopier: Item = null
 
-  var toolBase: Item = null
   var toolHeadSideDefiner: Item = null
   var toolHeadAddressCopier: Item = null
 
@@ -36,8 +35,6 @@ class OpenAutomationOC extends OAModule {
   var oalangt3: Item = null
 
   def preInit() = {
-    toolBase = ItemUtil.makeItem(oa, "toolBase")
-      .addDescriptionLine("openautomation.toolBase.desc").indev
     itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
     fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
     itemAutoCore = ItemUtil.makeBlock(oa, "itemAutoCore", Material.iron, () => new TileEntityItemAutoCore)

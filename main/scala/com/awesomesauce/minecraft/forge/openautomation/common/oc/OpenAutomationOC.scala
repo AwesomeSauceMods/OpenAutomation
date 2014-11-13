@@ -31,6 +31,9 @@ object OpenAutomationOC extends OAModule {
   var oalangt3: Item = null
 
   def preInit() = {
+  }
+
+  def init() = {
     itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
     fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
     workbench = ItemUtil.makeBlock(oa, "workbench", Material.iron, () => new TileEntityWorkbench)
@@ -58,9 +61,6 @@ object OpenAutomationOC extends OAModule {
       Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
       Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "oaOutputCode"))
-  }
-
-  def init() = {
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xzx",
       Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
       Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaItemCode", Character.valueOf('c'), "oaOutputCode",

@@ -24,6 +24,9 @@ object OpenAutomationOC extends OAModule {
 
   var pressureCrusher: Block = null
   var powerOutput: Block = null
+  var oalangt1: Item = null
+  var oalangt2: Item = null
+  var oalangt3: Item = null
 
   def preInit() = {
   }

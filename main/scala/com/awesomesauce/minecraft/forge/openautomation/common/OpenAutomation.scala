@@ -3,7 +3,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemCodeBundle
+import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemCodeBundle, ItemSideDefiner, ItemToolHead}
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.OpenAutomationOC
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
@@ -23,6 +23,8 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
   var fluidCode: Item = null
   var outputCode: Item = null
   var toolBase: Item = null
+  var toolHeadSideDefiner: Item = null
+  var toolSideDefiner: Item = null
 
   @EventHandler
   def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
@@ -64,6 +66,10 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
       .addUsage("awesomesauce.rightclick", "openautomation.codeBundle.usage")
     toolBase = ItemUtil.makeItem(oa, "toolBase")
       .addDescriptionLine("openautomation.toolBase.desc").indev
+    toolSideDefiner = ItemUtil.makeItem(oa, "sideDefiner", new ItemSideDefiner).asInstanceOf[ItemDescription]
+      .addUsage("awesomesauce.rightclick", "openautomation.tools.sideDefiner.usage")
+      .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
+    toolHeadSideDefiner = ItemUtil.makeItem(oa, "toolHeadSideDefiner", new ItemToolHead(toolSideDefiner)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
     for (m <- modules) {
       m.preInit()
     }

@@ -3,7 +3,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.oc
 import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
-import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemSideDefiner, ItemToolHead}
+import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemToolHead
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.item.ItemAddressCopier
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.te._
@@ -20,10 +20,8 @@ object OpenAutomationOC extends OAModule {
   var fluidIO: Block = null
   var workbench: Block = null
 
-  var toolSideDefiner: Item = null
   var toolAddressCopier: Item = null
 
-  var toolHeadSideDefiner: Item = null
   var toolHeadAddressCopier: Item = null
 
   var pressureCrusher: Block = null
@@ -38,10 +36,6 @@ object OpenAutomationOC extends OAModule {
     fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
     itemAutoCore = ItemUtil.makeBlock(oa, "itemAutoCore", Material.iron, () => new TileEntityItemAutoCore)
     workbench = ItemUtil.makeBlock(oa, "workbench", Material.iron, () => new TileEntityWorkbench)
-    toolSideDefiner = ItemUtil.makeItem(oa, "sideDefiner", new ItemSideDefiner).asInstanceOf[ItemDescription]
-      .addUsage("awesomesauce.rightclick", "openautomation.tools.sideDefiner.usage")
-      .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
-    toolHeadSideDefiner = ItemUtil.makeItem(oa, "toolHeadSideDefiner", new ItemToolHead(toolSideDefiner)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
     toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1).asInstanceOf[ItemDescription]
       .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")
       .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev

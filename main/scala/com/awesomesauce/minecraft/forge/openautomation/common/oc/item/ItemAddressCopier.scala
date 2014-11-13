@@ -1,8 +1,8 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc.item
 
 import com.awesomesauce.minecraft.forge.openautomation.api.oc.tools.AddressPastable
-import com.awesomesauce.minecraft.forge.openautomation.common.OpenAutomation
 import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemTool
+import com.awesomesauce.minecraft.forge.openautomation.common.oc.OpenAutomationOC
 import li.cil.oc.api.network.Environment
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 
 class ItemAddressCopier extends ItemTool {
-  def toolhead = OpenAutomation.toolHeadAddressCopier
+  def toolhead = OpenAutomationOC.toolHeadAddressCopier
 
   override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, xa: Float, ya: Float, za: Float): Boolean = {
     if (!stack.hasTagCompound()) {

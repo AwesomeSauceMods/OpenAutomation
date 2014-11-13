@@ -45,7 +45,7 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
 
   def preInit() = {
     if (Loader.isModLoaded("OpenComputers")) {
-      modules.add(new OpenAutomationOC)
+      modules.add(OpenAutomationOC)
     }
     inputCode = ItemUtil.makeItem(oa, "oaInputCode", true)
       .addDescriptionLine("openautomation.code.desc")

@@ -7,14 +7,14 @@ import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemSideDefi
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.item.ItemAddressCopier
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.te._
-import li.cil.oc.api.{Driver, FileSystem, Items}
+import li.cil.oc.api.{Driver, Items}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
 
-class OpenAutomationOC extends OAModule {
+object OpenAutomationOC extends OAModule {
   var itemIO: Block = null
   var itemAutoCore: Block = null
   var fluidIO: Block = null
@@ -29,7 +29,6 @@ class OpenAutomationOC extends OAModule {
   var pressureCrusher: Block = null
   var powerOutput: Block = null
   var elements: scala.collection.mutable.Map[Int, Item] = scala.collection.mutable.Map[Int, Item]()
-  var autoOSFS: li.cil.oc.api.fs.FileSystem = null
   var oalangt1: Item = null
   var oalangt2: Item = null
   var oalangt3: Item = null
@@ -54,7 +53,6 @@ class OpenAutomationOC extends OAModule {
         elements.put(i, ItemUtil.makeItem(oa, "element" + i))
       }
     }
-    autoOSFS = FileSystem.fromClass(Class.forName("com.awesomesauce.minecraft.forge.openautomation.addons.OpenAutomationAddons"), "openautomationaddons", "lua/autoos")
     oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
     oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
     oalangt3 = ItemUtil.makeItem(oa, "oalangt3")

@@ -85,7 +85,7 @@ class TileEntityMelter extends TileEntity with IInventory with IFluidHandler wit
     fluidTank.drain(maxDrain, simulate)
   }
 
-  def fill(from: ForgeDirection, stack: FluidStack, simulate: Boolean) = null
+  def fill(from: ForgeDirection, stack: FluidStack, simulate: Boolean) = 0
 
   def canFill(from: ForgeDirection, fluid: Fluid) = false
 

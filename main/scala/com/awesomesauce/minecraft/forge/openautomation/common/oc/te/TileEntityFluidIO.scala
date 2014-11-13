@@ -16,8 +16,13 @@ import net.minecraftforge.fluids.{FluidRegistry, FluidStack, FluidTankInfo, IFlu
 import scala.Array.canBuildFrom
 
 class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with SideDefinable with AddressPastable with TCustomTexture {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("fluidIO").withConnector(200).create()
-  node = node_
+  try {
+    val node_ = Network.newNode(this, Visibility.Network).withComponent("fluidIO").withConnector(200).create()
+    node = node_
+  }
+  catch {
+    case e: NullPointerException => node = null
+  }
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var drainSide: ForgeDirection = ForgeDirection.UNKNOWN
   var filter = ""
@@ -40,15 +45,6 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   else false
 
   def getTankInfo(): Array[FluidTankInfo] = fluidHandler.getTankInfo(drainSide)
-
-  def fluidHandler: IFluidHandler = {
-    val x = xCoord + side.offsetX
-    val y = yCoord + side.offsetY
-    val z = zCoord + side.offsetZ
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IFluidHandler])
-      worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
-    else null
-  }
 
   def sendFluid(fluid: FluidStack): Unit = fluidHandler.drain(drainSide, fluid, true)
 
@@ -77,8 +73,6 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   def getDrainSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(getDrainSide.toString)
   }
-
-  def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite else drainSide
 
   @Callback
   def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
@@ -149,6 +143,17 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     }
     false
   }
+
+  def fluidHandler: IFluidHandler = {
+    val x = xCoord + side.offsetX
+    val y = yCoord + side.offsetY
+    val z = zCoord + side.offsetZ
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IFluidHandler])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
+    else null
+  }
+
+  def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite else drainSide
 
   @Callback
   def getFluids(context: Context, arguments: Arguments): Array[AnyRef] = {

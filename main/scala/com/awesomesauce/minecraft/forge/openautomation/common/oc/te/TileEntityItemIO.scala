@@ -15,8 +15,13 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
 
 class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideDefinable with AddressPastable {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
-  node = node_
+  try {
+    val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
+    node = node_
+  }
+  catch {
+    case e: NullPointerException => node = null
+  }
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var filter: Filter = new Filter("")
   var address: String = "xxx"
@@ -88,9 +93,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     Array(inventory.getInventoryName)
   }
 
-  //ItemStorage
-  def inventory = new InventoryWrapper(inventoryy)
-
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     address = arguments.checkString(0)
@@ -152,6 +154,9 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     slot = oldSlot
     Array(true.asInstanceOf[java.lang.Boolean])
   }
+
+  //ItemStorage
+  def inventory = new InventoryWrapper(inventoryy)
 
   def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
     if (destination.recieveItem(stack)) {

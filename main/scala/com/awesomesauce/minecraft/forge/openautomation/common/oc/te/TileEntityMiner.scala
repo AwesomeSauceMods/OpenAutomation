@@ -9,8 +9,13 @@ import li.cil.oc.api.prefab.TileEntityEnvironment
 
 
 class TileEntityMiner extends TileEntityEnvironment with AddressPastable {
+  try {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("miner").withConnector(1000).create()
   node = node_
+  }
+  catch {
+    case e: NullPointerException => node = null
+  }
   var address: String = "xxx"
   var filter: Filter = new Filter("")
   var maxX: Int = 100

@@ -15,8 +15,13 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary
 
 class TileEntityPressureCrusher extends TileEntityEnvironment with AddressPastable with ItemStorage with IInventory with TActivatedTileEntity {
-  val node_ = Network.newNode(this, Visibility.Network).withComponent("pressureCrusher").withConnector(2000).create()
-  node = node_
+  try {
+    val node_ = Network.newNode(this, Visibility.Network).withComponent("pressureCrusher").withConnector(2000).create()
+    node = node_
+  }
+  catch {
+    case e: NullPointerException => node = null
+  }
   val recipes = AwesomeSauceComponents.grinderRecipes
   var address: String = "xxx"
   var crushingSlot: ItemStack = null

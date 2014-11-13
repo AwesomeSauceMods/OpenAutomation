@@ -9,8 +9,13 @@ import net.minecraftforge.common.util.ForgeDirection
 
 
 class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection {
+  try {
   val node_ = Network.newNode(this, Visibility.Network).withComponent("powerOutput").withConnector(1000).create()
   node = node_
+  }
+  catch {
+    case e: NullPointerException => node = null
+  }
   var maxOutput = 1000
 
   def canConnectEnergy(side: ForgeDirection) = true

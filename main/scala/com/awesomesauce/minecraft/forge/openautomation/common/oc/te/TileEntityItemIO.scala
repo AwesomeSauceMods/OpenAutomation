@@ -15,13 +15,9 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
 
 class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideDefinable with AddressPastable {
-  try {
-    val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
+
+  val node_ = Network.newNode(this, Visibility.Network).withComponent("itemIO").withConnector(200).create()
     node = node_
-  }
-  catch {
-    case e: NullPointerException => node = null
-  }
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var filter: Filter = new Filter("")
   var address: String = "xxx"
@@ -43,24 +39,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
   }
 
   def recieveItem(item: ItemStack): Boolean = InventoryUtil.addStackToSlotInInventory(inventoryy, item, slot)
-
-  def inventoryy: IInventory = {
-    var x = 0
-    var y = 0
-    var z = 0
-    if (customX != 0 || customY != 0 || customZ != 0) {
-      x = customX
-      y = customY
-      z = customZ
-    } else {
-      x = xCoord + side.offsetX
-      y = yCoord + side.offsetY
-      z = zCoord + side.offsetZ
-    }
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
-      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
-    else null
-  }
 
   //Callbacks
   @Callback
@@ -155,9 +133,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     Array(true.asInstanceOf[java.lang.Boolean])
   }
 
-  //ItemStorage
-  def inventory = new InventoryWrapper(inventoryy)
-
   def doSendItem(stack: ItemStack, s: Int, destination: ItemDestination): Boolean = {
     if (destination.recieveItem(stack)) {
       inventoryy.setInventorySlotContents(s, null)
@@ -172,6 +147,27 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
     if (item == null)
       return Array(null, "No Item.")
     Array(Util.itemData(item))
+  }
+
+  //ItemStorage
+  def inventory = new InventoryWrapper(inventoryy)
+
+  def inventoryy: IInventory = {
+    var x = 0
+    var y = 0
+    var z = 0
+    if (customX != 0 || customY != 0 || customZ != 0) {
+      x = customX
+      y = customY
+      z = customZ
+    } else {
+      x = xCoord + side.offsetX
+      y = yCoord + side.offsetY
+      z = zCoord + side.offsetZ
+    }
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
+    else null
   }
 
   //Save/Load

@@ -16,13 +16,9 @@ import net.minecraftforge.fluids.{FluidRegistry, FluidStack, FluidTankInfo, IFlu
 import scala.Array.canBuildFrom
 
 class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with SideDefinable with AddressPastable with TCustomTexture {
-  try {
-    val node_ = Network.newNode(this, Visibility.Network).withComponent("fluidIO").withConnector(200).create()
+
+  val node_ = Network.newNode(this, Visibility.Network).withComponent("fluidIO").withConnector(200).create()
     node = node_
-  }
-  catch {
-    case e: NullPointerException => node = null
-  }
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var drainSide: ForgeDirection = ForgeDirection.UNKNOWN
   var filter = ""

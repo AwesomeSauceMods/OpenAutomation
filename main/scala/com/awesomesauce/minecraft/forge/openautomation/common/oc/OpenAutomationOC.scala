@@ -11,7 +11,6 @@ import li.cil.oc.api.{Driver, Items}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
 
 object OpenAutomationOC extends OAModule {
@@ -25,10 +24,6 @@ object OpenAutomationOC extends OAModule {
 
   var pressureCrusher: Block = null
   var powerOutput: Block = null
-  var elements: scala.collection.mutable.Map[Int, Item] = scala.collection.mutable.Map[Int, Item]()
-  var oalangt1: Item = null
-  var oalangt2: Item = null
-  var oalangt3: Item = null
 
   def preInit() = {
   }
@@ -43,11 +38,6 @@ object OpenAutomationOC extends OAModule {
     toolHeadAddressCopier = ItemUtil.makeItem(oa, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
     pressureCrusher = ItemUtil.makeBlock(oa, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
-    if (oa.config.getBoolean("enableChemistry", Configuration.CATEGORY_GENERAL, false, "Enable the chemistry component. NON COMPLETE")) {
-      for (i <- Range(1, 83)) {
-        elements.put(i, ItemUtil.makeItem(oa, "element" + i))
-      }
-    }
     oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
     oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
     oalangt3 = ItemUtil.makeItem(oa, "oalangt3")

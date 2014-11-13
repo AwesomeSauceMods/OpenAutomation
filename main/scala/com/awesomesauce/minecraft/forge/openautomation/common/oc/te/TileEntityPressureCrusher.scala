@@ -1,9 +1,9 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.tile
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import com.awesomesauce.minecraft.forge.core.components.AwesomeSauceComponents
 import com.awesomesauce.minecraft.forge.core.lib.item.TActivatedTileEntity
 import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryWrapper, PlayerUtil}
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.oc.tools.AddressPastable
 import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemStorage}
 import li.cil.oc.api.Network
 import li.cil.oc.api.machine.{Arguments, Callback, Context}

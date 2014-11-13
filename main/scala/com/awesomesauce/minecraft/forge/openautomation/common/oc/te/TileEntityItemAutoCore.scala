@@ -1,7 +1,7 @@
-package com.awesomesauce.minecraft.forge.openautomation.common.te
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryUtil, ReadOnlyInventory}
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.oc.tools.AddressPastable
 import com.awesomesauce.minecraft.forge.openautomation.api.{ItemDestination, ItemInput}
 import li.cil.oc.api.Network
 import li.cil.oc.api.machine.{Arguments, Callback, Context}
@@ -16,10 +16,6 @@ class TileEntityItemAutoCore extends TileEntityEnvironment with ItemDestination 
   var inventories = scala.collection.mutable.Set[ItemDestination]()
 
   def pasteAddress(address: String): Unit = addAddress(address)
-
-  def addAddress(address: String) = {
-    inventories.add(node.network().node(address).host().asInstanceOf[ItemDestination])
-  }
 
   def recieveItem(item: ItemStack): Boolean = sendItem(item)
 
@@ -37,6 +33,10 @@ class TileEntityItemAutoCore extends TileEntityEnvironment with ItemDestination 
   def addAddress(context: Context, arguments: Arguments): Array[AnyRef] = {
     addAddress(arguments.checkString(0))
     Array(true.asInstanceOf[java.lang.Boolean])
+  }
+
+  def addAddress(address: String) = {
+    inventories.add(node.network().node(address).host().asInstanceOf[ItemDestination])
   }
 
   @Callback

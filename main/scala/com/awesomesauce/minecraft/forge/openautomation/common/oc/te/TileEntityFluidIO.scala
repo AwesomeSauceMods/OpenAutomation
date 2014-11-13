@@ -1,7 +1,8 @@
-package com.awesomesauce.minecraft.forge.openautomation.common.te
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import com.awesomesauce.minecraft.forge.core.lib.item.TCustomTexture
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
+import com.awesomesauce.minecraft.forge.openautomation.api.oc.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.tools.SideDefinable
 import com.awesomesauce.minecraft.forge.openautomation.api.{FluidDestination, FluidStorage}
 import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
@@ -38,6 +39,8 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   }
   else false
 
+  def getTankInfo(): Array[FluidTankInfo] = fluidHandler.getTankInfo(drainSide)
+
   def fluidHandler: IFluidHandler = {
     val x = xCoord + side.offsetX
     val y = yCoord + side.offsetY
@@ -46,8 +49,6 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
       worldObj.getTileEntity(x, y, z).asInstanceOf[IFluidHandler]
     else null
   }
-
-  def getTankInfo(): Array[FluidTankInfo] = fluidHandler.getTankInfo(drainSide)
 
   def sendFluid(fluid: FluidStack): Unit = fluidHandler.drain(drainSide, fluid, true)
 
@@ -76,6 +77,8 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
   def getDrainSide(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(getDrainSide.toString)
   }
+
+  def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite else drainSide
 
   @Callback
   def setFilter(context: Context, arguments: Arguments): Array[AnyRef] = {
@@ -146,8 +149,6 @@ class TileEntityFluidIO extends TileEntityEnvironment with FluidStorage with Sid
     }
     false
   }
-
-  def getDrainSide = if (drainSide == ForgeDirection.UNKNOWN) side.getOpposite else drainSide
 
   @Callback
   def getFluids(context: Context, arguments: Arguments): Array[AnyRef] = {

@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.oalang
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang
 
 
 class ScriptPart(line: String) {
@@ -13,6 +13,7 @@ class ScriptPart(line: String) {
   var resultVars = Array[String]("")
 
   override def toString = line
+
   def execute(int: OAlangInterpreter) = {
     val c = int.handleArgument(component).toString
     val ca = int.handleArgument(callback).toString

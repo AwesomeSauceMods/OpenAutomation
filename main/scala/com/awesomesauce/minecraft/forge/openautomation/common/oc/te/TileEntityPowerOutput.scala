@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.tile
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import cofh.api.energy.{IEnergyConnection, IEnergyHandler}
 import li.cil.oc.api.Network

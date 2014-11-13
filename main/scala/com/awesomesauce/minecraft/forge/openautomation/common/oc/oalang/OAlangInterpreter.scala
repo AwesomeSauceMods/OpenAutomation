@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.oalang
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang
 
 class OAlangInterpreter(val components: ComponentInterface) {
   components.interpreter = this

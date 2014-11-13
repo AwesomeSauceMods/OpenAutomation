@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.oalang
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang
 
 import li.cil.oc.api.machine.{Architecture, ExecutionResult, Machine}
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList, NBTTagString}

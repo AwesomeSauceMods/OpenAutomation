@@ -1,7 +1,8 @@
-package com.awesomesauce.minecraft.forge.openautomation.common.te
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import com.awesomesauce.minecraft.forge.core.lib.util.{InventoryUtil, InventoryWrapper}
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.{AddressPastable, SideDefinable}
+import com.awesomesauce.minecraft.forge.openautomation.api.oc.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.tools.SideDefinable
 import com.awesomesauce.minecraft.forge.openautomation.api.{Filter, ItemDestination, ItemStorage}
 import com.awesomesauce.minecraft.forge.openautomation.common.Util
 import li.cil.oc.api.Network
@@ -38,6 +39,24 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
 
   def recieveItem(item: ItemStack): Boolean = InventoryUtil.addStackToSlotInInventory(inventoryy, item, slot)
 
+  def inventoryy: IInventory = {
+    var x = 0
+    var y = 0
+    var z = 0
+    if (customX != 0 || customY != 0 || customZ != 0) {
+      x = customX
+      y = customY
+      z = customZ
+    } else {
+      x = xCoord + side.offsetX
+      y = yCoord + side.offsetY
+      z = zCoord + side.offsetZ
+    }
+    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
+      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
+    else null
+  }
+
   //Callbacks
   @Callback
   def ping(context: Context, arguments: Arguments): Array[AnyRef] = Array(this.node.address(), "pong")
@@ -71,24 +90,6 @@ class TileEntityItemIO extends TileEntityEnvironment with ItemStorage with SideD
 
   //ItemStorage
   def inventory = new InventoryWrapper(inventoryy)
-
-  def inventoryy: IInventory = {
-    var x = 0
-    var y = 0
-    var z = 0
-    if (customX != 0 || customY != 0 || customZ != 0) {
-      x = customX
-      y = customY
-      z = customZ
-    } else {
-      x = xCoord + side.offsetX
-      y = yCoord + side.offsetY
-      z = zCoord + side.offsetZ
-    }
-    if (worldObj.getTileEntity(x, y, z).isInstanceOf[IInventory])
-      worldObj.getTileEntity(x, y, z).asInstanceOf[IInventory]
-    else null
-  }
 
   @Callback
   def setAddress(context: Context, arguments: Arguments): Array[AnyRef] = {

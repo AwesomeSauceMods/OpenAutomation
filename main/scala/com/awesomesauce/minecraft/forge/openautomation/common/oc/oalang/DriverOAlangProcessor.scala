@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.oalang
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang
 
 import li.cil.oc.api.driver.EnvironmentHost
 import li.cil.oc.api.driver.item.{Processor, Slot}

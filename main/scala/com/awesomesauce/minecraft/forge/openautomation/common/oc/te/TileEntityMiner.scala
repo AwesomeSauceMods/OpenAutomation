@@ -1,7 +1,7 @@
-package com.awesomesauce.minecraft.forge.openautomation.addons.tile
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import com.awesomesauce.minecraft.forge.openautomation.api.Filter
-import com.awesomesauce.minecraft.forge.openautomation.api.tools.AddressPastable
+import com.awesomesauce.minecraft.forge.openautomation.api.oc.tools.AddressPastable
 import li.cil.oc.api.Network
 import li.cil.oc.api.machine.{Arguments, Callback, Context}
 import li.cil.oc.api.network.Visibility

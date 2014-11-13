@@ -16,7 +16,6 @@ import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
 
 object OpenAutomationOC extends OAModule {
   var itemIO: Block = null
-  var itemAutoCore: Block = null
   var fluidIO: Block = null
   var workbench: Block = null
 
@@ -34,7 +33,6 @@ object OpenAutomationOC extends OAModule {
   def preInit() = {
     itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
     fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
-    itemAutoCore = ItemUtil.makeBlock(oa, "itemAutoCore", Material.iron, () => new TileEntityItemAutoCore)
     workbench = ItemUtil.makeBlock(oa, "workbench", Material.iron, () => new TileEntityWorkbench)
     toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1).asInstanceOf[ItemDescription]
       .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")

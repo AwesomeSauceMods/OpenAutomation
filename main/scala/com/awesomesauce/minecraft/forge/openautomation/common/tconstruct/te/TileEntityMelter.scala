@@ -1,6 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.te
 
 import cofh.api.energy.{EnergyStorage, IEnergyHandler}
+import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAutomationTConstruct
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -10,7 +11,8 @@ import net.minecraftforge.fluids.{Fluid, FluidStack, FluidTank, IFluidHandler}
 import tconstruct.library.crafting.Smeltery
 
 class TileEntityMelter extends TileEntity with IInventory with IFluidHandler with IEnergyHandler {
-  val rfCost = 60
+  val rfCost = OpenAutomationTConstruct.melterCost
+  val multiplier = OpenAutomationTConstruct.melterMultiplier
   //END IInventory
   //BEGIN IFluidHandler
   val fluidTank = new FluidTank(10000)
@@ -26,7 +28,7 @@ class TileEntityMelter extends TileEntity with IInventory with IFluidHandler wit
       if (Smeltery.getSmelteryResult(inventory(i)) != null) {
         if (energyStorage.extractEnergy(rfCost, false) == rfCost) {
           energyStorage.extractEnergy(rfCost, true)
-          temperatures(i) += 1
+          temperatures(i) += multiplier
           if (temperatures(i) >= Smeltery.getLiquifyTemperature(inventory(i))) {
             val result = Smeltery.getSmelteryResult(inventory(i))
             if (fluidTank.fill(result, false) == result.amount) {

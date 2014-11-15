@@ -31,3 +31,5 @@ openautomation.toolBase.desc=The handle and base for the tools.
 
 tile.openautomation.pressureCrusher.name=OA Pressure Crusher
 tile.openautomation.powerOutput.name=Power Out-Converter
+
+tile.openautomation.tconstruct.melter.name=Micro-Smeltery Melter

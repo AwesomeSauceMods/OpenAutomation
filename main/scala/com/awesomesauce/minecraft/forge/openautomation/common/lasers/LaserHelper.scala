@@ -13,6 +13,7 @@ object LaserHelper {
       nx += dir.offsetX
       ny += dir.offsetY
       nz += dir.offsetZ
+      world.spawnParticle("reddust", nx + 0.5, ny + 0.5, nz + 0.5, 0, 0, 0)
     }
     if (world.getTileEntity(nx, ny, nz).isInstanceOf[LaserReciever]) {
       return world.getTileEntity(nx, ny, nz).asInstanceOf[LaserReciever].arrive(dir.getOpposite, packet)

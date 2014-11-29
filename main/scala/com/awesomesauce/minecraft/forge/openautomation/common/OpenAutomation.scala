@@ -15,6 +15,7 @@ import net.minecraft.item.Item
 object OpenAutomation extends TAwesomeSauceMod with OAModule {
   final val MODID = "OpenAutomation"
   final val MODNAME = "OpenAutomation"
+  val name = "Core"
   val modules = scala.collection.mutable.Set[OAModule]()
   @Mod.Metadata(MODID)
   var metadata: ModMetadata = null
@@ -26,12 +27,6 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
   var toolBase: Item = null
   var toolHeadSideDefiner: Item = null
   var toolSideDefiner: Item = null
-
-  def addModule(module: OAModule) = {
-    if (config.get("Modules", module.name, true).getBoolean) {
-      modules.add(module)
-    }
-  }
 
   @EventHandler
   def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
@@ -54,10 +49,10 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
 
   def preInit() = {
     if (Loader.isModLoaded("OpenComputers")) {
-      modules.add(OpenAutomationOC)
+      addModule(OpenAutomationOC)
     }
     if (Loader.isModLoaded("TConstruct")) {
-      modules.add(OpenAutomationTConstruct)
+      addModule(OpenAutomationTConstruct)
     }
     inputCode = ItemUtil.makeItem(oa, "oaInputCode", true)
       .addDescriptionLine("openautomation.code.desc")
@@ -82,6 +77,12 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
     toolHeadSideDefiner = ItemUtil.makeItem(oa, "toolHeadSideDefiner", new ItemToolHead(toolSideDefiner)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
     for (m <- modules) {
       m.preInit()
+    }
+  }
+
+  def addModule(module: OAModule) = {
+    if (config.get("Modules", module.name, true).getBoolean) {
+      modules.add(module)
     }
   }
 

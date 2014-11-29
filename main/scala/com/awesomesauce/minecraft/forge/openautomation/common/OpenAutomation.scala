@@ -54,6 +54,7 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
     if (Loader.isModLoaded("TConstruct")) {
       addModule(OpenAutomationTConstruct)
     }
+    addModule(OpenAutomationLasers)
     inputCode = ItemUtil.makeItem(oa, "oaInputCode", true)
       .addDescriptionLine("openautomation.code.desc")
       .addDescriptionLine("openautomation.inputCode.desc")

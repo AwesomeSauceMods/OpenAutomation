@@ -14,6 +14,7 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
 
 object OpenAutomationOC extends OAModule {
+  val name = "OC"
   var itemIO: Block = null
   var fluidIO: Block = null
   var workbench: Block = null

@@ -27,6 +27,12 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
   var toolHeadSideDefiner: Item = null
   var toolSideDefiner: Item = null
 
+  def addModule(module: OAModule) = {
+    if (config.get("Modules", module.name, true).getBoolean) {
+      modules.add(module)
+    }
+  }
+
   @EventHandler
   def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
 

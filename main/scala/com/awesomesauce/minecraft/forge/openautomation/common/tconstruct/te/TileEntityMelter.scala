@@ -11,8 +11,9 @@ import net.minecraftforge.fluids.{Fluid, FluidStack, FluidTank, IFluidHandler}
 import tconstruct.library.crafting.Smeltery
 
 class TileEntityMelter extends TileEntity with IInventory with IFluidHandler with IEnergyHandler {
-  val rfCost = OpenAutomationTConstruct.melterCost
+  val cost = OpenAutomationTConstruct.melterCost
   val multiplier = OpenAutomationTConstruct.melterMultiplier
+  val costMultiplier = OpenAutomationTConstruct.melterCostMultiplier
   //END IInventory
   //BEGIN IFluidHandler
   val fluidTank = new FluidTank(10000)
@@ -26,6 +27,7 @@ class TileEntityMelter extends TileEntity with IInventory with IFluidHandler wit
   override def updateEntity() = {
     for (i <- Range(0, 3)) {
       if (Smeltery.getSmelteryResult(inventory(i)) != null) {
+        val rfCost = cost + temperatures(i) / costMultiplier
         if (energyStorage.extractEnergy(rfCost, false) == rfCost) {
           energyStorage.extractEnergy(rfCost, true)
           temperatures(i) += multiplier

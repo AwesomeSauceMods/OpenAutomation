@@ -12,9 +12,11 @@ import net.minecraftforge.oredict.ShapedOreRecipe
 object OpenAutomationTConstruct extends OAModule {
   var melter: Block = null
   var melterCost = 0
+  var melterCostMultiplier = 0
   var melterMultiplier = 0
   def preInit() = {
-    melterCost = oa.config.get("tconstruct", "melterCost", 120).getInt
+    melterCost = oa.config.get("tconstruct", "melterCost", 60).getInt
+    melterCostMultiplier = oa.config.get("tconstruct", "melterDivider", 10).getInt
     melterMultiplier = oa.config.get("tconstruct", "melterSpeed", 2).getInt
   }
 

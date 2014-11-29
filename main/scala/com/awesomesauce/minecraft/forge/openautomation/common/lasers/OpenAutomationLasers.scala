@@ -2,7 +2,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers
 
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
-import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te.{TileEntityEnergyLaserEmitter, TileEntityLaserReceiver}
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te.{TileEntityEnergyLaserEmitter, TileEntityLaserMirror, TileEntityLaserReceiver}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 

@@ -6,14 +6,11 @@ import net.minecraftforge.common.util.ForgeDirection
 
 object LaserHelper {
   def sendLaser(world: World, x: Int, y: Int, z: Int, dir: ForgeDirection, packet: LaserPacket): Boolean = {
-    for (i <- Range(0, 10))
-      world.spawnParticle("reddust", x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, 0, 0, 0)
     var nx = x + dir.offsetX
     var ny = y + dir.offsetY
     var nz = z + dir.offsetZ
     var counter = 0
     while (!world.getBlock(nx, ny, nz).isOpaqueCube && counter < 400) {
-      world.spawnParticle("reddust", nx - 0.5D, ny - 0.5D, nz - 0.5D, world.rand.nextGaussian() * 0.02D, world.rand.nextGaussian() * 0.02D, world.rand.nextGaussian() * 0.02D)
       counter += 1
       nx += dir.offsetX
       ny += dir.offsetY

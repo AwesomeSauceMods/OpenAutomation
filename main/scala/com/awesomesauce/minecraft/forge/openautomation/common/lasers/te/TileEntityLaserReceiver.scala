@@ -5,9 +5,6 @@ import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserPacket, 
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-/**
- * Created by gjgfuj on 11/29/14.
- */
 class TileEntityLaserReceiver extends TileEntity with IEnergyConnection with LaserReciever {
   def canConnectEnergy(from: ForgeDirection) = true
 

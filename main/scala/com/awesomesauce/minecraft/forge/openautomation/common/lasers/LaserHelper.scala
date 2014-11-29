@@ -9,11 +9,13 @@ object LaserHelper {
     var nx = x + dir.offsetX
     var ny = y + dir.offsetY
     var nz = z + dir.offsetZ
-    while (!world.getBlock(nx, ny, nz).isOpaqueCube) {
+    var counter = 0
+    while (!world.getBlock(nx, ny, nz).isOpaqueCube && counter < 400) {
+      world.spawnParticle("reddust", nx + 0.5F, ny + 0.5F, nz + 0.5F, world.rand.nextGaussian() * 0.02F, world.rand.nextGaussian() * 0.02F, world.rand.nextGaussian() * 0.02F)
+      counter += 1
       nx += dir.offsetX
       ny += dir.offsetY
       nz += dir.offsetZ
-      world.spawnParticle("reddust", nx + 0.5, ny + 0.5, nz + 0.5, 0, 0, 0)
     }
     if (world.getTileEntity(nx, ny, nz).isInstanceOf[LaserReciever]) {
       return world.getTileEntity(nx, ny, nz).asInstanceOf[LaserReciever].arrive(dir.getOpposite, packet)

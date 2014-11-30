@@ -13,4 +13,12 @@ class EnergyPacket(amount: Int) extends LaserPacket {
     }
     false
   }
+
+  def split(sAmount: Int) = {
+    val arr = new Array[LaserPacket](sAmount)
+    for (i <- Range(0, sAmount)) {
+      arr(i) = new EnergyPacket(amount / sAmount)
+    }
+    arr
+  }
 }

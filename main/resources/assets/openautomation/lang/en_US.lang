@@ -37,3 +37,4 @@ tile.openautomation.tconstruct.melter.name=Micro-Smeltery Melter
 tile.openautomation.energyLaserEmitter.name=Redstone Laser Emitter
 tile.openautomation.laserReceiver.name=Laser Receptor
 tile.openautomation.laserMirror.name=Mirror (Laser)
+tile.openautomation.laserSplitter.name=Double Mirror (Laser)

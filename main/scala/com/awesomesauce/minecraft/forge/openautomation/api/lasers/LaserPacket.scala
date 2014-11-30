@@ -5,4 +5,6 @@ import net.minecraftforge.common.util.ForgeDirection
 
 trait LaserPacket {
   def arrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection): Boolean
+
+  def split(amount: Int): Array[LaserPacket]
 }

@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
 
-class TileEntityLaserSplitter extends TileEntity with LaserReciever {
+class TileEntityLaserSplitter extends TileEntity with LaserReciever with TActivatedTileEntity {
   var dir1: ForgeDirection = ForgeDirection.UP
   var dir2: ForgeDirection = ForgeDirection.EAST
 

@@ -6,7 +6,7 @@ import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te.{TileEnt
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraftforge.oredict.ShapedOreRecipe
+import net.minecraftforge.oredict.{OreDictionary, ShapedOreRecipe}
 
 
 object OpenAutomationLasers extends OAModule {
@@ -29,7 +29,8 @@ object OpenAutomationLasers extends OAModule {
     laserFocus = ItemUtil.makeItem(oa, "laserFocus", true)
     laserEmitter = ItemUtil.makeItem(oa, "laserEmitter", true)
     laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)
-    laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirror", true)
+    laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
+    OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
   }
 
   def init() = {

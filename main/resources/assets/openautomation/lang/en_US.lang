@@ -42,4 +42,4 @@ tile.openautomation.laserSplitter.name=Double Mirror (Laser)
 item.openautomation.laserFocus.name=Laser Focus
 item.openautomation.laserEmitter.name=Laser Emitter
 item.openautomation.laserReceptor.name=Laser Receptor
-item.openautomation.laserMirror.name=Laser Reflective Mirror
+item.openautomation.laserMirrorCrafting.name=Laser Reflective Mirror

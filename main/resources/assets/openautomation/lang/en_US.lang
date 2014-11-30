@@ -38,3 +38,8 @@ tile.openautomation.energyLaserEmitter.name=Redstone Laser Emitter
 tile.openautomation.laserReceiver.name=Laser Receptor
 tile.openautomation.laserMirror.name=Mirror (Laser)
 tile.openautomation.laserSplitter.name=Double Mirror (Laser)
+
+item.openautomation.laserFocus.name=Laser Focus
+item.openautomation.laserEmitter.name=Laser Emitter
+item.openautomation.laserReceptor.name=Laser Receptor
+item.openautomation.laserMirror.name=Laser Reflective Mirror

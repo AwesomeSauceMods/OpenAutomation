@@ -5,6 +5,7 @@ import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserPacket, LaserReciever}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -44,5 +45,15 @@ class TileEntityLaserMirror extends TileEntity with LaserReciever with TActivate
       direction = dir1.getOpposite
     }
     LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, packet)
+  }
+
+  override def writeToNBT(tag: NBTTagCompound) = {
+    tag.setString("dir1", dir1.toString)
+    tag.setString("dir2", dir2.toString)
+  }
+
+  override def readFromNBT(tag: NBTTagCompound) = {
+    dir1 = ForgeDirection.valueOf(tag.getString("dir1"))
+    dir2 = ForgeDirection.valueOf(tag.getString("dir2"))
   }
 }

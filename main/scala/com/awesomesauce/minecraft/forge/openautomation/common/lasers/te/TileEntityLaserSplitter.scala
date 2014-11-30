@@ -1,5 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
+import com.awesomesauce.minecraft.forge.core.lib.item.TActivatedTileEntity
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserPacket, LaserReciever}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper

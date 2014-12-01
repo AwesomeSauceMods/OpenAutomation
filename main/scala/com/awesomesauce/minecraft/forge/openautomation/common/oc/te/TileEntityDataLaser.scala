@@ -15,6 +15,6 @@ class TileEntityDataLaser extends TileEntityEnvironment {
   @Callback
   def sendLaser(context: Context, arguments: Arguments): Array[AnyRef] = {
     Array(LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord,
-      ForgeDirection.getOrientation(arguments.checkInteger(0)), new DataPacket(arguments.checkAny(1))))
+      ForgeDirection.getOrientation(arguments.checkInteger(0)), new DataPacket(arguments.checkAny(1))).asInstanceOf[java.lang.Boolean])
   }
 }

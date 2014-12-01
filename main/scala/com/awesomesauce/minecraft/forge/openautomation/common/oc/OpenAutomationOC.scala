@@ -33,14 +33,23 @@ object OpenAutomationOC extends OAModule {
   }
 
   def init() = {
-    itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
-    fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
-    workbench = ItemUtil.makeBlock(oa, "workbench", Material.iron, () => new TileEntityWorkbench)
-    toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1).asInstanceOf[ItemDescription]
-      .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")
-      .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
-    toolHeadAddressCopier = ItemUtil.makeItem(oa, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
-    pressureCrusher = ItemUtil.makeBlock(oa, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
+    if (oa.config.get("modules", "oc.enableOldBuggy", false, "Enable the old, buggy p2p transport stuff.").getBoolean) {
+      itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
+      fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
+      toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1).asInstanceOf[ItemDescription]
+        .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")
+        .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
+      toolHeadAddressCopier = ItemUtil.makeItem(oa, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
+      pressureCrusher = ItemUtil.makeBlock(oa, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xzx",
+        Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
+        Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaItemCode", Character.valueOf('c'), "oaOutputCode",
+        Character.valueOf('z'), "awesomeCore"))
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(fluidIO), "xyx", "abc", "xzx",
+        Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
+        Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaFluidCode", Character.valueOf('c'), "oaOutputCode",
+        Character.valueOf('z'), "awesomeCore"))
+    }
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
     oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
     oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
@@ -55,14 +64,7 @@ object OpenAutomationOC extends OAModule {
       Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
       Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "oaOutputCode"))
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xzx",
-      Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
-      Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaItemCode", Character.valueOf('c'), "oaOutputCode",
-      Character.valueOf('z'), "awesomeCore"))
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(fluidIO), "xyx", "abc", "xzx",
-      Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
-      Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaFluidCode", Character.valueOf('c'), "oaOutputCode",
-      Character.valueOf('z'), "awesomeCore"))
+
     ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(oa.codeBundle), Items.get("chip1").createItemStack(1), "blockAwesomeite"))
     ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(oa.codeBundle), Items.get("chip2").createItemStack(1), "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
     ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(oa.codeBundle), Items.get("chip3").createItemStack(1), "nuggetAwesomeite"))

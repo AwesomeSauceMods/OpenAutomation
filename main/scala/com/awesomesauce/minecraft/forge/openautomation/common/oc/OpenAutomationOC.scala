@@ -28,6 +28,7 @@ object OpenAutomationOC extends OAModule {
   var oalangt1: Item = null
   var oalangt2: Item = null
   var oalangt3: Item = null
+  var ocLaser: Block = null
 
   def preInit() = {
   }
@@ -51,6 +52,7 @@ object OpenAutomationOC extends OAModule {
         Character.valueOf('z'), "awesomeCore"))
     }
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
+    ocLaser = ItemUtil.makeBlock(oa, "ocLaser", Material.iron, () => new TileEntityDataLaser)
     oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
     oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
     oalangt3 = ItemUtil.makeItem(oa, "oalangt3")

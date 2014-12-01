@@ -30,14 +30,21 @@ class TileEntityLaserSplitter extends TileEntity with LaserReciever with TActiva
     else false
   }
 
-  def arrive(from: ForgeDirection, packet: LaserPacket) = {
+  def arrive(from: ForgeDirection, packet: LaserPacket): Boolean = {
     var direction: ForgeDirection = from.getOpposite
     if (from == dir1) {
       direction = dir2
+      val splitPacket = packet.split(2)
+      LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, splitPacket(0)) ||
+        LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction.getOpposite, splitPacket(1))
     }
-    val splitPacket = packet.split(2)
-    LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, splitPacket(0))
-    LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction.getOpposite, splitPacket(1))
+    else if (from == dir2 || from == dir2.getOpposite) {
+      direction = dir1
+      LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, packet)
+    }
+    else {
+      false
+    }
   }
 
   override def writeToNBT(tag: NBTTagCompound) = {

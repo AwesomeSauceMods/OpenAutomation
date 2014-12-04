@@ -32,7 +32,7 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider w
         if (te.isInstanceOf[IEnergyReceiver]) {
           val energyHandler = te.asInstanceOf[IEnergyReceiver]
           val amountOfEnergyToDrain = energyHandler.receiveEnergy(side.getOpposite, maxOutput * 10, true).toDouble / 10
-          val drainedEnergy = extractEnergy(side, amountOfEnergyToDrain, false)
+          val drainedEnergy = extractEnergy(side, amountOfEnergyToDrain.toInt, false)
           val transferred = energyHandler.receiveEnergy(side.getOpposite, am, false)
           /*
           println("aOETD:"+amountOfEnergyToDrain)

@@ -1,6 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.te
 
-import cofh.api.energy.{EnergyStorage, IEnergyHandler}
+import cofh.api.energy.{EnergyStorage, IEnergyReceiver}
 import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAutomationTConstruct
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.{Fluid, FluidStack, FluidTank, IFluidHandler}
 import tconstruct.library.crafting.Smeltery
 
-class TileEntityMelter extends TileEntity with IInventory with IFluidHandler with IEnergyHandler {
+class TileEntityMelter extends TileEntity with IInventory with IFluidHandler with IEnergyReceiver {
   val cost = OpenAutomationTConstruct.melterCost
   val multiplier = OpenAutomationTConstruct.melterMultiplier
   val costMultiplier = OpenAutomationTConstruct.melterCostMultiplier
@@ -96,8 +96,6 @@ class TileEntityMelter extends TileEntity with IInventory with IFluidHandler wit
   def canDrain(from: ForgeDirection, fluid: Fluid) = true
 
   def getTankInfo(from: ForgeDirection) = Array(fluidTank.getInfo)
-
-  def extractEnergy(from: ForgeDirection, maxExtract: Int, simulate: Boolean) = 0
 
   def receiveEnergy(from: ForgeDirection, maxRecieve: Int, simulate: Boolean) = energyStorage.receiveEnergy(maxRecieve, simulate)
 

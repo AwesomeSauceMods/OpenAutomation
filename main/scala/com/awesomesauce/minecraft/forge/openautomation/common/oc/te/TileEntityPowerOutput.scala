@@ -1,6 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
-import cofh.api.energy.{IEnergyConnection, IEnergyHandler}
+import cofh.api.energy.{IEnergyProvider, IEnergyReceiver}
 import li.cil.oc.api.Network
 import li.cil.oc.api.machine.{Arguments, Callback, Context}
 import li.cil.oc.api.network.Visibility
@@ -8,7 +8,7 @@ import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraftforge.common.util.ForgeDirection
 
 
-class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection {
+class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider {
 
   val node_ = Network.newNode(this, Visibility.Network).withComponent("powerOutput").withConnector(1000).create()
   node = node_
@@ -28,12 +28,11 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection
     if (node_ != null) {
       for (side <- ForgeDirection.VALID_DIRECTIONS) {
         val te = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ)
-        if (te.isInstanceOf[IEnergyHandler]) {
-          val energyHandler = te.asInstanceOf[IEnergyHandler]
+        if (te.isInstanceOf[IEnergyReceiver]) {
+          val energyHandler = te.asInstanceOf[IEnergyReceiver]
           val amountOfEnergyToDrain = energyHandler.receiveEnergy(side.getOpposite, maxOutput * 10, true).toDouble / 10
-          val bufferChanged = this.node_.changeBuffer(-amountOfEnergyToDrain)
-          val amountDrained = ((amountOfEnergyToDrain + bufferChanged) * 10).toInt
-          val transferred = energyHandler.receiveEnergy(side.getOpposite, amountDrained, false)
+          val drainedEnergy = extractEnergy(side, amountOfEnergyToDrain, false)
+          val transferred = energyHandler.receiveEnergy(side.getOpposite, am, false)
           /*
           println("aOETD:"+amountOfEnergyToDrain)
           println("bC:"+bufferChanged)
@@ -42,6 +41,25 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection
           println("s:"+side.toString)
           */
         }
+      }
+    }
+  }
+
+  def extractEnergy(side: ForgeDirection, maxExtract: Int, simulate: Boolean): Int = {
+    if (simulate) {
+      if (maxExtract < maxOutput) {
+        (node_.localBuffer() * 10).toInt
+      }
+      else {
+        maxOutput * 10
+      }
+    }
+    else {
+      if (maxExtract < maxOutput) {
+        (node_.changeBuffer(-maxExtract) * 10).toInt
+      }
+      else {
+        (node_.changeBuffer(-maxOutput) * 10).toInt
       }
     }
   }

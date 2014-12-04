@@ -57,12 +57,14 @@ object OpenAutomationOC extends OAModule {
     powerOutput.asInstanceOf[Description].addDescriptionLine("Outputs RF at a rate of 1:10RF")
     ocLaser = ItemUtil.makeBlock(oa, "ocLaser", Material.iron, () => new TileEntityDataLaser)
     ocLaser.asInstanceOf[Description].addDescriptionLine("Emits a data laser containing arbitary").addDescriptionLine("data.")
-    oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
-    oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
-    oalangt3 = ItemUtil.makeItem(oa, "oalangt3")
-    Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt1), 16))
-    Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt2), 32))
-    Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt3), 64))
+    if (oa.config.get("modules", "oc.enableOALang", false, "Enable the OALang stuff.").getBoolean) {
+      oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
+      oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
+      oalangt3 = ItemUtil.makeItem(oa, "oalangt3")
+      Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt1), 16))
+      Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt2), 32))
+      Driver.add(new DriverOAlangProcessor(new ItemStack(oalangt3), 64))
+    }
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(powerOutput),
       "xyx",
       "jad",

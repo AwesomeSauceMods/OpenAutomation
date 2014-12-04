@@ -1,5 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers
 
+import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te.{TileEntityEnergyLaserEmitter, TileEntityLaserMirror, TileEntityLaserReceiver, TileEntityLaserSplitter}
@@ -23,9 +24,13 @@ object OpenAutomationLasers extends OAModule {
 
   def preInit() = {
     energyLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityEnergyLaserEmitter)
+    energyLaserEmitter.asInstanceOf[Description].addDescriptionLine("Run RF into one side of it, emit").addDescriptionLine("laser out the other side.")
     laserReceiver = ItemUtil.makeBlock(oa, "laserReceiver", Material.iron, () => new TileEntityLaserReceiver)
+    laserReceiver.asInstanceOf[Description].addDescriptionLine("Receives a laser, and outputs it out the opposite side.")
     laserMirror = ItemUtil.makeBlock(oa, "laserMirror", Material.iron, () => new TileEntityLaserMirror)
+    laserMirror.asInstanceOf[Description].addDescriptionLine("Reflects a laser off it.").addDescriptionLine("Reflects off both sides of the mirror.").addUsage("Right Click", "Changes direction of reflection.")
     laserSplitter = ItemUtil.makeBlock(oa, "laserSplitter", Material.iron, () => new TileEntityLaserSplitter)
+    laserSplitter.asInstanceOf[Description].addDescriptionLine("Splits a laser in two.").addUsage("Right Click", "Changes direction of split.")
     laserFocus = ItemUtil.makeItem(oa, "laserFocus", true)
     laserEmitter = ItemUtil.makeItem(oa, "laserEmitter", true)
     laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)

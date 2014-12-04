@@ -16,8 +16,8 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyConnection
 
   def canConnectEnergy(side: ForgeDirection) = true
 
-  @Callback
-  def setOutput(context: Context, arguments: Arguments): Array[AnyRef] = {
+  @Callback(setter = true)
+  def output(context: Context, arguments: Arguments): Array[AnyRef] = {
     if (arguments.checkInteger(0) < 1000)
       maxOutput = arguments.checkInteger(0)
     Array(maxOutput.asInstanceOf[Integer])

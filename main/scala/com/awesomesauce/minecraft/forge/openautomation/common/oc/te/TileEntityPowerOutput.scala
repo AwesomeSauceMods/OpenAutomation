@@ -1,6 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import cofh.api.energy.{IEnergyProvider, IEnergyReceiver}
+import com.awesomesauce.minecraft.forge.core.lib.item.BasicDismantleableTile
 import li.cil.oc.api.Network
 import li.cil.oc.api.machine.{Arguments, Callback, Context}
 import li.cil.oc.api.network.Visibility
@@ -8,7 +9,7 @@ import li.cil.oc.api.prefab.TileEntityEnvironment
 import net.minecraftforge.common.util.ForgeDirection
 
 
-class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider {
+class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider with BasicDismantleableTile {
 
   val node_ = Network.newNode(this, Visibility.Network).withComponent("powerOutput").withConnector(1000).create()
   node = node_

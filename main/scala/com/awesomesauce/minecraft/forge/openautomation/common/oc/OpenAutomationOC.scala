@@ -1,6 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc
 
-import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
+import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
 import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemToolHead
@@ -37,10 +37,12 @@ object OpenAutomationOC extends OAModule {
     if (oa.config.get("modules", "oc.enableOldBuggy", false, "Enable the old, buggy p2p transport stuff.").getBoolean) {
       itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
       fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
-      toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1).asInstanceOf[ItemDescription]
+      toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1)
+      toolAddressCopier.asInstanceOf[Description]
         .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")
         .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
-      toolHeadAddressCopier = ItemUtil.makeItem(oa, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
+      toolHeadAddressCopier = ItemUtil.makeItem(oa, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier))
+      toolHeadAddressCopier.asInstanceOf[Description].addDescriptionLine("openautomation.tools.head.desc").indev
       pressureCrusher = ItemUtil.makeBlock(oa, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
       ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xzx",
         Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
@@ -52,7 +54,9 @@ object OpenAutomationOC extends OAModule {
         Character.valueOf('z'), "awesomeCore"))
     }
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
+    powerOutput.asInstanceOf[Description].addDescriptionLine("Outputs RF at a rate of 1:10RF")
     ocLaser = ItemUtil.makeBlock(oa, "ocLaser", Material.iron, () => new TileEntityDataLaser)
+    ocLaser.asInstanceOf[Description].addDescriptionLine("Emits a data laser containing arbitary").addDescriptionLine("data.")
     oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
     oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
     oalangt3 = ItemUtil.makeItem(oa, "oalangt3")

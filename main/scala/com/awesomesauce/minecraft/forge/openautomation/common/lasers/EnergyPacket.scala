@@ -1,6 +1,7 @@
-package com.awesomesauce.minecraft.forge.openautomation.api.lasers
+package com.awesomesauce.minecraft.forge.openautomation.common.lasers
 
 import cofh.api.energy.IEnergyHandler
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserPacket
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 

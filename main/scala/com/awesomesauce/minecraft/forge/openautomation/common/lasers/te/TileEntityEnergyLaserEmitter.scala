@@ -1,8 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
 import cofh.api.energy.IEnergyHandler
-import com.awesomesauce.minecraft.forge.openautomation.api.lasers.EnergyPacket
-import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.{EnergyPacket, LaserHelper}
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 

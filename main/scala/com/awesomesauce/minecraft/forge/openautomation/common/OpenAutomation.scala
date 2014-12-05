@@ -9,7 +9,7 @@ import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationE
 import cpw.mods.fml.common.{Loader, Mod, ModMetadata}
 import net.minecraft.item.Item
 
-@Mod(modid = OpenAutomation.MODID, name = OpenAutomation.MODNAME, modLanguage = "scala")
+@Mod(modid = OpenAutomation.MODID, name = OpenAutomation.MODNAME, modLanguage = "scala", dependencies = "after:OpenComputers; after:TConstruct")
 object OpenAutomation extends TAwesomeSauceMod with OAModule {
   final val MODID = "OpenAutomation"
   final val MODNAME = "OpenAutomation"
@@ -46,6 +46,13 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
   def getTextureDomain: String = "openautomation"
 
   def preInit() = {
+    addModules()
+    for (m <- modules) {
+      m.preInit()
+    }
+  }
+
+  def addModules() = {
     if (Loader.isModLoaded("OpenComputers")) {
       addModule(OpenAutomationOC)
     }
@@ -53,9 +60,6 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
       addModule(OpenAutomationTConstruct)
     }
     addModule(OpenAutomationLasers)
-    for (m <- modules) {
-      m.preInit()
-    }
   }
 
   def addModule(module: OAModule) = {

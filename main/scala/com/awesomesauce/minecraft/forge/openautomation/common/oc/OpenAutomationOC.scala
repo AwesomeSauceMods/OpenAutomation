@@ -31,7 +31,6 @@ object OpenAutomationOC extends OAModule {
   def preInit() = {
   }
 
-  //Init
   def init() = {
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
     powerOutput.asInstanceOf[Description].addDescriptionLine("Outputs RF at a rate of 1:10RF")

@@ -10,7 +10,6 @@ import net.minecraftforge.common.util.ForgeDirection
 
 
 class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider with BasicDismantleableTile {
-
   val node_ = Network.newNode(this, Visibility.Network).withComponent("powerOutput").withConnector(1000).create()
   node = node_
   var maxOutput = 1000
@@ -33,7 +32,7 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider w
           val energyHandler = te.asInstanceOf[IEnergyReceiver]
           val amountOfEnergyToDrain = energyHandler.receiveEnergy(side.getOpposite, maxOutput * 10, true).toDouble / 10
           val drainedEnergy = extractEnergy(side, amountOfEnergyToDrain.toInt, false)
-          val transferred = energyHandler.receiveEnergy(side.getOpposite, am, false)
+          val transferred = energyHandler.receiveEnergy(side.getOpposite, drainedEnergy, false)
           /*
           println("aOETD:"+amountOfEnergyToDrain)
           println("bC:"+bufferChanged)

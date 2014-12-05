@@ -3,15 +3,13 @@ package com.awesomesauce.minecraft.forge.openautomation.common.oc
 import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
-import com.awesomesauce.minecraft.forge.openautomation.common.item.ItemToolHead
-import com.awesomesauce.minecraft.forge.openautomation.common.oc.item.ItemAddressCopier
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.te._
 import li.cil.oc.api.{Driver, Items}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
+import net.minecraftforge.oredict.ShapedOreRecipe
 
 object OpenAutomationOC extends OAModule {
   val name = "OC"
@@ -34,25 +32,6 @@ object OpenAutomationOC extends OAModule {
   }
 
   def init() = {
-    if (oa.config.get("modules", "oc.enableOldBuggy", false, "Enable the old, buggy p2p transport stuff.").getBoolean) {
-      itemIO = ItemUtil.makeBlock(oa, "itemIO", Material.iron, () => new TileEntityItemIO, 2)
-      fluidIO = ItemUtil.makeBlock(oa, "fluidIO", Material.iron, () => new TileEntityFluidIO, 2)
-      toolAddressCopier = ItemUtil.makeItem(oa, "addressCopier", new ItemAddressCopier).setMaxStackSize(1)
-      toolAddressCopier.asInstanceOf[Description]
-        .addUsage("awesomesauce.rightclick", "openautomation.tools.addressCopier.usage")
-        .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
-      toolHeadAddressCopier = ItemUtil.makeItem(oa, "toolHeadAddressCopier", new ItemToolHead(toolAddressCopier))
-      toolHeadAddressCopier.asInstanceOf[Description].addDescriptionLine("openautomation.tools.head.desc").indev
-      pressureCrusher = ItemUtil.makeBlock(oa, "pressureCrusher", Material.iron, () => new TileEntityPressureCrusher)
-      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(itemIO), "xyx", "abc", "xzx",
-        Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
-        Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaItemCode", Character.valueOf('c'), "oaOutputCode",
-        Character.valueOf('z'), "awesomeCore"))
-      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(fluidIO), "xyx", "abc", "xzx",
-        Character.valueOf('x'), "ingotAwesomeite", Character.valueOf('y'), Items.get("printedCircuitBoard").createItemStack(1),
-        Character.valueOf('a'), "oaInputCode", Character.valueOf('b'), "oaFluidCode", Character.valueOf('c'), "oaOutputCode",
-        Character.valueOf('z'), "awesomeCore"))
-    }
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
     powerOutput.asInstanceOf[Description].addDescriptionLine("Outputs RF at a rate of 1:10RF")
     ocLaser = ItemUtil.makeBlock(oa, "ocLaser", Material.iron, () => new TileEntityDataLaser)
@@ -71,11 +50,8 @@ object OpenAutomationOC extends OAModule {
       "xmx",
       Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
-      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "oaOutputCode"))
+      Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "dustRedstone"))
 
-    ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(oa.codeBundle), Items.get("chip1").createItemStack(1), "blockAwesomeite"))
-    ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(oa.codeBundle), Items.get("chip2").createItemStack(1), "ingotAwesomeite", "ingotAwesomeite", "ingotAwesomeite"))
-    ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(oa.codeBundle), Items.get("chip3").createItemStack(1), "nuggetAwesomeite"))
   }
 
   def postInit() = {

@@ -1,9 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common
 
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
-import com.awesomesauce.minecraft.forge.core.lib.item.ItemDescription
-import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
-import com.awesomesauce.minecraft.forge.openautomation.common.item.{ItemCodeBundle, ItemSideDefiner, ItemToolHead}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.OpenAutomationLasers
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.OpenAutomationOC
 import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAutomationTConstruct
@@ -56,27 +53,6 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
       addModule(OpenAutomationTConstruct)
     }
     addModule(OpenAutomationLasers)
-    inputCode = ItemUtil.makeItem(oa, "oaInputCode", true)
-      .addDescriptionLine("openautomation.code.desc")
-      .addDescriptionLine("openautomation.inputCode.desc")
-    itemCode = ItemUtil.makeItem(oa, "oaItemCode", true)
-      .addDescriptionLine("openautomation.code.desc")
-      .addDescriptionLine("openautomation.itemCode.desc")
-    outputCode = ItemUtil.makeItem(oa, "oaOutputCode", true)
-      .addDescriptionLine("openautomation.code.desc")
-      .addDescriptionLine("openautomation.outputCode.desc")
-    fluidCode = ItemUtil.makeItem(oa, "oaFluidCode", true)
-      .addDescriptionLine("openautomation.code.desc")
-      .addDescriptionLine("openautomation.fluidCode.desc")
-    codeBundle = ItemUtil.makeItem(oa, "codeBundle", new ItemCodeBundle).asInstanceOf[ItemDescription]
-      .addDescriptionLine("openautomation.codeBundle.desc")
-      .addUsage("awesomesauce.rightclick", "openautomation.codeBundle.usage")
-    toolBase = ItemUtil.makeItem(oa, "toolBase")
-      .addDescriptionLine("openautomation.toolBase.desc").indev
-    toolSideDefiner = ItemUtil.makeItem(oa, "sideDefiner", new ItemSideDefiner).asInstanceOf[ItemDescription]
-      .addUsage("awesomesauce.rightclick", "openautomation.tools.sideDefiner.usage")
-      .addUsage("awesomesauce.shiftrightclick", "openautomation.tools.disassemble.usage").indev
-    toolHeadSideDefiner = ItemUtil.makeItem(oa, "toolHeadSideDefiner", new ItemToolHead(toolSideDefiner)).asInstanceOf[ItemDescription].addDescriptionLine("openautomation.tools.head.desc").indev
     for (m <- modules) {
       m.preInit()
     }

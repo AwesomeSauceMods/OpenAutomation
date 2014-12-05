@@ -63,4 +63,8 @@ class TileEntityPowerOutput extends TileEntityEnvironment with IEnergyProvider w
       }
     }
   }
+
+  def getEnergyStored(side: ForgeDirection) = (node_.localBuffer() * 10).toInt
+
+  def getMaxEnergyStored(side: ForgeDirection) = (node_.localBufferSize() * 10).toInt
 }

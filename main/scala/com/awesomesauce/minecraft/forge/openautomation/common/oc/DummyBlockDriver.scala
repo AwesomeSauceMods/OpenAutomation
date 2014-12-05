@@ -17,7 +17,7 @@ object DummyBlockDriver extends Block with EnvironmentAware {
       if (block.isInstanceOf[BlockSimpleContainer]) {
         val tile = block.asInstanceOf[BlockSimpleContainer].tile()
         if (tile.isInstanceOf[Environment]) {
-          return classOf[tile.asInstanceOf[Environment]]
+          return tile.asInstanceOf[Environment].getClass
         }
       }
     }

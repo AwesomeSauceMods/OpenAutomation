@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.common.lasers
+package com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets
 
 import cofh.api.energy.IEnergyReceiver
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserPacket

@@ -3,7 +3,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers
 import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
-import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te.{TileEntityEnergyLaserEmitter, TileEntityLaserMirror, TileEntityLaserReceiver, TileEntityLaserSplitter}
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te._
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
@@ -14,6 +14,7 @@ object OpenAutomationLasers extends OAModule {
   val name = "Lasers"
 
   var energyLaserEmitter: Block = null
+  var playerLaserEmitter: Block = null
   var laserReceiver: Block = null
   var laserMirror: Block = null
   var laserSplitter: Block = null
@@ -25,6 +26,8 @@ object OpenAutomationLasers extends OAModule {
   def preInit() = {
     energyLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityEnergyLaserEmitter)
     energyLaserEmitter.asInstanceOf[Description].addDescriptionLine("Run RF into one side of it, emit").addDescriptionLine("laser out the other side.")
+    playerLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityPlayerLaserEmitter)
+    perlayLaserEmitter.asInstanceOf[Description].addUsage("Right Click", "Send yourself to the other end.")
     laserReceiver = ItemUtil.makeBlock(oa, "laserReceiver", Material.iron, () => new TileEntityLaserReceiver)
     laserReceiver.asInstanceOf[Description].addDescriptionLine("Receives a laser, and outputs it out the opposite side.")
     laserMirror = ItemUtil.makeBlock(oa, "laserMirror", Material.iron, () => new TileEntityLaserMirror)

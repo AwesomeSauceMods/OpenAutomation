@@ -2,7 +2,8 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
 import cofh.api.energy.IEnergyHandler
 import com.awesomesauce.minecraft.forge.core.lib.item.BasicDismantleableTile
-import com.awesomesauce.minecraft.forge.openautomation.common.lasers.{EnergyPacket, LaserHelper}
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.EnergyPacket
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 

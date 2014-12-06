@@ -24,15 +24,13 @@ object OpenAutomationLasers extends OAModule {
 
   def preInit() = {
     energyLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityEnergyLaserEmitter)
-    energyLaserEmitter.asInstanceOf[Description].addDescriptionLine("Run RF into one side of it, emit").addDescriptionLine("laser out the other side.")
     playerLaserEmitter = ItemUtil.makeBlock(oa, "playerLaserEmitter", Material.iron, () => new TileEntityPlayerLaserEmitter)
-    playerLaserEmitter.asInstanceOf[Description].addUsage("Right Click", "Send yourself to the other end.")
+    playerLaserEmitter.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.playerLaserEmitter.usage.rightclick")
     laserReceiver = ItemUtil.makeBlock(oa, "laserReceiver", Material.iron, () => new TileEntityLaserReceiver)
-    laserReceiver.asInstanceOf[Description].addDescriptionLine("Receives a laser, and outputs it out the opposite side.")
     laserMirror = ItemUtil.makeBlock(oa, "laserMirror", Material.iron, () => new TileEntityLaserMirror)
-    laserMirror.asInstanceOf[Description].addDescriptionLine("Reflects a laser off it.").addDescriptionLine("Reflects off both sides of the mirror.").addUsage("Right Click", "Changes direction of reflection.")
+    laserMirror.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.laserMirror.usage.rightclick")
     laserSplitter = ItemUtil.makeBlock(oa, "laserSplitter", Material.iron, () => new TileEntityLaserSplitter)
-    laserSplitter.asInstanceOf[Description].addDescriptionLine("Splits a laser in two.").addUsage("Right Click", "Changes direction of split.")
+    laserSplitter.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.laserSplitter.usage.rightclick")
     laserFocus = ItemUtil.makeItem(oa, "laserFocus", true)
     laserEmitter = ItemUtil.makeItem(oa, "laserEmitter", true)
     laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)

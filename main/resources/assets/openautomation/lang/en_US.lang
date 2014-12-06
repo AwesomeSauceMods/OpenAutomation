@@ -1,43 +1,25 @@
 itemGroup.OpenAutomation=OpenAutomation
 
-tile.openautomation.itemIO.name=OA Item I/O
-tile.openautomation.itemAutoCore.name=OA Item Automation Core
-tile.openautomation.fluidIO.name=OA Fluid I/O
-tile.openautomation.workbench.name=OA Workbench
-
-item.openautomation.toolBase.name=OA Tool Base
-item.openautomation.toolHeadSideDefiner.name=OA Side Definer Tool Head
-item.openautomation.sideDefiner.name=OA Side Definer Tool
-item.openautomation.addressSelector.name=OA Address Selector Tool
-item.openautomation.recipeEncoder.name=OA Recipe Encoder Tool
-item.openautomation.craftingTableTool.name=OA Crafting Table Tool
-
-item.openautomation.codeBundle.name=OA Code Bundle
-item.openautomation.oaInputCode.name=OA Input Code
-item.openautomation.oaItemCode.name=OA Item Code
-item.openautomation.oaFluidCode.name=OA Fluid Code
-item.openautomation.oaOutputCode.name=OA Output Code
-
-openautomation.codeBundle.desc=A bundle of codes.
-openautomation.codeBundle.usage=Gives you 5 random codes.
-openautomation.code.desc=A raw code for usage in crafting.
-openautomation.inputCode.desc=This code is input into the network.
-openautomation.itemCode.desc=This code is for items.
-openautomation.fluidCode.desc=This code is for fluids.
-openautomation.outputCode.desc=This code is for output from the network.
-openautomation.tools.sideDefiner.usage=Set the side on an automation machine.
-openautomation.tools.disassemble.usage=Split the tool into the head and base.
-openautomation.toolBase.desc=The handle and base for the tools.
-
-tile.openautomation.pressureCrusher.name=OA Pressure Crusher
 tile.openautomation.powerOutput.name=Power Out-Converter
 
 tile.openautomation.tconstruct.melter.name=Micro-Smeltery Melter
 
 tile.openautomation.energyLaserEmitter.name=Redstone Laser Emitter
+openautomation.energyLaserEmitter.desc.1=Run RF into one side of it, emit
+openautomation.energyLaserEmitter.desc.2=laser out the other side.
+tile.openautomation.playerLaserEmitter.name=Human Laser Emitter
+openautomation.playerLaserEmitter.usage.rightclick=Send yourself to the other end.
 tile.openautomation.laserReceiver.name=Laser Receptor
+openautomation.laserReceiver.desc.1=Receives a laser, and outputs it out the opposite side.
 tile.openautomation.laserMirror.name=Mirror (Laser)
+openautomation.laserMirror.desc.1=Reflects a laser off it.
+openautomation.laserMirror.desc.2=Reflects off both sides of the mirror.
+openautomation.laserMirror.usage.rightclick=Changes direction of reflection.
 tile.openautomation.laserSplitter.name=Double Mirror (Laser)
+openautomation.laserSplitter.desc.1=Splits a laser in two.
+openautomation.laserSplitter.usage.rightclick=Changes direction of split.
+
+tile.openautomation.laser
 
 item.openautomation.laserFocus.name=Laser Focus
 item.openautomation.laserEmitter.name=Laser Emitter

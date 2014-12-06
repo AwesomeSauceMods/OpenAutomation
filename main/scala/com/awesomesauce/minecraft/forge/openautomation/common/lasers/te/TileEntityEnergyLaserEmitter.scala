@@ -1,14 +1,13 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
-import cofh.api.energy.IEnergyReceiver
+import cofh.api.energy.IEnergyHandler
 import com.awesomesauce.minecraft.forge.core.lib.item.BasicDismantleableTile
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.{EnergyPacket, LaserHelper}
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-
-class TileEntityEnergyLaserEmitter extends TileEntity with IEnergyReceiver with BasicDismantleableTile {
-
+class TileEntityEnergyLaserEmitter extends TileEntity with IEnergyHandler with BasicDismantleableTile {
+  def extractEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = 0
   def getEnergyStored(from: ForgeDirection) = 0
 
   def getMaxEnergyStored(from: ForgeDirection) = 10000

@@ -25,7 +25,7 @@ class TileEntityPlayerLaserEmitter extends TileEntity with IEnergyHandler with T
 
   def activate(player: EntityPlayer, side: Int, px: Float, py: Float, pz: Float) = {
     if (energyStorage.getEnergyStored >= energyCost) {
-      if (LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(side), new EntityPacket(player))) {
+      if (LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(side).getOpposite, new EntityPacket(player))) {
         PlayerUtil.sendChatMessage(player, "Successfully sent.")
         true
       }

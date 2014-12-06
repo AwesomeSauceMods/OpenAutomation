@@ -10,7 +10,7 @@ class EntityPacket(entity: EntityLivingBase) extends LaserPacket {
     if (!world.isAirBlock(x + to.offsetX, y + to.offsetY, z + to.offsetZ))
       false
     else {
-      entity.setPositionAndUpdate(x + to.offsetX, y + to.offsetY, z + to.offsetZ)
+      entity.setPositionAndUpdate(x + to.offsetX + 0.5, y + to.offsetY, z + to.offsetZ + 0.5)
       true
     }
   }

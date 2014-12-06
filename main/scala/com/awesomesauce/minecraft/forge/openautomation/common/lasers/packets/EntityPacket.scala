@@ -7,7 +7,7 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class EntityPacket(entity: Entity) extends LaserPacket {
   def arrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
-    if (world.getBlock(x + to.offsetX, y + to.offsetY, z + to.offsetZ).isCollidable)
+    if (!world.getBlock(x + to.offsetX, y + to.offsetY, z + to.offsetZ).isAir(world, x + to.offsetX, y + to.offsetY, z + to.offsetZ))
       false
     else {
       entity.setPosition(x + to.offsetX, y + to.offsetY, z + to.offsetZ)

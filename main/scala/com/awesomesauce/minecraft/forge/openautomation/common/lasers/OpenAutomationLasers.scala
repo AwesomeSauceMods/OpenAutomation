@@ -25,7 +25,7 @@ object OpenAutomationLasers extends OAModule {
   def preInit() = {
     energyLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityEnergyLaserEmitter)
     energyLaserEmitter.asInstanceOf[Description].addDescriptionLine("Run RF into one side of it, emit").addDescriptionLine("laser out the other side.")
-    playerLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityPlayerLaserEmitter)
+    playerLaserEmitter = ItemUtil.makeBlock(oa, "playerLaserEmitter", Material.iron, () => new TileEntityPlayerLaserEmitter)
     playerLaserEmitter.asInstanceOf[Description].addUsage("Right Click", "Send yourself to the other end.")
     laserReceiver = ItemUtil.makeBlock(oa, "laserReceiver", Material.iron, () => new TileEntityLaserReceiver)
     laserReceiver.asInstanceOf[Description].addDescriptionLine("Receives a laser, and outputs it out the opposite side.")

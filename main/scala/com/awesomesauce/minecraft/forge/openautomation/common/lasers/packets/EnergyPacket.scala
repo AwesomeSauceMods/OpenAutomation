@@ -1,6 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets
 
-import cofh.api.energy.IEnergyReceiver
+import cofh.api.energy.IEnergyHandler
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserPacket
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
@@ -9,8 +9,8 @@ class EnergyPacket(var amount: Double) extends LaserPacket {
   amount = amount - amount * 0.001
   def arrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection): Boolean = {
     val te = world.getTileEntity(x + to.offsetX, y + to.offsetY, z + to.offsetZ)
-    if (te.isInstanceOf[IEnergyReceiver]) {
-      return te.asInstanceOf[IEnergyReceiver].receiveEnergy(to.getOpposite, amount.toInt, false) > 0
+    if (te.isInstanceOf[IEnergyHandler]) {
+      return te.asInstanceOf[IEnergyHandler].receiveEnergy(to.getOpposite, amount.floor.toInt, false) > 0
     }
     false
   }

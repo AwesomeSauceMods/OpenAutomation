@@ -3,6 +3,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.oc
 import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
+import com.awesomesauce.minecraft.forge.openautomation.common.oc.driver.{DriverLaserMirror, EnvironmentBlockDriver}
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.te._
 import li.cil.oc.api.{API, Driver, Items}
@@ -52,7 +53,7 @@ object OpenAutomationOC extends OAModule {
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
       Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "dustRedstone"))
     API.driver.add(EnvironmentBlockDriver)
-
+    API.driver.add(DriverLaserMirror)
   }
 
   def postInit() = {

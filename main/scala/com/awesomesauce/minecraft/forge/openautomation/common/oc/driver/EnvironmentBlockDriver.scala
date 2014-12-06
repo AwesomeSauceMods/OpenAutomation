@@ -1,4 +1,4 @@
-package com.awesomesauce.minecraft.forge.openautomation.common.oc
+package com.awesomesauce.minecraft.forge.openautomation.common.oc.driver
 
 import com.awesomesauce.minecraft.forge.core.lib.item.BlockSimpleContainer
 import li.cil.oc.api.driver._

@@ -2,14 +2,14 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
 import com.awesomesauce.minecraft.forge.core.lib.item.{BasicDismantleableTile, TActivatedTileEntity}
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
-import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserPacket, LaserReciever}
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserMirror, LaserPacket}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileEntityLaserMirror extends TileEntity with LaserReciever with TActivatedTileEntity with BasicDismantleableTile {
+class TileEntityLaserMirror extends TileEntity with LaserMirror with TActivatedTileEntity with BasicDismantleableTile {
   var dir1: ForgeDirection = ForgeDirection.UP
   var dir2: ForgeDirection = ForgeDirection.EAST
 

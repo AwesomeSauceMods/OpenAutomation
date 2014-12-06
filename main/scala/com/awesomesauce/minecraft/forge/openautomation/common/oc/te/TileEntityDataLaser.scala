@@ -15,6 +15,7 @@ class TileEntityDataLaser extends TileEntityEnvironment with BasicDismantleableT
 
   @Callback(doc = "function(side:integer,data:object):boolean -- Sends a data laser with said packet.")
   def sendLaser(context: Context, arguments: Arguments): Array[AnyRef] = {
+    node_.tryChangeBuffer(-1)
     Array(LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord,
       ForgeDirection.getOrientation(arguments.checkInteger(0)), new DataPacket(arguments.checkAny(1))).asInstanceOf[java.lang.Boolean])
   }

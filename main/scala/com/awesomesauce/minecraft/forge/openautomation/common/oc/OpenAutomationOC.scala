@@ -51,7 +51,7 @@ object OpenAutomationOC extends OAModule {
       Character.valueOf('x'), "ingotIron", Character.valueOf('y'), "ingotGold",
       Character.valueOf('j'), Items.get("cable").createItemStack(1), Character.valueOf('a'), "ingotAwesomeite",
       Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "dustRedstone"))
-    API.driver.add(DummyBlockDriver)
+    API.driver.add(EnvironmentBlockDriver)
 
   }
 

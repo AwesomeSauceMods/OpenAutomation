@@ -19,7 +19,8 @@ tile.openautomation.laserSplitter.name=Double Mirror (Laser)
 openautomation.laserSplitter.desc.1=Splits a laser in two.
 openautomation.laserSplitter.usage.rightclick=Changes direction of split.
 
-tile.openautomation.laser
+tile.openautomation.ocLaser.name=Computer Based Laser
+openautomation.ocLaser.desc.1=component.laser.sendDataLaser(side, data)
 
 item.openautomation.laserFocus.name=Laser Focus
 item.openautomation.laserEmitter.name=Laser Emitter

@@ -3,15 +3,15 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 import cofh.api.energy.{EnergyStorage, IEnergyHandler}
 import com.awesomesauce.minecraft.forge.core.lib.item.{BasicDismantleableTile, TActivatedTileEntity}
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
-import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.EntityPacket
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.{LaserHelper, OpenAutomationLasers}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
 class TileEntityPlayerLaserEmitter extends TileEntity with IEnergyHandler with TActivatedTileEntity with BasicDismantleableTile {
-  val energyStorage = new EnergyStorage(1000000)
-  val energyCost = 100000
+  val energyStorage = new EnergyStorage(OpenAutomationLasers.playerLaserStorage)
+  val energyCost = OpenAutomationLasers.playerLaserCost
 
   def extractEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = 0
 

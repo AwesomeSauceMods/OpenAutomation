@@ -22,6 +22,10 @@ object OpenAutomationLasers extends OAModule {
   var laserReceptor: Item = null
   var laserMirrorCrafting: Item = null
 
+  var energyLaserMultiple = 0.0
+  var playerLaserCost = 0
+  var playerLaserStorage = 0
+
   def preInit() = {
     energyLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityEnergyLaserEmitter)
     playerLaserEmitter = ItemUtil.makeBlock(oa, "playerLaserEmitter", Material.iron, () => new TileEntityPlayerLaserEmitter)
@@ -36,6 +40,9 @@ object OpenAutomationLasers extends OAModule {
     laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)
     laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
     OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
+    energyLaserMultiple = oa.config.get("lasers", "energyLaserMultiple", 0.001, "The energy loss of a laser, as a multiple to subtract.").getDouble
+    playerLaserCost = oa.config.get("lasers", "playerLaserCost", 100000, "The cost for one operation of a player laser.").getInt
+    playerLaserStorage = oa.config.get("lasers", "playerLaserStorage", 1000000, "The maximum storage of a player laser.").getInt
   }
 
   def init() = {

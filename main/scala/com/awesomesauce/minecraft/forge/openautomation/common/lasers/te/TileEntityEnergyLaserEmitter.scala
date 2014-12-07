@@ -16,6 +16,7 @@ class TileEntityEnergyLaserEmitter extends TileEntity with IEnergyHandler with B
   def activate(player: EntityPlayer, side: Int, partx: Float, party: Float, partz: Float): Boolean = {
     PlayerUtil.sendChatMessage(player, dunnit.toString + "RF sent last laser.")
     PlayerUtil.sendChatMessage(player, maxDunnit.toString + "RF sent last laser.")
+    false
   }
   def extractEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = 0
   def getEnergyStored(from: ForgeDirection) = 0

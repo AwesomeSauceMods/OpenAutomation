@@ -1,6 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
-import com.awesomesauce.minecraft.forge.core.lib.item.TActivatedTileEntity
+import com.awesomesauce.minecraft.forge.core.lib.item.{TActivatedTileEntity, TRedstonePulseActivated}
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserAPI, LaserCallback, LaserHelper, PingSender}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.{CallbackPacket, PingPacket}
@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver with TActivatedTileEntity with PingSender {
+class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver with TActivatedTileEntity with PingSender with TRedstonePulseActivated {
   val energyCost = 10
   val energyStorageAmount = 1000
   var enabled = false
@@ -18,14 +18,6 @@ class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver wit
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var pingPlayer: EntityPlayer = null
 
-  override def updateEntity() = {
-    if (consumeEnergy()) {
-      if (enabled) {
-        LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new CallbackPacket(this, currentCallback))
-      }
-    }
-  }
-
   def pingArrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
     currentCallbackNum += 1
     currentCallback = LaserAPI.callbacks(currentCallbackNum)
@@ -33,6 +25,8 @@ class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver wit
       currentCallbackNum += 1
       currentCallback = LaserAPI.callbacks(currentCallbackNum)
     }
+    PlayerUtil.sendChatMessage(pingPlayer, "Callback: " + currentCallback.getName)
+    PlayerUtil.sendChatMessage(pingPlayer, currentCallback.getDescription)
   }
 
   def activate(player: EntityPlayer, s: Int, partx: Float, party: Float, partz: Float) = {
@@ -42,10 +36,22 @@ class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver wit
       true
     }
     else {
-      side = ForgeDirection.getOrientation(s).getOpposite
+      val newSide = ForgeDirection.getOrientation(s).getOpposite
+      if (side != newSide) {
+        side = newSide
+        PlayerUtil.sendChatMessage(player, "Set output side to: " + side.toString)
+      }
       pingPlayer = player
       LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new PingPacket(this))
       false
+    }
+  }
+
+  def pulse() = {
+    if (consumeEnergy()) {
+      if (enabled) {
+        LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new CallbackPacket(this, currentCallback))
+      }
     }
   }
 }

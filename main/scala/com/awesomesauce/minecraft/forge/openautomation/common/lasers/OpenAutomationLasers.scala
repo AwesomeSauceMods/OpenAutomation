@@ -2,6 +2,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers
 
 import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserAPI
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te._
 import net.minecraft.block.Block
@@ -40,6 +41,10 @@ object OpenAutomationLasers extends OAModule {
     laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)
     laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
     OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
+
+    LaserAPI.registerCallback(LaserMirrorRotateSide1Callback)
+    LaserAPI.registerCallback(LaserMirrorRotateSide2Callback)
+
     energyLaserMultiple = oa.config.get("lasers", "energyLaserMultiple", 0.001, "The energy loss of a laser, as a multiple to subtract.").getDouble
     playerLaserCost = oa.config.get("lasers", "playerLaserCost", 100000, "The cost for one operation of a player laser.").getInt
     playerLaserStorage = oa.config.get("lasers", "playerLaserStorage", 1000000, "The maximum storage of a player laser.").getInt

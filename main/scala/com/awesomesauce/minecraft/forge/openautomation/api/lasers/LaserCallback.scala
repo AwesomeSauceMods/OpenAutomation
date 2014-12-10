@@ -6,8 +6,10 @@ import net.minecraftforge.common.util.ForgeDirection
 
 trait LaserCallback {
   /**
-   * Returns a human readable name for the callback
-   * @return Human readable name for the callback
+   * Returns a period separated identifier for the callback
+   * (Not neccessary, but that is the way the official OA callbacks work.)
+   * e.g. "Laser.Mirror.Rotate.Side1"
+   * @return period separated identifier for the callback.
    */
   def getName: String
 

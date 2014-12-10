@@ -8,6 +8,7 @@ trait TEnergyReceiver extends TileEntity with IEnergyHandler {
   val energyStorageAmount: Int
   val energyCost: Int
   val energyStorage = new EnergyStorage(energyStorageAmount)
+  println(energyStorage.getMaxEnergyStored)
 
   def extractEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = 0
 

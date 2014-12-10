@@ -5,11 +5,10 @@ import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserAPI, LaserCallback, LaserHelper, PingSender}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.{CallbackPacket, PingPacket}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver with TActivatedTileEntity with PingSender with TRedstonePulseActivated {
+class TileEntityCallbackLaserEmitter extends TileEnergyReceiver with TActivatedTileEntity with PingSender with TRedstonePulseActivated {
   val energyCost = 10
   val energyStorageAmount = 1000
   var enabled = false

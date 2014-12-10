@@ -4,7 +4,7 @@ import cofh.api.energy.{EnergyStorage, IEnergyHandler}
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-trait TEnergyReceiver extends TileEntity with IEnergyHandler {
+abstract class TileEnergyReceiver extends TileEntity with IEnergyHandler {
   val energyStorageAmount: Int
   val energyCost: Int
   val energyStorage = new EnergyStorage(energyStorageAmount)

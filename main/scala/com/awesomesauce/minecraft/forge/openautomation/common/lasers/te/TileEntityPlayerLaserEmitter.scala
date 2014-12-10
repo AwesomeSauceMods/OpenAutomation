@@ -6,10 +6,9 @@ import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserHelper
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.OpenAutomationLasers
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.EntityPacket
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileEntityPlayerLaserEmitter extends TileEntity with TEnergyReceiver with TActivatedTileEntity with BasicDismantleableTile {
+class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TActivatedTileEntity with BasicDismantleableTile {
   val energyStorageAmount = OpenAutomationLasers.playerLaserStorage
   val energyCost = OpenAutomationLasers.playerLaserCost
 

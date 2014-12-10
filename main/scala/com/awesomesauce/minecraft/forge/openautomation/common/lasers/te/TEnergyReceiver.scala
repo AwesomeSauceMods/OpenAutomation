@@ -21,9 +21,13 @@ trait TEnergyReceiver extends TileEntity with IEnergyHandler {
 
   def consumeEnergy(): Boolean = {
     if (energyStorage.extractEnergy(energyCost, true) == energyCost) {
+      println("consuming: " + energyCost)
       energyStorage.extractEnergy(energyCost, false)
       true
     }
-    else false
+    else {
+      println("not consuming: " + energyCost)
+      false
+    }
   }
 }

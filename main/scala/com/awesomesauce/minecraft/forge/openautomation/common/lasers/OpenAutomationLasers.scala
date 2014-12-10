@@ -4,6 +4,7 @@ import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserAPI
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.callbacks._
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te._
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material

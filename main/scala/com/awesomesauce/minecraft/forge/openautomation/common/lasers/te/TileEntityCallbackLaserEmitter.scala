@@ -19,23 +19,24 @@ class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver wit
   var pingPlayer: EntityPlayer = null
 
   def pingArrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
+    nextCallback(world, x, y, z, to)
+    if (pingPlayer != null) {
+      PlayerUtil.sendChatMessage(pingPlayer, "Callback: " + currentCallback.getName)
+      PlayerUtil.sendChatMessage(pingPlayer, currentCallback.getDescription)
+    }
+  }
+
+  def nextCallback(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
     currentCallbackNum += 1
     currentCallback = LaserAPI.callbacks(currentCallbackNum)
     while (!currentCallback.isUseableOn(world, x, y, z, to)) {
       currentCallbackNum += 1
       currentCallback = LaserAPI.callbacks(currentCallbackNum)
     }
-    PlayerUtil.sendChatMessage(pingPlayer, "Callback: " + currentCallback.getName)
-    PlayerUtil.sendChatMessage(pingPlayer, currentCallback.getDescription)
   }
 
   def activate(player: EntityPlayer, s: Int, partx: Float, party: Float, partz: Float) = {
     if (player.isSneaking) {
-      enabled = !enabled
-      PlayerUtil.sendChatMessage(player, currentCallback.getName + " now enabled: " + enabled.toString)
-      true
-    }
-    else {
       val newSide = ForgeDirection.getOrientation(s).getOpposite
       if (side != newSide) {
         side = newSide
@@ -43,7 +44,12 @@ class TileEntityCallbackLaserEmitter extends TileEntity with TEnergyReceiver wit
       }
       pingPlayer = player
       LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new PingPacket(this))
-      false
+      true
+    }
+    else {
+      PlayerUtil.sendChatMessage(pingPlayer, "Callback: " + currentCallback.getName)
+      PlayerUtil.sendChatMessage(pingPlayer, currentCallback.getDescription)
+      true
     }
   }
 

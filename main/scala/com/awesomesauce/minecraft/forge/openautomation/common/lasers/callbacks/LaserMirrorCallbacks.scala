@@ -27,7 +27,7 @@ object LaserMirrorRotateSide2 extends LaserCallback {
 
   def isUseableOn(destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection): Boolean = destWorld.getTileEntity(destX, destY, destZ).isInstanceOf[LaserMirror]
 
-  def isExecutable(callbackEmitter: TileEntity, destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection): Boolean = {}
+  def isExecutable(callbackEmitter: TileEntity, destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection): Boolean = true
 
   def executeCallback(callbackEmitter: TileEntity, destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection) = {
     val mirror = destWorld.getTileEntity(destX, destY, destZ).asInstanceOf[LaserMirror]

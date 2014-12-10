@@ -14,7 +14,7 @@ class CallbackPacket(sender: TileEntity, callback: LaserCallback) extends LaserP
   def split(amount: Int) = {
     val arr = new Array[LaserPacket](amount)
     for (i <- Range(0, amount)) {
-      arr(i) = new CallbackPacket(callback)
+      arr(i) = new CallbackPacket(sender, callback)
     }
     arr
   }

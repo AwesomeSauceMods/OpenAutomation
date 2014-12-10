@@ -42,8 +42,9 @@ object OpenAutomationLasers extends OAModule {
     laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
     OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
 
-    LaserAPI.registerCallback(LaserMirrorRotateSide1Callback)
-    LaserAPI.registerCallback(LaserMirrorRotateSide2Callback)
+    LaserAPI.registerCallback(LaserMirrorRotateSide1)
+    LaserAPI.registerCallback(LaserMirrorRotateSide2)
+    LaserAPI.registerCallback(LaserCallbackChange)
 
     energyLaserMultiple = oa.config.get("lasers", "energyLaserMultiple", 0.001, "The energy loss of a laser, as a multiple to subtract.").getDouble
     playerLaserCost = oa.config.get("lasers", "playerLaserCost", 100000, "The cost for one operation of a player laser.").getInt

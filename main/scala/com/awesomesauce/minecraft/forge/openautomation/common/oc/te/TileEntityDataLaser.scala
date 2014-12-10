@@ -1,7 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc.te
 
 import com.awesomesauce.minecraft.forge.core.lib.item.BasicDismantleableTile
-import com.awesomesauce.minecraft.forge.openautomation.common.lasers.LaserHelper
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserHelper
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.DataPacket
 import li.cil.oc.api.Network
 import li.cil.oc.api.machine.{Arguments, Callback, Context}

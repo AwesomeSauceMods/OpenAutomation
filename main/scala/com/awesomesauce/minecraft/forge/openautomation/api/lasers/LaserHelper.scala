@@ -1,6 +1,5 @@
-package com.awesomesauce.minecraft.forge.openautomation.common.lasers
+package com.awesomesauce.minecraft.forge.openautomation.api.lasers
 
-import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserPacket, LaserReciever}
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 

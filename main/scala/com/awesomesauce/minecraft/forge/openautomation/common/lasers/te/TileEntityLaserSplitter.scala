@@ -41,7 +41,7 @@ class TileEntityLaserSplitter extends TileEntity with LaserMirror with TActivate
       LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, packet)
     }
     else {
-      false
+      LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, packet)
     }
   }
 

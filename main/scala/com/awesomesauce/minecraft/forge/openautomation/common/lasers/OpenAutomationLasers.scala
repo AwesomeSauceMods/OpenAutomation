@@ -49,7 +49,6 @@ object OpenAutomationLasers extends OAModule {
 
     energyLaserMultiple = oa.config.get("lasers", "energyLaserMultiple", 0.001, "The energy loss of a laser, as a multiple to subtract.").getDouble
     playerLaserCost = oa.config.get("lasers", "playerLaserCost", 100000, "The cost for one operation of a player laser.").getInt
-    playerLaserStorage = oa.config.get("lasers", "playerLaserStorage", 1000000, "The maximum storage of a player laser.").getInt
   }
 
   def init() = {
@@ -65,6 +64,10 @@ object OpenAutomationLasers extends OAModule {
       "iii", "abc", "idi",
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
       Character.valueOf('b'), "laserEmitter", Character.valueOf('c'), "dustRedstone",
+      Character.valueOf('d'), "ingotAwesomeite"))
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(playerLaserEmitter), "iii", "abc", "idi",
+      Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
+      Character.valueOf('b'), "laserEmitter", Character.valueOf('c'), "gearEnderium",
       Character.valueOf('d'), "ingotAwesomeite"))
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserReceiver),
       "iii", "abd", "idi",

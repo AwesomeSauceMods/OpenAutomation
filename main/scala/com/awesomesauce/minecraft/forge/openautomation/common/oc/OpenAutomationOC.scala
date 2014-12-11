@@ -36,7 +36,7 @@ object OpenAutomationOC extends OAModule {
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
     powerOutput.asInstanceOf[Description].addDescriptionLine("Outputs RF at a rate of 1:10RF")
     ocLaser = ItemUtil.makeBlock(oa, "ocLaser", Material.iron, () => new TileEntityDataLaser)
-    ocLaser.asInstanceOf[Description].addDescriptionLine("Emits a data laser containing arbitary").addDescriptionLine("data.")
+    ocLaser.asInstanceOf[Description].addDescriptionLine("Emits lasers from a computer.")
     if (oa.config.get("modules", "oc.enableOALang", false, "Enable the OALang stuff.").getBoolean) {
       oalangt1 = ItemUtil.makeItem(oa, "oalangt1")
       oalangt2 = ItemUtil.makeItem(oa, "oalangt2")
@@ -54,6 +54,12 @@ object OpenAutomationOC extends OAModule {
       Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "dustRedstone"))
     API.driver.add(EnvironmentBlockDriver)
     API.driver.add(DriverLaserMirror)
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(ocLaser),
+      "iei", "abc", "idi",
+      Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
+      Character.valueOf('b'), "laserEmitter",
+      Character.valueOf('c'), Items.get("cable").createItemStack(1),
+      Character.valueOf('d'), "ingotAwesomeite"))
   }
 
   def postInit() = {

@@ -5,9 +5,8 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
 abstract class TileEnergyReceiver extends TileEntity with IEnergyHandler {
-  val energyStorageAmount: Int
   val energyCost: Int
-  val energyStorage = new EnergyStorage(energyStorageAmount)
+  val energyStorage = new EnergyStorage(1000000)
   println(energyStorage.getMaxEnergyStored)
 
   def extractEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = 0

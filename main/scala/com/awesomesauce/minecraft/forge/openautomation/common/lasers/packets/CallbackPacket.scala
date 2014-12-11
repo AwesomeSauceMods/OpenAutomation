@@ -7,8 +7,13 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class CallbackPacket(sender: TileEntity, callback: LaserCallback) extends LaserPacket {
   def arrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
-    callback.executeCallback(sender, world, x, y, z, to)
-    true
+    if (callback.isUseableOn(world, x, y, z, to) && callback.isExecutable(sender, world, x, y, z, to)) {
+      callback.executeCallback(sender, world, x, y, z, to)
+      true
+    }
+    else {
+      false
+    }
   }
 
   def split(amount: Int) = {

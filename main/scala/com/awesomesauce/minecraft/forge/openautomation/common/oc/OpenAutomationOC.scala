@@ -2,8 +2,10 @@ package com.awesomesauce.minecraft.forge.openautomation.common.oc
 
 import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserAPI
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
-import com.awesomesauce.minecraft.forge.openautomation.common.oc.driver.{DriverLaserMirror, EnvironmentBlockDriver}
+import com.awesomesauce.minecraft.forge.openautomation.common.oc.callbacks._
+import com.awesomesauce.minecraft.forge.openautomation.common.oc.driver._
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.te._
 import li.cil.oc.api.{API, Driver, Items}
@@ -54,12 +56,15 @@ object OpenAutomationOC extends OAModule {
       Character.valueOf('d'), Items.get("printedCircuitBoard").createItemStack(1), Character.valueOf('m'), "dustRedstone"))
     API.driver.add(EnvironmentBlockDriver)
     API.driver.add(DriverLaserMirror)
+    API.driver.add(DriverCallbackLaserEmitter)
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(ocLaser),
       "iei", "abc", "idi",
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
       Character.valueOf('b'), "laserEmitter",
       Character.valueOf('c'), Items.get("cable").createItemStack(1),
       Character.valueOf('d'), "ingotAwesomeite"))
+    LaserAPI.registerCallback(ComputerPowerTurnOff)
+    LaserAPI.registerCallback(ComputerPowerTurnOn)
   }
 
   def postInit() = {

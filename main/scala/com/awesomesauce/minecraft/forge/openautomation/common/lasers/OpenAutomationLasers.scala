@@ -16,6 +16,8 @@ object OpenAutomationLasers extends OAModule {
 
   var energyLaserEmitter: Block = null
   var playerLaserEmitter: Block = null
+  var callbackLaserEmitter: Block = null
+
   var laserReceiver: Block = null
   var laserMirror: Block = null
   var laserSplitter: Block = null
@@ -32,6 +34,7 @@ object OpenAutomationLasers extends OAModule {
     energyLaserEmitter = ItemUtil.makeBlock(oa, "energyLaserEmitter", Material.iron, () => new TileEntityEnergyLaserEmitter)
     playerLaserEmitter = ItemUtil.makeBlock(oa, "playerLaserEmitter", Material.iron, () => new TileEntityPlayerLaserEmitter)
     playerLaserEmitter.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.playerLaserEmitter.usage.rightclick")
+    callbackLaserEmitter = ItemUtil.makeBlock(oa, "callbackLaserEmitter", Material.iron, () => new TileEntityCallbackLaserEmitter)
     laserReceiver = ItemUtil.makeBlock(oa, "laserReceiver", Material.iron, () => new TileEntityLaserReceiver)
     laserMirror = ItemUtil.makeBlock(oa, "laserMirror", Material.iron, () => new TileEntityLaserMirror)
     laserMirror.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.laserMirror.usage.rightclick")

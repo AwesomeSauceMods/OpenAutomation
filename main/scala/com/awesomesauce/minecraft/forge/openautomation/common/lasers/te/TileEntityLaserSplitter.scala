@@ -29,16 +29,12 @@ class TileEntityLaserSplitter extends TileEntity with LaserMirror with TActivate
   }
 
   def arrive(from: ForgeDirection, packet: LaserPacket): Boolean = {
-    var direction: ForgeDirection = from.getOpposite
+    var direction: ForgeDirection = dir1
     if (from == dir1) {
       direction = dir2
       val splitPacket = packet.split(2)
       LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, splitPacket(0)) ||
         LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction.getOpposite, splitPacket(1))
-    }
-    else if (from == dir2 || from == dir2.getOpposite) {
-      direction = dir1
-      LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, packet)
     }
     else {
       LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, direction, packet)

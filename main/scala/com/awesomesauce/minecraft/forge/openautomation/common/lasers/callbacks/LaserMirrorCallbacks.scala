@@ -17,6 +17,7 @@ object LaserMirrorRotateSide1 extends LaserCallback {
   def executeCallback(callbackEmitter: TileEntity, destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection) = {
     val mirror = destWorld.getTileEntity(destX, destY, destZ).asInstanceOf[LaserMirror]
     mirror.dir1 = destTo
+    true
   }
 }
 
@@ -32,6 +33,7 @@ object LaserMirrorRotateSide2 extends LaserCallback {
   def executeCallback(callbackEmitter: TileEntity, destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection) = {
     val mirror = destWorld.getTileEntity(destX, destY, destZ).asInstanceOf[LaserMirror]
     mirror.dir2 = destTo
+    true
   }
 }
 
@@ -47,5 +49,6 @@ object LaserMirrorRotateHorizontal extends LaserCallback {
   def executeCallback(callbackEmitter: TileEntity, destWorld: World, destX: Int, destY: Int, destZ: Int, destTo: ForgeDirection) = {
     val mirror = destWorld.getTileEntity(destX, destY, destZ).asInstanceOf[LaserMirror]
     mirror.dir2 = mirror.dir2.getOpposite
+    true
   }
 }

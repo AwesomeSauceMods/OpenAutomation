@@ -29,10 +29,12 @@ class TileEntityCallbackLaserEmitter extends TileEnergyReceiver with TActivatedT
     currentCallbackNum += 1
     currentCallback = LaserAPI.callbacks.get(currentCallbackNum)
     while (!currentCallback.isUseableOn(world, x, y, z, to)) {
-      if (currentCallbackNum >= LaserAPI.callbacks.size - 1)
+      if (currentCallbackNum >= LaserAPI.callbacks.size - 1) {
         currentCallbackNum = -1
+      }
       currentCallbackNum += 1
       currentCallback = LaserAPI.callbacks.get(currentCallbackNum)
+      println(currentCallbackNum + ":" + currentCallback.getName)
     }
   }
 

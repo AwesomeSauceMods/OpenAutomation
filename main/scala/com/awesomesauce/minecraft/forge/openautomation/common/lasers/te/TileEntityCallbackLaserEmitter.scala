@@ -46,8 +46,8 @@ class TileEntityCallbackLaserEmitter extends TileEnergyReceiver with TActivatedT
       true
     }
     else {
-      PlayerUtil.sendChatMessage(pingPlayer, "Callback: " + currentCallback.getName)
-      PlayerUtil.sendChatMessage(pingPlayer, currentCallback.getDescription)
+      PlayerUtil.sendChatMessage(player, "Callback: " + currentCallback.getName)
+      PlayerUtil.sendChatMessage(player, currentCallback.getDescription)
       true
     }
   }

@@ -37,6 +37,7 @@ class CallbackLaserEmitterEnvironment(emitter: TileEntityCallbackLaserEmitter) e
       if (LaserAPI.callbacks.get(i).getName.equalsIgnoreCase(arguments.checkString(0))) {
         emitter.currentCallbackNum = i
         emitter.currentCallback = LaserAPI.callbacks.get(i)
+        return Array(emitter.currentCallback.getName)
       }
     }
   }

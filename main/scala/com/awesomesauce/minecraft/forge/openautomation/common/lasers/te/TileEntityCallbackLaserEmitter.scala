@@ -13,7 +13,7 @@ class TileEntityCallbackLaserEmitter extends TileEnergyReceiver with TActivatedT
   val energyStorageAmount = 1000
   var enabled = false
   var currentCallbackNum = 0
-  var currentCallback: LaserCallback = LaserAPI.callbacks(0)
+  var currentCallback: LaserCallback = LaserAPI.callbacks.get(0)
   var side: ForgeDirection = ForgeDirection.UNKNOWN
   var pingPlayer: EntityPlayer = null
 
@@ -27,10 +27,10 @@ class TileEntityCallbackLaserEmitter extends TileEnergyReceiver with TActivatedT
 
   def nextCallback(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
     currentCallbackNum += 1
-    currentCallback = LaserAPI.callbacks(currentCallbackNum)
+    currentCallback = LaserAPI.callbacks.get(currentCallbackNum)
     while (!currentCallback.isUseableOn(world, x, y, z, to)) {
       currentCallbackNum += 1
-      currentCallback = LaserAPI.callbacks(currentCallbackNum)
+      currentCallback = LaserAPI.callbacks.get(currentCallbackNum)
     }
   }
 

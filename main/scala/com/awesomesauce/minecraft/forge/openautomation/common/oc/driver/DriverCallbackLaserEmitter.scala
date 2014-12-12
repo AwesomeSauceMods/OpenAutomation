@@ -33,8 +33,8 @@ class CallbackLaserEmitterEnvironment(emitter: TileEntityCallbackLaserEmitter) e
 
   @Callback(doc = "function(string):boolean -- Set the current callback. If a callback exists by that name, set it to that, else do nothing.")
   def setCallback(context: Context, arguments: Arguments): Array[AnyRef] = {
-    for (i <- Range(0, LaserAPI.callbacks.length)) {
-      if (LaserAPI.callbacks(i).getName.equalsIgnoreCase(arguments.checkString(0))) {
+    for (i <- Range(0, LaserAPI.callbacks.size)) {
+      if (LaserAPI.callbacks.get(i).getName.equalsIgnoreCase(arguments.checkString(0))) {
         emitter.currentCallbackNum = i
         emitter.currentCallback = LaserAPI.callbacks.get(i)
       }

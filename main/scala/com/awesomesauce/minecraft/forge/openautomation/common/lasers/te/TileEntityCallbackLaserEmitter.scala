@@ -2,7 +2,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
 import com.awesomesauce.minecraft.forge.core.lib.item.{TActivatedTileEntity, TRedstonePulseActivated}
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
-import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserAPI, LaserCallback, LaserHelper, PingSender}
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserCallback, LaserHelper, PingSender}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.{CallbackPacket, PingPacket}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World

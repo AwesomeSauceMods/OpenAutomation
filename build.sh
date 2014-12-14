@@ -12,3 +12,4 @@ git clone https://github.com/AwesomeSauceMods/RnDTech.git src
 cd ..
 bash gradlew setupCiWorkspace
 bash gradlew OpenAutomation:build
+#

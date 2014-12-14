@@ -3,4 +3,4 @@ scala:
   - "2.9.2"
 jdk:
   - oraclejdk7
-script: ./build.sh
+script: bash build.sh

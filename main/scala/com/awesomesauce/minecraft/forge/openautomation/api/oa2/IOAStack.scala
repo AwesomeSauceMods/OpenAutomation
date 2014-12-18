@@ -10,7 +10,7 @@ trait IOAStack {
    */
   def matchesUp(other: IOAStack): Boolean
 
-  def isCompatibleWith(te: TileEntity): Boolean
+  def isCompatibleWith(te: TileEntity, side: ForgeDirection): Boolean
 
   def pullStack(te: TileEntity, side: ForgeDirection): AnyRef
 

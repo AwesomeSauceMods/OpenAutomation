@@ -18,6 +18,9 @@ class StackItem extends AbstractStack {
   var minMetaFilter = Integer.MIN_VALUE
   var nbtFilter: NBTTagCompound = null
 
+  def isCompatibleWith(te: TileEntity, side: ForgeDirection): Boolean = {
+    te.isInstanceOf[IInventory]
+  }
   def pullStack(te: TileEntity, side: ForgeDirection): AnyRef = {
     if (te.isInstanceOf[IInventory]) {
       val inv = te.asInstanceOf[IInventory]

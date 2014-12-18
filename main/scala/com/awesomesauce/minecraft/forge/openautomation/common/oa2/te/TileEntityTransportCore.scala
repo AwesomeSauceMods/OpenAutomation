@@ -28,6 +28,6 @@ class TileEntityTransportCore extends TileEntityEnvironment with IOACore {
 
   @Callback
   def createStack(context: Context, arguments: Arguments): Array[AnyRef] = {
-
+    Array(null)
   }
 }

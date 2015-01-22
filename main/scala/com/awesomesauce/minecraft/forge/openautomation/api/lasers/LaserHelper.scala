@@ -17,7 +17,7 @@ object LaserHelper {
       ny += dir.offsetY
       nz += dir.offsetZ
       if (computronicsLoaded)
-        pl.asie.computronics.util.ParticleUtils.sendParticlePacket("reddust", world, nx+0.5, ny+0.5, nz+0.5, 0,0,0)
+        pl.asie.computronics.util.ParticleUtils.sendParticlePacket(packet.particleEffect, world, nx+0.5, ny+0.5, nz+0.5, 0,0,0)
     }
     if (world.getTileEntity(nx, ny, nz).isInstanceOf[LaserReciever]) {
       return world.getTileEntity(nx, ny, nz).asInstanceOf[LaserReciever].arrive(dir.getOpposite, packet)

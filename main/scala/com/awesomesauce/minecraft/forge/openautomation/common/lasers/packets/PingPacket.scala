@@ -6,7 +6,8 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class PingPacket(sender: PingSender) extends LaserPacket {
   def arrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
-    sender.pingArrive(world, x, y, z, to)
+    if (sender != null)
+      sender.pingArrive(world, x, y, z, to)
     true
   }
 

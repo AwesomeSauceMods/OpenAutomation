@@ -5,6 +5,7 @@ import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAut
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.{Fluid, FluidStack, FluidTank, IFluidHandler}
@@ -23,6 +24,26 @@ class TileEntityMelter extends TileEntity with IInventory with IFluidHandler wit
   var temperatures = new Array[Int](3)
   //BEGIN IInventory
   var inventory = new Array[ItemStack](3)
+
+  override def writeToNBT(tag: NBTTagCompound) = {
+    super.writeToNBT(tag)
+    val tankNBT = new NBTTagCompound
+    fluidTank.writeToNBT(tankNBT)
+    tag.setTag("tank", tankNBT)
+    val energyNBT = new NBTTagCompound
+    energyStorage.writeToNBT(energyNBT)
+    tag.setTag("energy", energyNBT)
+    tag.setIntArray("temperatures", temperatures)
+  }
+
+  override def readFromNBT(tag: NBTTagCompound) = {
+    super.readFromNBT(tag)
+    val tankNBT = tag.getCompoundTag("tank")
+    fluidTank.readFromNBT(tankNBT)
+    val energyNBT = tag.getCompoundTag("energy")
+    energyStorage.readFromNBT(energyNBT)
+    temperatures = tag.getIntArray("temperatures")
+  }
 
   override def updateEntity() = {
     for (i <- Range(0, 3)) {

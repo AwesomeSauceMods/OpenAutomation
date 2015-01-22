@@ -23,6 +23,7 @@ class TileEntityLaserSplitter extends TileEntity with LaserMirror with TActivate
       }
       PlayerUtil.sendChatMessage(player, "Receiving on side: " + dir1.toString)
       PlayerUtil.sendChatMessage(player, "Rotated to side: " + dir2.toString + " and: " + dir2.getOpposite.toString)
+      markDirty()
       true
     }
     else false
@@ -42,11 +43,13 @@ class TileEntityLaserSplitter extends TileEntity with LaserMirror with TActivate
   }
 
   override def writeToNBT(tag: NBTTagCompound) = {
+    super.writeToNBT(tag)
     tag.setString("dir1", dir1.toString)
     tag.setString("dir2", dir2.toString)
   }
 
   override def readFromNBT(tag: NBTTagCompound) = {
+    super.readFromNBT(tag)
     dir1 = ForgeDirection.valueOf(tag.getString("dir1"))
     dir2 = ForgeDirection.valueOf(tag.getString("dir2"))
   }

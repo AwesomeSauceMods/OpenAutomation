@@ -5,7 +5,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
 object LaserHelper {
-  lazy val computronicsLoaded = Loader.isModLoaded("Computronics")
+  lazy val computronicsLoaded = Loader.isModLoaded("computronics")
   def sendLaser(world: World, x: Int, y: Int, z: Int, dir: ForgeDirection, packet: LaserPacket): Boolean = {
     var nx = x + dir.offsetX
     var ny = y + dir.offsetY

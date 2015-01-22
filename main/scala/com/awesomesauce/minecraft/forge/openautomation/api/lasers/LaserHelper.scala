@@ -5,7 +5,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
 object LaserHelper {
-  val computronicsLoaded = Loader.isModLoaded("Computronics")
+  lazy val computronicsLoaded = Loader.isModLoaded("Computronics")
   def sendLaser(world: World, x: Int, y: Int, z: Int, dir: ForgeDirection, packet: LaserPacket): Boolean = {
     var nx = x + dir.offsetX
     var ny = y + dir.offsetY
@@ -17,7 +17,7 @@ object LaserHelper {
       ny += dir.offsetY
       nz += dir.offsetZ
       if (computronicsLoaded)
-        pl.asie.computronics.util.ParticleUtils.sendParticlePacket("reddust", world, nx, ny, nz, 0,0,0)
+        pl.asie.computronics.util.ParticleUtils.sendParticlePacket("reddust", world, nx+0.5, ny+0.5, nz+0.5, 0,0,0)
     }
     if (world.getTileEntity(nx, ny, nz).isInstanceOf[LaserReciever]) {
       return world.getTileEntity(nx, ny, nz).asInstanceOf[LaserReciever].arrive(dir.getOpposite, packet)

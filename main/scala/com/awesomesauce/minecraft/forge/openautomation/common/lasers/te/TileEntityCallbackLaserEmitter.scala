@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.ForgeDirection
 class TileEntityCallbackLaserEmitter extends TileEnergyReceiver with TActivatedTileEntity with PingSender with TRedstonePulseActivated {
   val energyCost = 10
   val energyStorageAmount = 1000
-  var enabled = false
+  var enabled = true
   var currentCallbackNum = 0
   var currentCallback: LaserCallback = LaserAPI.callbacks.get(0)
   var side: ForgeDirection = ForgeDirection.UNKNOWN

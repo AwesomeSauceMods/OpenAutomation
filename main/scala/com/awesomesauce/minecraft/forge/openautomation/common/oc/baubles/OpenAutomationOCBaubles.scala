@@ -5,7 +5,7 @@ import net.minecraft.item.Item
 
 
 object OpenAutomationOCBaubles extends OAModule {
-  def name = "OC.Baubles"
+  val name = "OC.Baubles"
 
   var baubleRingBase: Item = null
   var baubleAmuletBase: Item = null

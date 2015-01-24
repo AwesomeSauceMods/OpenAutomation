@@ -27,7 +27,8 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TActivatedTil
     }
     if (consumeEnergy()) {
       if (LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(side).getOpposite, new EntityPacket(player))) {
-        PlayerUtil.sendChatMessage(player, "Successfully sent.")
+        //PlayerUtil.sendChatMessage(player, "Successfully sent.")
+        worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F)
         true
       }
       else {

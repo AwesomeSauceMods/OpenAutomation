@@ -4,7 +4,7 @@ tile.openautomation.powerOutput.name=Power Out-Converter
 
 tile.openautomation.tconstruct.melter.name=Micro-Smeltery Melter
 
-tile.openautomation.energyLaserEmitter.name=Redstone Laser Emitter
+tile.openautomation.energyLaserEmitter.name=Energy Laser Emitter
 openautomation.energyLaserEmitter.desc.1=Run RF into one side of it, emit
 openautomation.energyLaserEmitter.desc.2=laser out the other side.
 tile.openautomation.playerLaserEmitter.name=Human Laser Emitter

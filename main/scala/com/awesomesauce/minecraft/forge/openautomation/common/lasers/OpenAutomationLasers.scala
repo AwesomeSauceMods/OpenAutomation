@@ -2,10 +2,11 @@ package com.awesomesauce.minecraft.forge.openautomation.common.lasers
 
 import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
-import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserAPI, NullCallback}
+import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{ILaserModule, LaserAPI, NullCallback}
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.callbacks._
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te._
+import com.awesomesauce.minecraft.forge.openautomation.common.lasers.upgrades.{ItemLaserUpgradeEfficiency, ItemLaserUpgradePotato}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
@@ -26,6 +27,9 @@ object OpenAutomationLasers extends OAModule {
   var laserEmitter: Item = null
   var laserReceptor: Item = null
   var laserMirrorCrafting: Item = null
+  var laserUpgradeBase: Item = null
+  var laserUpgradePotato: Item = null
+  var laserUpgradeEfficiency: Item = null
 
   var energyLaserMultiple = 0.0
   var playerLaserCost = 0
@@ -45,6 +49,12 @@ object OpenAutomationLasers extends OAModule {
     laserEmitter = ItemUtil.makeItem(oa, "laserEmitter", true)
     laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)
     laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
+
+    laserUpgradePotato = ItemUtil.makeItem(oa, "laserUpgradePotato", new ItemLaserUpgradePotato)
+    LaserAPI.registerLaserModule(laserUpgradePotato.asInstanceOf[ILaserModule])
+    laserUpgradeEfficiency = ItemUtil.makeItem(oa, "laserUpgradeEfficiency", new ItemLaserUpgradeEfficiency)
+    LaserAPI.registerLaserModule(laserUpgradeEfficiency.asInstanceOf[ILaserModule])
+
     OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
 
     LaserAPI.registerCallback(LaserMirrorRotateSide1)

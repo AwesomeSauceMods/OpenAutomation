@@ -1,7 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
 import cofh.api.energy.IEnergyHandler
-import com.awesomesauce.minecraft.forge.core.lib.item.{BasicDismantleableTile, TActivatedTileEntity}
+import com.awesomesauce.minecraft.forge.core.lib.item.BasicDismantleableTile
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserHelper
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.EnergyPacket
@@ -9,11 +9,13 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileEntityEnergyLaserEmitter extends TileEntity with IEnergyHandler with BasicDismantleableTile with TActivatedTileEntity {
+class TileEntityEnergyLaserEmitter extends TileEntity with TLaserEmitter with IEnergyHandler with BasicDismantleableTile {
   var dunnit = 0
   var maxDunnit = 0
 
-  def activate(player: EntityPlayer, side: Int, partx: Float, party: Float, partz: Float): Boolean = {
+  override def activate(player: EntityPlayer, side: Int, partx: Float, party: Float, partz: Float): Boolean = {
+    if (super.activate(player, side, partx, party, partz))
+      return true
     PlayerUtil.sendChatMessage(player, dunnit.toString + "RF sent last laser out of")
     PlayerUtil.sendChatMessage(player, maxDunnit.toString + "RF received last laser.")
     false

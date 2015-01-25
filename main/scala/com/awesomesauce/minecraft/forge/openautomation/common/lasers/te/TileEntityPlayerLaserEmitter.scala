@@ -1,6 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
-import com.awesomesauce.minecraft.forge.core.lib.item.{BasicDismantleableTile, TActivatedTileEntity}
+import com.awesomesauce.minecraft.forge.core.lib.item.BasicDismantleableTile
 import com.awesomesauce.minecraft.forge.core.lib.util.PlayerUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserHelper
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.OpenAutomationLasers
@@ -8,7 +8,7 @@ import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.{En
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TActivatedTileEntity with BasicDismantleableTile {
+class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter with BasicDismantleableTile {
   val energyStorageAmount = OpenAutomationLasers.playerLaserStorage
   val energyCost = OpenAutomationLasers.playerLaserCost
   var updateTicks = 0
@@ -20,7 +20,10 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TActivatedTil
       for (side <- ForgeDirection.values())
         LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new PingPacket(null))
   }
-  def activate(player: EntityPlayer, side: Int, px: Float, py: Float, pz: Float) = {
+
+  override def activate(player: EntityPlayer, side: Int, px: Float, py: Float, pz: Float): Boolean = {
+    if (super.activate(player, side, px, py, pz))
+      return true
     if (player.isSneaking) {
       sendPing = !sendPing
       PlayerUtil.sendChatMessage(player, "Sending guide laser: " + sendPing.toString)

@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
-class EntityPacket(entity: EntityLivingBase) extends LaserPacket {
+class EntityPacket(var entity: EntityLivingBase) extends LaserPacket {
   def arrive(world: World, x: Int, y: Int, z: Int, to: ForgeDirection) = {
     if (!world.isAirBlock(x + to.offsetX, y + to.offsetY, z + to.offsetZ))
       false

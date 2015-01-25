@@ -11,7 +11,7 @@ object LaserHelper {
     var ny = y + dir.offsetY
     var nz = z + dir.offsetZ
     var counter = 0
-    while (!world.getBlock(nx, ny, nz).isOpaqueCube && counter < 400) {
+    while (!world.getBlock(nx, ny, nz).isOpaqueCube && counter < 512) {
       if (computronicsLoaded)
         pl.asie.computronics.util.ParticleUtils.sendParticlePacket(packet.particleEffect, world, nx + 0.5, ny + 0.5, nz + 0.5, 0, 0, 0)
       counter += 1

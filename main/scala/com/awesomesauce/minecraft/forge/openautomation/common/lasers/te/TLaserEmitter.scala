@@ -22,10 +22,12 @@ trait TLaserEmitter extends TileEntity with TActivatedTileEntity {
   }
 
   def activate(player: EntityPlayer, side: Int, partx: Float, party: Float, partz: Float): Boolean = {
-    if (LaserAPI.isModule(player.getCurrentEquippedItem)) {
-      modules.add(LaserAPI.getModule(player.getCurrentEquippedItem))
-      PlayerUtil.sendChatMessage(player, "Added module.")
-    }
+    if (player.getHeldItem != null)
+      if (LaserAPI.isModule(player.getHeldItem)) {
+        modules.add(LaserAPI.getModule(player.getHeldItem))
+        PlayerUtil.sendChatMessage(player, "Added module.")
+        return true
+      }
     false
   }
 }

@@ -26,10 +26,12 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter
     sendPing = nbt.getBoolean("sendPing")
   }
   override def updateEntity() = {
-    updateTicks += 1
-    if (sendPing && updateTicks % updateEmitPing == 0)
-      for (side <- ForgeDirection.values())
-        LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new PingPacket(null))
+    if (sendPing) {
+      updateTicks += 1
+      if (updateTicks % updateEmitPing == 0)
+        for (side <- ForgeDirection.values())
+          LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, side, new PingPacket(null))
+    }
   }
 
   override def activate(player: EntityPlayer, side: Int, px: Float, py: Float, pz: Float): Boolean = {

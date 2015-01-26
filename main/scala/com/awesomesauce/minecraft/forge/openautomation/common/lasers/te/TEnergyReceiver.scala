@@ -32,12 +32,12 @@ abstract class TileEnergyReceiver extends TileEntity with IEnergyHandler {
     }
   }
 
-  override def writeToNBT(tag: NBTTagCompound) = {
+  override def writeToNBT(tag: NBTTagCompound): Unit = {
     super.writeToNBT(tag)
     energyStorage.writeToNBT(tag)
   }
 
-  override def readFromNBT(tag: NBTTagCompound) = {
+  override def readFromNBT(tag: NBTTagCompound): Unit = {
     super.readFromNBT(tag)
     energyStorage.readFromNBT(tag)
   }

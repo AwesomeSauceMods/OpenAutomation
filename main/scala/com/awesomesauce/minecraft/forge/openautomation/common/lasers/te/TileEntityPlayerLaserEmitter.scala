@@ -27,6 +27,7 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter
     if (player.isSneaking) {
       sendPing = !sendPing
       PlayerUtil.sendChatMessage(player, "Sending guide laser: " + sendPing.toString)
+      return false
     }
     if (consumeEnergy()) {
       if (LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(side).getOpposite, new EntityPacket(player))) {

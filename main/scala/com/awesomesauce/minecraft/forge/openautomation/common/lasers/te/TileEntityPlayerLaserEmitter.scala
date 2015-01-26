@@ -6,7 +6,6 @@ import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserHelper
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.OpenAutomationLasers
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.{EntityPacket, PingPacket}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
 
 class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter with BasicDismantleableTile {
@@ -14,19 +13,8 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter
   val energyCost = OpenAutomationLasers.playerLaserCost
   var updateTicks = 0
   val updateEmitPing = 100
-  var sendPing = true
+  var sendPing = false
 
-  override def writeToNBT(nbt: NBTTagCompound) = {
-    super.writeToNBT(nbt)
-    nbt.setBoolean("sendPing", sendPing)
-    println("saved sendPing as: " + sendPing)
-  }
-
-  override def readFromNBT(nbt: NBTTagCompound) = {
-    super.readFromNBT(nbt)
-    sendPing = nbt.getBoolean("sendPing")
-    println("loaded sendPing as: " + sendPing)
-  }
   override def updateEntity() = {
     if (sendPing) {
       updateTicks += 1

@@ -10,7 +10,7 @@ import com.awesomesauce.minecraft.forge.openautomation.common.lasers.upgrades.{I
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraftforge.oredict.{OreDictionary, ShapedOreRecipe}
+import net.minecraftforge.oredict.ShapedOreRecipe
 
 object OpenAutomationLasers extends OAModule {
   LaserAPI.registerCallback(NullCallback)
@@ -23,10 +23,6 @@ object OpenAutomationLasers extends OAModule {
   var laserReceiver: Block = null
   var laserMirror: Block = null
   var laserSplitter: Block = null
-  var laserFocus: Item = null
-  var laserEmitter: Item = null
-  var laserReceptor: Item = null
-  var laserMirrorCrafting: Item = null
   var laserUpgradeBase: Item = null
   var laserUpgradePotato: Item = null
   var laserUpgradeEfficiency: Item = null
@@ -45,17 +41,11 @@ object OpenAutomationLasers extends OAModule {
     laserMirror.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.laserMirror.usage.rightclick")
     laserSplitter = ItemUtil.makeBlock(oa, "laserSplitter", Material.iron, () => new TileEntityLaserSplitter)
     laserSplitter.asInstanceOf[Description].addUsage("awesomesauce.rightclick", "openautomation.laserSplitter.usage.rightclick")
-    laserFocus = ItemUtil.makeItem(oa, "laserFocus", true)
-    laserEmitter = ItemUtil.makeItem(oa, "laserEmitter", true)
-    laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)
-    laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
-
     laserUpgradePotato = ItemUtil.makeItem(oa, "laserUpgradePotato", new ItemLaserUpgradePotato)
     LaserAPI.registerLaserModule(laserUpgradePotato.asInstanceOf[ILaserModule])
     laserUpgradeEfficiency = ItemUtil.makeItem(oa, "laserUpgradeEfficiency", new ItemLaserUpgradeEfficiency)
     LaserAPI.registerLaserModule(laserUpgradeEfficiency.asInstanceOf[ILaserModule])
 
-    OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
 
     LaserAPI.registerCallback(LaserMirrorRotateSide1)
     LaserAPI.registerCallback(LaserMirrorRotateSide2)
@@ -65,15 +55,6 @@ object OpenAutomationLasers extends OAModule {
     playerLaserCost = oa.config.get("lasers", "playerLaserCost", 100000, "The cost for one operation of a player laser.").getInt
   }
 
-  def init() = {
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserFocus, 2), "aba", " a ",
-      Character.valueOf('b'), "blockGlass", Character.valueOf('a'), "nuggetAwesomeite"))
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEmitter), "aaa", " ba", "  a",
-      Character.valueOf('b'), "nuggetAwesomeite", Character.valueOf('a'), "dustGlowstone"))
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserReceptor), "aaa", " aa", "  a",
-      Character.valueOf('a'), "nuggetAwesomeite"))
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserMirrorCrafting, 2), "aba", "aba", " c ",
-      Character.valueOf('a'), "dustGlowstone", Character.valueOf('b'), "paneGlass", Character.valueOf('c'), "nuggetAwesomeite"))
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(energyLaserEmitter),
       "iii", "abc", "idi",
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",

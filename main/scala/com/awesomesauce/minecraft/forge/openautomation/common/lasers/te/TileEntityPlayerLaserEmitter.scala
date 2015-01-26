@@ -19,11 +19,13 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter
   override def writeToNBT(nbt: NBTTagCompound) = {
     super.writeToNBT(nbt)
     nbt.setBoolean("sendPing", sendPing)
+    println("saved sendPing as: " + sendPing)
   }
 
   override def readFromNBT(nbt: NBTTagCompound) = {
     super.readFromNBT(nbt)
     sendPing = nbt.getBoolean("sendPing")
+    println("loaded sendPing as: " + sendPing)
   }
   override def updateEntity() = {
     if (sendPing) {

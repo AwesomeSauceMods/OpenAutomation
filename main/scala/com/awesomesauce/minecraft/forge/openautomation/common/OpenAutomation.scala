@@ -1,6 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common
 
 import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
+import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.OpenAutomationLasers
 import com.awesomesauce.minecraft.forge.openautomation.common.oa2.OpenAutomationOA2
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.OpenAutomationOC
@@ -8,7 +9,8 @@ import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAut
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.{Loader, Mod, ModMetadata}
-import net.minecraft.item.Item
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraftforge.oredict.{OreDictionary, ShapedOreRecipe}
 
 @Mod(modid = OpenAutomation.MODID, name = OpenAutomation.MODNAME, modLanguage = "scala", dependencies = "after:OpenComputers; after:TConstruct")
 object OpenAutomation extends TAwesomeSauceMod with OAModule {
@@ -18,14 +20,11 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
   val modules = scala.collection.mutable.Set[OAModule]()
   @Mod.Metadata(MODID)
   var metadata: ModMetadata = null
-  var codeBundle: Item = null
-  var inputCode: Item = null
-  var itemCode: Item = null
-  var fluidCode: Item = null
-  var outputCode: Item = null
-  var toolBase: Item = null
-  var toolHeadSideDefiner: Item = null
-  var toolSideDefiner: Item = null
+
+  var laserFocus: Item = null
+  var laserEmitter: Item = null
+  var laserReceptor: Item = null
+  var laserMirrorCrafting: Item = null
 
   @EventHandler
   def aspri(e: FMLPreInitializationEvent) = super.awesomesaucepreinit(e)
@@ -42,7 +41,7 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
 
   override def getVersion = "0.3.0"
 
-  def getTabIconItem: () => net.minecraft.item.Item = () => codeBundle
+  def getTabIconItem: () => net.minecraft.item.Item = () => laserFocus
 
   def getTextureDomain: String = "openautomation"
 
@@ -51,6 +50,21 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
     for (m <- modules) {
       m.preInit()
     }
+    laserFocus = ItemUtil.makeItem(oa, "laserFocus", true)
+    laserEmitter = ItemUtil.makeItem(oa, "laserEmitter", true)
+    laserReceptor = ItemUtil.makeItem(oa, "laserReceptor", true)
+    laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
+
+    OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
+    def init() = {
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserFocus, 2), "aba", " a ",
+        Character.valueOf('b'), "blockGlass", Character.valueOf('a'), "nuggetAwesomeite"))
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEmitter), "aaa", " ba", "  a",
+        Character.valueOf('b'), "nuggetAwesomeite", Character.valueOf('a'), "dustGlowstone"))
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserReceptor), "aaa", " aa", "  a",
+        Character.valueOf('a'), "nuggetAwesomeite"))
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserMirrorCrafting, 2), "aba", "aba", " c ",
+        Character.valueOf('a'), "dustGlowstone", Character.valueOf('b'), "paneGlass", Character.valueOf('c'), "nuggetAwesomeite"))
   }
 
   def addModules() = {

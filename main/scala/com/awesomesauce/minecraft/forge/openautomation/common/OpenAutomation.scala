@@ -56,15 +56,14 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
     laserMirrorCrafting = ItemUtil.makeItem(oa, "laserMirrorCrafting")
 
     OreDictionary.registerOre("laserMirror", laserMirrorCrafting)
-    def init() = {
-      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserFocus, 2), "aba", " a ",
-        Character.valueOf('b'), "blockGlass", Character.valueOf('a'), "nuggetAwesomeite"))
-      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEmitter), "aaa", " ba", "  a",
-        Character.valueOf('b'), "nuggetAwesomeite", Character.valueOf('a'), "dustGlowstone"))
-      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserReceptor), "aaa", " aa", "  a",
-        Character.valueOf('a'), "nuggetAwesomeite"))
-      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserMirrorCrafting, 2), "aba", "aba", " c ",
-        Character.valueOf('a'), "dustGlowstone", Character.valueOf('b'), "paneGlass", Character.valueOf('c'), "nuggetAwesomeite"))
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserFocus, 2), "aba", " a ",
+      Character.valueOf('b'), "blockGlass", Character.valueOf('a'), "nuggetAwesomeite"))
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEmitter), "aaa", " ba", "  a",
+      Character.valueOf('b'), "nuggetAwesomeite", Character.valueOf('a'), "dustGlowstone"))
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserReceptor), "aaa", " aa", "  a",
+      Character.valueOf('a'), "nuggetAwesomeite"))
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserMirrorCrafting, 2), "aba", "aba", " c ",
+      Character.valueOf('a'), "dustGlowstone", Character.valueOf('b'), "paneGlass", Character.valueOf('c'), "nuggetAwesomeite"))
   }
 
   def addModules() = {

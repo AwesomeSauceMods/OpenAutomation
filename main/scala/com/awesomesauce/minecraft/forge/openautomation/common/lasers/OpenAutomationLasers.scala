@@ -55,6 +55,7 @@ object OpenAutomationLasers extends OAModule {
     playerLaserCost = oa.config.get("lasers", "playerLaserCost", 100000, "The cost for one operation of a player laser.").getInt
   }
 
+  def init() = {
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(energyLaserEmitter),
       "iii", "abc", "idi",
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",

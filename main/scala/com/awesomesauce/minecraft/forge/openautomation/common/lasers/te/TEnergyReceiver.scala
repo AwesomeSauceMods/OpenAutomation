@@ -1,6 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.lasers.te
 
 import cofh.api.energy.{EnergyStorage, IEnergyHandler}
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -29,5 +30,15 @@ abstract class TileEnergyReceiver extends TileEntity with IEnergyHandler {
       println("not consuming: " + energyCost)
       false
     }
+  }
+
+  override def writeToNBT(tag: NBTTagCompound) = {
+    super.writeToNBT(tag)
+    energyStorage.writeToNBT(tag)
+  }
+
+  override def readFromNBT(tag: NBTTagCompound) = {
+    super.readFromNBT(tag)
+    energyStorage.readFromNBT(tag)
   }
 }

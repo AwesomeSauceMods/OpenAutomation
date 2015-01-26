@@ -13,7 +13,7 @@ class TileEntityDataLaser extends TileEntityEnvironment with BasicDismantleableT
   val node_ = Network.newNode(this, Visibility.Network).withComponent("laser").withConnector(1000).create()
   node = node_
 
-  @Callback(doc = "function(side:integer,data:object):boolean -- Sends a data laser with said packet.")
+  @Callback(doc = "function(side:integer,message:anything):boolean -- Sends a data laser with said packet. The receiving end will receive a signal 'laser_message',address,message)
   def sendDataLaser(context: Context, arguments: Arguments): Array[AnyRef] = {
     node_.tryChangeBuffer(-1)
     Array(LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord,

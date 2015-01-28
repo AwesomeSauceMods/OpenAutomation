@@ -25,6 +25,8 @@ class TileEntityPlayerLaserEmitter extends TileEnergyReceiver with TLaserEmitter
   }
 
   override def activate(player: EntityPlayer, side: Int, px: Float, py: Float, pz: Float): Boolean = {
+    if (worldObj.isRemote)
+      return false
     if (super.activate(player, side, px, py, pz))
       return true
     if (player.isSneaking) {

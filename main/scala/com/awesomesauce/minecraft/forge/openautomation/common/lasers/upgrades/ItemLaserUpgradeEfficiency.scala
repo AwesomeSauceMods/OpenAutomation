@@ -12,10 +12,11 @@ class ItemLaserUpgradeEfficiency extends ItemSimple with ILaserModule {
   def stackIsModule(stack: ItemStack) = stack.getItem == this
 
   def modifyPacket(packet: LaserPacket) = {
-    if (packet.isInstanceOf[EnergyPacket]) {
-      val ePacket = packet.asInstanceOf[EnergyPacket]
-      ePacket.amount = ePacket.origAmount
-      ePacket.multiple = false
+    packet match {
+      case ePacket: EnergyPacket => {
+        ePacket.amount = ePacket.origAmount
+        ePacket.multiple = false
+      }
     }
   }
 

@@ -27,9 +27,11 @@ class TileEntityEnergyLaserEmitter extends TileEntity with TLaserEmitter with IE
 
   def getMaxEnergyStored(from: ForgeDirection) = 10000
 
+  def makePacket(energy: Int) = new EnergyPacket(energy)
+
   def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = {
     maxDunnit = maxReceive
-    if (LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, from.getOpposite, new EnergyPacket(maxReceive))) {
+    if (LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, from.getOpposite, makePacket(maxReceive))) {
       dunnit = maxReceive
       maxReceive
     }

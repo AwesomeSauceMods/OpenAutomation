@@ -4,6 +4,7 @@ import com.awesomesauce.minecraft.forge.core.lib.TAwesomeSauceMod
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.OpenAutomationLasers
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.OpenAutomationOC
+import com.awesomesauce.minecraft.forge.openautomation.common.power.OpenAutomationPower
 import com.awesomesauce.minecraft.forge.openautomation.common.tconstruct.OpenAutomationTConstruct
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
@@ -73,6 +74,7 @@ object OpenAutomation extends TAwesomeSauceMod with OAModule {
       addModule(OpenAutomationTConstruct)
     }
     addModule(OpenAutomationLasers)
+    addModule(OpenAutomationPower)
   }
 
   def addModule(module: OAModule) = {

@@ -2,6 +2,7 @@ package com.awesomesauce.minecraft.forge.openautomation.common.power.te
 
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.{LaserHelper, LaserPacket, LaserReciever}
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.packets.EnergyPacket
+import com.awesomesauce.minecraft.forge.openautomation.common.power.OpenAutomationPower
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -24,8 +25,8 @@ class TileEntityLaserEnergiser extends TileEntity with LaserReciever with IInven
 
   def arrive(from: ForgeDirection, laser: LaserPacket) = {
     if (laser.isInstanceOf[EnergyPacket] && laser.getCompound.hasKey("supportsEnergiser") && laser.getCompound.getBoolean("supportsEnergiser")) {
-      laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack)
-      stack = null
+      laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate
+      stack.stackSize -= 1
     }
     LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, from.getOpposite, laser)
   }
@@ -38,7 +39,7 @@ class TileEntityLaserEnergiser extends TileEntity with LaserReciever with IInven
 
   def isUseableByPlayer(p: EntityPlayer) = true
 
-  def getStackInSlot(s: Int) = null
+  def getStackInSlot(s: Int) = stack
 
   def hasCustomInventoryName = false
 

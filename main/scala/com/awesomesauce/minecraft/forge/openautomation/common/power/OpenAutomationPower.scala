@@ -9,7 +9,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.config.Configuration
-import net.minecraftforge.oredict.{ShapedOreRecipe, ShapelessOreRecipe}
+import net.minecraftforge.oredict.{OreDictionary, ShapedOreRecipe, ShapelessOreRecipe}
 
 
 object OpenAutomationPower extends OAModule {
@@ -27,7 +27,12 @@ object OpenAutomationPower extends OAModule {
   }
 
   def init() = {
+    if (OreDictionary.getOres("ingotElectrum").size() > 0)
     ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(laserEnergiserEmitter), OpenAutomationLasers.energyLaserEmitter, Blocks.redstone_block, "ingotElectrum"))
+    else
+      ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(laserEnergiserEmitter), OpenAutomationLasers.energyLaserEmitter, Blocks.redstone_block, "ingotIron", "ingotGold"))
+
+
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEnergiser), "xxx", "xyx", "yzy", Character.valueOf('x'), "dustRedstone", Character.valueOf('y'), "laserMirror", Character.valueOf('z'), Blocks.furnace))
   }
 

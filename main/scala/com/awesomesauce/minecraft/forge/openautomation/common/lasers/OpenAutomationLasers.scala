@@ -9,8 +9,9 @@ import com.awesomesauce.minecraft.forge.openautomation.common.lasers.te._
 import com.awesomesauce.minecraft.forge.openautomation.common.lasers.upgrades.{ItemLaserUpgradeEfficiency, ItemLaserUpgradePotato}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.init.Items
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraftforge.oredict.ShapedOreRecipe
+import net.minecraftforge.oredict.{OreDictionary, ShapedOreRecipe}
 
 object OpenAutomationLasers extends OAModule {
   LaserAPI.registerCallback(NullCallback)
@@ -61,10 +62,16 @@ object OpenAutomationLasers extends OAModule {
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
       Character.valueOf('b'), "laserEmitter", Character.valueOf('c'), "dustRedstone",
       Character.valueOf('d'), "ingotAwesomeite"))
+    if (OreDictionary.getOres("gearEnderium").size() > 0)
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(playerLaserEmitter), "iii", "abc", "idi",
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
       Character.valueOf('b'), "laserEmitter", Character.valueOf('c'), "gearEnderium",
       Character.valueOf('d'), "ingotAwesomeite"))
+    else
+      ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(playerLaserEmitter), "iii", "abc", "idi",
+        Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",
+        Character.valueOf('b'), "laserEmitter", Character.valueOf('c'), Items.ender_eye,
+        Character.valueOf('d'), "ingotAwesomeite"))
     ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserReceiver),
       "iii", "abd", "idi",
       Character.valueOf('i'), "ingotIron", Character.valueOf('a'), "laserFocus",

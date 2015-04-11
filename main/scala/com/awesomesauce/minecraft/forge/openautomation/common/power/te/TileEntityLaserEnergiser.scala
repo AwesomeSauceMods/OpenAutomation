@@ -25,8 +25,10 @@ class TileEntityLaserEnergiser extends TileEntity with LaserReciever with IInven
 
   def arrive(from: ForgeDirection, laser: LaserPacket) = {
     if (laser.isInstanceOf[EnergyPacket] && laser.getCompound.hasKey("supportsEnergiser") && laser.getCompound.getBoolean("supportsEnergiser")) {
-      if (laser.asInstanceOf[EnergyPacket].amount > TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate * 2) laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate
-      stack.stackSize -= 1
+      if (laser.asInstanceOf[EnergyPacket].amount > TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate * 2) {
+        laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate
+        stack.stackSize -= 1
+      }
     }
     LaserHelper.sendLaser(worldObj, xCoord, yCoord, zCoord, from.getOpposite, laser)
   }

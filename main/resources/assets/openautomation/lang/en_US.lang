@@ -22,6 +22,13 @@ openautomation.laserSplitter.usage.rightclick=Changes direction of split.
 tile.openautomation.ocLaser.name=Computer Based Laser
 openautomation.ocLaser.desc.1=component.laser.sendDataLaser(side, data)
 
+tile.openautomation.laserEnergisableEmitter.name=Energy Laser Emitter (Energisable)
+openautomation.laserEnergisableEmitter.desc.1=Same as before, but with the
+openautomation.laserEnergisableEmitter.desc.2=ability to generate power in transit.
+tile.openautomation.laserEnergiser.name=Laser Energiser (Solids)
+openautomation.laserEnergiser.desc.1=When an energisable laser travels through it,
+openautomation.laserEnergiser.desc.2=burns a fuel and generates energy.
+
 item.openautomation.laserFocus.name=Laser Focus
 item.openautomation.laserEmitter.name=Laser Emitter
 item.openautomation.laserReceptor.name=Laser Receptor

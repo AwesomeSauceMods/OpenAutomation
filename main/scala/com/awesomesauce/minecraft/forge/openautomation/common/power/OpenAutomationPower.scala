@@ -13,13 +13,13 @@ object OpenAutomationPower extends OAModule {
   var laserEnergiser: Block = null
   var laserEnergiserEmitter: Block = null
   var energisableRate = 200
-  var fuelOutputModifier = 10
+  var fuelOutputModifier = 20
 
   def preInit() = {
     laserEnergiser = ItemUtil.makeBlock(oa, "laserEnergiser", Material.iron, () => new TileEntityLaserEnergiser)
     laserEnergiserEmitter = ItemUtil.makeBlock(oa, "laserEnergisableEmitter", Material.iron, () => new TileEntityLaserEnergisableEmitter)
     energisableRate = oa.config.get(Configuration.CATEGORY_GENERAL, "power:energisableRate", 200, "Rate of sending energisable packets.").getInt
-    fuelOutputModifier = oa.config.get(Configuration.CATEGORY_GENERAL, "power:fuelOutputModifier", 10, "Multiplier for fuel output in RF.").getInt
+    fuelOutputModifier = oa.config.get(Configuration.CATEGORY_GENERAL, "power:fuelOutputModifier", 20, "Multiplier for fuel output in RF.").getInt
   }
 
   def init() = {}

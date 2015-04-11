@@ -25,7 +25,7 @@ class TileEntityEnergyLaserEmitter extends TileEntity with TLaserEmitter with IE
 
   def getEnergyStored(from: ForgeDirection) = 0
 
-  def getMaxEnergyStored(from: ForgeDirection) = 10000
+  def getMaxEnergyStored(from: ForgeDirection) = Integer.MAX_VALUE
 
   def makePacket(energy: Int) = new EnergyPacket(energy)
 

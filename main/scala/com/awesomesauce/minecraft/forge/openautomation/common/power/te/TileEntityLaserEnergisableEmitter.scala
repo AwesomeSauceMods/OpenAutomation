@@ -14,6 +14,7 @@ class TileEntityLaserEnergisableEmitter extends TileEntityEnergyLaserEmitter {
     val packet = new EnergyPacket(energy)
     packetsSent += 1
     if (packetsSent % OpenAutomationPower.energisableRate == 0) {
+      println("Sending energisable Packet.")
       packet.getCompound.setBoolean("supportsEnergiser", true)
     }
     return packet

@@ -28,7 +28,7 @@ object OpenAutomationPower extends OAModule {
 
   def init() = {
     ItemUtil.addRecipe(oa, new ShapelessOreRecipe(new ItemStack(laserEnergiserEmitter), OpenAutomationLasers.energyLaserEmitter, Blocks.redstone_block, "ingotElectrum"))
-    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEnergiser), "xxx", "xyx", "yzy", 'x', "dustRedstone", 'y', "laserMirror", 'z', Blocks.furnace))
+    ItemUtil.addRecipe(oa, new ShapedOreRecipe(new ItemStack(laserEnergiser), "xxx", "xyx", "yzy", Character.valueOf('x'), "dustRedstone", Character.valueOf('y'), "laserMirror", Character.valueOf('z'), Blocks.furnace))
   }
 
   def postInit() = {}

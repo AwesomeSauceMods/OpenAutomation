@@ -24,7 +24,7 @@ class TileEntityLaserEnergiser extends TileEntity with LaserReciever with IInven
   def getInventoryStackLimit = 1
 
   def arrive(from: ForgeDirection, laser: LaserPacket) = {
-    if (laser.isInstanceOf[EnergyPacket] && laser.getCompound.hasKey("supportsEnergiser") && laser.getCompound.getBoolean("supportsEnergiser")) {
+    if (stack != null && laser.isInstanceOf[EnergyPacket] && laser.getCompound.hasKey("supportsEnergiser") && laser.getCompound.getBoolean("supportsEnergiser")) {
       if (laser.asInstanceOf[EnergyPacket].amount >= TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate) {
         laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate
         stack.stackSize -= 1

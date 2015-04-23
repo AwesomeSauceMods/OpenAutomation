@@ -1,6 +1,7 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang
 
 import li.cil.oc.api.machine.{Architecture, ExecutionResult, Machine}
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList, NBTTagString}
 import net.minecraftforge.common.util.Constants.NBT
 
@@ -11,9 +12,7 @@ class OAlangArchitecture(val machine: Machine) extends Architecture {
 
   def isInitialized = initialized
 
-  def recomputeMemory() = {
-    //TODO
-  }
+  def recomputeMemory(components: java.lang.Iterable[ItemStack]) = true
 
   def initialize() = {
     interpreter = new OAlangInterpreter(new ComponentInterface(machine))

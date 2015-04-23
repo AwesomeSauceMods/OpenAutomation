@@ -34,11 +34,11 @@ object OpenAutomationOC extends OAModule {
   var ocLaser: Block = null
 
   def preInit() = {
+    if (Loader.isModLoaded("Baubles"))
+      oa.addModule(OpenAutomationOCBaubles)
   }
 
   def init() = {
-    if (Loader.isModLoaded("Baubles"))
-      oa.addModule(OpenAutomationOCBaubles)
     powerOutput = ItemUtil.makeBlock(oa, "powerOutput", Material.iron, () => new TileEntityPowerOutput)
     powerOutput.asInstanceOf[Description].addDescriptionLine("Outputs RF at a rate of 1:10RF")
     ocLaser = ItemUtil.makeBlock(oa, "ocLaser", Material.iron, () => new TileEntityDataLaser)

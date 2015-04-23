@@ -18,16 +18,16 @@ object OpenAutomationOCBaubles extends OAModule {
   var baubleBelt: Item = null
 
   def preInit() = {
+  }
+
+  def init() = {
+
     baubleRingBase = ItemUtil.makeItem(oa, "baubleRingBase")
     baubleAmuletBase = ItemUtil.makeItem(oa, "baubleAmuletBase")
     baubleBeltBase = ItemUtil.makeItem(oa, "baubleBeltBase")
     baubleRing = ItemUtil.makeItem(oa, "baubleRing", new ItemMachineBauble(BaubleType.RING))
     baubleAmulet = ItemUtil.makeItem(oa, "baubleAmulet", new ItemMachineBauble(BaubleType.AMULET))
     baubleBelt = ItemUtil.makeItem(oa, "baubleBelt", new ItemMachineBauble(BaubleType.BELT))
-  }
-
-  def init() = {
-
   }
 
   def postInit() = {

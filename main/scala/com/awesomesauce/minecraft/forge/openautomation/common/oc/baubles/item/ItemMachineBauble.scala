@@ -1,7 +1,6 @@
 package com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item
 
 import java.util
-import java.util.Objects
 
 import baubles.api.{BaubleType, IBauble}
 import li.cil.oc.api.Driver
@@ -86,7 +85,7 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
     def componentSlot(address: String): Int = {
       for (i <- Range(0, components.size())) {
         val environment = components.get(i)
-        if (environment != null && environment.node() != null && Objects.equals(environment.node().address(), address)) {
+        if (environment != null && environment.node() != null && environment.node().address().equals(address)) {
           return i
         }
       }

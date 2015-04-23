@@ -22,6 +22,7 @@ object BaubleAssembler {
       Driver.driverFor(item) match {
         case _: Memory => hasRAM = true
         case _: Processor => hasCPU = true
+        case _ => //IDC
       }
       if (Items.get(item) == Items.get("eeprom"))
         hasEEPROM = true
@@ -76,12 +77,6 @@ object BaubleAssembler {
       0
   }
 
-  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
-
-  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
-
-  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
-
   def assemble(inventory: IInventory): Array[AnyRef] = {
     var stack: ItemStack = null
     if (selectRing(inventory.getStackInSlot(0))) {
@@ -99,6 +94,12 @@ object BaubleAssembler {
     }
     Array[AnyRef](stack, Integer.valueOf(500))
   }
+
+  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
+
+  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
+
+  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
 
   def register() = {
 

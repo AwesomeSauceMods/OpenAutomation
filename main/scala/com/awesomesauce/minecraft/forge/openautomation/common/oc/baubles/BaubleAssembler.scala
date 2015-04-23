@@ -9,6 +9,7 @@ import li.cil.oc.api.{Driver, Items}
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
+import net.minecraft.util.ChatComponentText
 
 
 object BaubleAssembler {
@@ -26,19 +27,19 @@ object BaubleAssembler {
         hasEEPROM = true
     }
     if (!hasCPU) {
-      return Array(java.lang.Boolean.FALSE, "Requires CPU.")
+      return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires CPU."))
     }
     else if (!hasRAM) {
-      return Array(java.lang.Boolean.FALSE, "Requires RAM.")
+      return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires RAM."))
     }
     else if (!hasEEPROM) {
-      return Array(java.lang.Boolean.FALSE, "Requires EEPROM.")
+      return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires EEPROM"))
     }
     else if (complexity(inv) < maxComplexity(inv)) {
-      return Array(java.lang.Boolean.TRUE, complexity(inv) + "/" + maxComplexity(inv) + " Complexity.")
+      return Array(java.lang.Boolean.TRUE, new ChatComponentText(complexity(inv) + "/" + maxComplexity(inv) + " Complexity."))
     }
     else {
-      return Array(java.lang.Boolean.FALSE, complexity(inv) + "/" + maxComplexity(inv) + " Complexity.")
+      return Array(java.lang.Boolean.FALSE, new ChatComponentText(complexity(inv) + "/" + maxComplexity(inv) + " Complexity."))
     }
     Array[AnyRef](java.lang.Boolean.FALSE)
   }

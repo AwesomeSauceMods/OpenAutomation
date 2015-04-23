@@ -27,18 +27,23 @@ object BaubleAssembler {
         hasEEPROM = true
     }
     if (!hasCPU) {
+      println("Requires CPU")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires CPU."))
     }
     else if (!hasRAM) {
+      println("Requires RAM")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires RAM."))
     }
     else if (!hasEEPROM) {
+      println("Requires EEPROM")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires EEPROM"))
     }
     else if (complexity(inv) < maxComplexity(inv)) {
+      println("VALID")
       return Array(java.lang.Boolean.TRUE, new ChatComponentText(complexity(inv) + "/" + maxComplexity(inv) + " Complexity."))
     }
     else {
+      println("INVALID")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText(complexity(inv) + "/" + maxComplexity(inv) + " Complexity."))
     }
     Array[AnyRef](java.lang.Boolean.FALSE)
@@ -71,6 +76,12 @@ object BaubleAssembler {
       0
   }
 
+  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
+
+  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
+
+  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
+
   def assemble(inventory: IInventory): Array[AnyRef] = {
     var stack: ItemStack = null
     if (selectRing(inventory.getStackInSlot(0))) {
@@ -88,12 +99,6 @@ object BaubleAssembler {
     }
     Array[AnyRef](stack, Integer.valueOf(500))
   }
-
-  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
-
-  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
-
-  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
 
   def register() = {
 

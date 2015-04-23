@@ -6,6 +6,7 @@ class ComponentInterface(val machine: Machine) {
   var interpreter: OAlangInterpreter = null
 
   def invoke(address: String, callback: String, arguments: Array[AnyRef]): Array[AnyRef] = {
+    /*
     if (address == "interpreter") {
       if (callback == "load") {
         interpreter.index = 0
@@ -39,6 +40,8 @@ class ComponentInterface(val machine: Machine) {
       }
     }
     machine.invoke(address, callback, arguments)
+    */
+    null
   }
 
   def list() = machine.components()

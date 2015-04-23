@@ -85,7 +85,7 @@ object BaubleAssembler {
     for (i <- 1 until inventory.getSizeInventory) {
       items.appendTag(inventory.getStackInSlot(i).writeToNBT(new NBTTagCompound))
     }
-    Array[AnyRef](stack, 500)
+    Array[AnyRef](stack, Integer.valueOf(500))
   }
 
   def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase

@@ -77,6 +77,12 @@ object BaubleAssembler {
       0
   }
 
+  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
+
+  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
+
+  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
+
   def assemble(inventory: IInventory): Array[AnyRef] = {
     var stack: ItemStack = null
     if (selectRing(inventory.getStackInSlot(0))) {
@@ -90,16 +96,12 @@ object BaubleAssembler {
     }
     val items = new NBTTagList
     for (i <- 1 until inventory.getSizeInventory) {
-      items.appendTag(inventory.getStackInSlot(i).writeToNBT(new NBTTagCompound))
+      val tag = new NBTTagCompound
+      inventory.getStackInSlot(i).writeToNBT(tag)
+      items.appendTag(tag)
     }
     Array[AnyRef](stack, Integer.valueOf(500))
   }
-
-  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
-
-  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
-
-  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
 
   def register() = {
 

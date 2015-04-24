@@ -27,14 +27,14 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
       // Inventory loading.
       val stackNbt = itemNBT.getCompoundTagAt(in)
       val stack = ItemStack.loadItemStackFromNBT(stackNbt)
-      inventory.set(in, stack)
+      inventory.add(stack)
       val driver = Driver.driverFor(stack, getClass)
       if (stack != null && driver != null) {
         val environment = driver.createEnvironment(stack, this)
         if (environment != null) {
           environment.load(driver.dataTag(stack))
         }
-        components.set(in, environment)
+        components.add(environment)
         if (environment != null && environment.canUpdate) {
           updatingComponents.add(environment)
         }

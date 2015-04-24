@@ -8,6 +8,7 @@ import li.cil.oc.api.Driver
 import li.cil.oc.api.machine.MachineHost
 import li.cil.oc.api.network.{Connector, ManagedEnvironment, Node}
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraftforge.common.util.Constants
@@ -99,9 +100,15 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
 class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) with IBauble {
   val hostMap = scala.collection.mutable.Map[Int, MachineBaubleHost]()
 
-  override def receiveEnergy(stack: ItemStack, maxReceive: Int, simulate: Boolean) = {
-
-    super.receiveEnergy(stack, maxReceive, simulate)
+  override def addInformation(stack: ItemStack, player: EntityPlayer, l: java.util.List[_], bool: Boolean) = {
+    val list = l.asInstanceOf[java.util.List[Object]]
+    if (stack.getTagCompound.hasKey("id")) {
+      val host = hostMap(stack.getTagCompound.getInteger("id"))
+      if (host.machine.lastError() != null) {
+        list.add(host.machine.lastError())
+      }
+    }
+    list.add("" + getEnergyStored(stack) + "/" + getMaxEnergyStored(stack) + "RF")
   }
 
   override def getBaubleType(stack: ItemStack) = bType

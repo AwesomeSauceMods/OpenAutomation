@@ -3,12 +3,12 @@ package com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item
 import java.util
 
 import baubles.api.{BaubleType, IBauble}
-import cofh.api.energy.IEnergyContainerItem
+import cofh.api.energy.ItemEnergyContainer
 import li.cil.oc.api.Driver
 import li.cil.oc.api.machine.MachineHost
 import li.cil.oc.api.network.{Connector, ManagedEnvironment, Node}
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraftforge.common.util.Constants
 
@@ -96,26 +96,12 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
   }
 }
 
-class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnergyContainerItem {
+class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) with IBauble {
   val hostMap = scala.collection.mutable.Map[Int, MachineBaubleHost]()
 
-  def getEnergyStored(stack: ItemStack): Int = {
-    val host = hostMap(stack.getTagCompound.getInteger("id"))
-    (host.machine.node.asInstanceOf[Connector].globalBuffer() * 10).toInt
-  }
+  override def receiveEnergy(stack: ItemStack, maxReceive: Int, simulate: Boolean) = {
 
-  def extractEnergy(stack: ItemStack, maxExtract: Int, simulate: Boolean) = 0
-
-  def receiveEnergy(stack: ItemStack, maxInsert: Int, simulate: Boolean) = {
-    val host = hostMap(stack.getTagCompound.getInteger("id"))
-    val r = maxInsert - (host.machine.node.asInstanceOf[Connector].changeBuffer(maxInsert / 10) * 10).toInt
-    host.markChanged()
-    r
-  }
-
-  def getMaxEnergyStored(stack: ItemStack): Int = {
-    val host = hostMap(stack.getTagCompound.getInteger("id"))
-    (host.machine.node.asInstanceOf[Connector].globalBufferSize() * 10).toInt
+    super.receiveEnergy(stack, maxReceive, simulate)
   }
 
   override def getBaubleType(stack: ItemStack) = bType
@@ -123,6 +109,9 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnerg
   override def onWornTick(stack: ItemStack, player: EntityLivingBase) = {
     if (!player.isClientWorld) {
       val host = hostMap(stack.getTagCompound.getInteger("id"))
+      if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
+        host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
+      }
       if (!host.machine.isRunning)
         onEquipped(stack, player)
       host.machine.update()
@@ -137,6 +126,7 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnerg
     if (!player.isClientWorld) {
       val host = new MachineBaubleHost(stack, player)
       hostMap.put(stack.getTagCompound.getInteger("id"), host)
+      host.machine.node.asInstanceOf[Connector].setLocalBufferSize(1000)
       host.machine.start()
     }
   }
@@ -153,6 +143,7 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnerg
       }
       host.markChanged()
       hostMap.remove(stack.getTagCompound.getInteger("id"))
+      stack.getTagCompound.removeTag("id")
     }
   }
 

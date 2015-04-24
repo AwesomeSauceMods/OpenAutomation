@@ -103,12 +103,8 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   override def addInformation(stack: ItemStack, player: EntityPlayer, l: java.util.List[_], bool: Boolean) = {
     val list = l.asInstanceOf[java.util.List[Object]]
     if (stack.getTagCompound.hasKey("id")) {
-      list.add("id")
+      list.add("id" + stack.getTagCompound.getInteger("id"))
       val host = hosts.get(stack.getTagCompound.getInteger("id"))
-      list.add("Running: " + host.machine.isRunning)
-      if (host.machine.lastError() != null) {
-        list.add(host.machine.lastError())
-      }
     }
     list.add("" + getEnergyStored(stack) + "/" + getMaxEnergyStored(stack) + "RF")
   }
@@ -116,7 +112,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   override def getBaubleType(stack: ItemStack) = bType
 
   override def onWornTick(stack: ItemStack, player: EntityLivingBase) = {
-    if (!player.isClientWorld) {
+    if (!player.worldObj.isRemote) {
       val host = hosts.get(stack.getTagCompound.getInteger("id"))
       if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
         host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
@@ -152,7 +148,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
         }
       }
       host.markChanged()
-      hosts.remove(stack.getTagCompound.getInteger("id"))
+      hosts.set(stack.getTagCompound.getInteger("id"), null)
       stack.getTagCompound.removeTag("id")
     }
   }

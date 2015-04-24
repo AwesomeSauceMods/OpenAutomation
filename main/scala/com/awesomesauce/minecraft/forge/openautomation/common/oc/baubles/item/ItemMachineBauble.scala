@@ -3,9 +3,10 @@ package com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item
 import java.util
 
 import baubles.api.{BaubleType, IBauble}
+import cofh.api.energy.IEnergyContainerItem
 import li.cil.oc.api.Driver
 import li.cil.oc.api.machine.MachineHost
-import li.cil.oc.api.network.{ManagedEnvironment, Node}
+import li.cil.oc.api.network.{Connector, ManagedEnvironment, Node}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
@@ -90,8 +91,25 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
   }
 }
 
-class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
+class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnergyContainerItem {
   val hostMap = scala.collection.mutable.Map[Int, MachineBaubleHost]()
+
+  def getEnergyStored(stack: ItemStack): Int = {
+    val host = hostMap(stack.getTagCompound.getInteger("id"))
+    (host.machine.node.asInstanceOf[Connector].globalBuffer() * 10).toInt
+  }
+
+  def extractEnergy(stack: ItemStack, maxExtract: Int, simulate: Boolean) = 0
+
+  def receiveEnergy(stack: ItemStack, maxInsert: Int, simulate: Boolean) = {
+    val host = hostMap(stack.getTagCompound.getInteger("id"))
+    maxInsert - (host.machine.node.asInstanceOf[Connector].changeBuffer(maxInsert / 10) * 10).toInt
+  }
+
+  def getMaxEnergyStored(stack: ItemStack): Int = {
+    val host = hostMap(stack.getTagCompound.getInteger("id"))
+    (host.machine.node.asInstanceOf[Connector].globalBufferSize() * 10).toInt
+  }
 
   override def getBaubleType(stack: ItemStack) = bType
 

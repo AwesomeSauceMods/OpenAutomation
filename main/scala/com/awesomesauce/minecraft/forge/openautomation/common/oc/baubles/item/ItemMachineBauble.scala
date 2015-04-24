@@ -128,7 +128,10 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
       }
     }
     catch {
-      case _: IndexOutOfBoundsException => onEquipped(stack, player)
+      case e: IndexOutOfBoundsException => {
+        e.printStackTrace()
+        onEquipped(stack, player)
+      }
     }
   }
 

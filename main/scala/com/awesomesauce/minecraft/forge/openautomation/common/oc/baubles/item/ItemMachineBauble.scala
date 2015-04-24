@@ -104,6 +104,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
     val list = l.asInstanceOf[java.util.List[Object]]
     if (stack.getTagCompound.hasKey("id")) {
       val host = hostMap(stack.getTagCompound.getInteger("id"))
+      list.add("Running: " + host.machine.isRunning)
       if (host.machine.lastError() != null) {
         list.add(host.machine.lastError())
       }

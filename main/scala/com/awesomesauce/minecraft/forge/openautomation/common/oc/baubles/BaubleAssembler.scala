@@ -28,23 +28,18 @@ object BaubleAssembler {
         hasEEPROM = true
     }
     if (!hasCPU) {
-      println("Requires CPU")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires CPU."))
     }
     else if (!hasRAM) {
-      println("Requires RAM")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires RAM."))
     }
     else if (!hasEEPROM) {
-      println("Requires EEPROM")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText("Requires EEPROM"))
     }
     else if (complexity(inv) < maxComplexity(inv)) {
-      println("VALID")
       return Array(java.lang.Boolean.TRUE, new ChatComponentText(complexity(inv) + "/" + maxComplexity(inv) + " Complexity."))
     }
     else {
-      println("INVALID")
       return Array(java.lang.Boolean.FALSE, new ChatComponentText(complexity(inv) + "/" + maxComplexity(inv) + " Complexity."))
     }
     Array[AnyRef](java.lang.Boolean.FALSE)

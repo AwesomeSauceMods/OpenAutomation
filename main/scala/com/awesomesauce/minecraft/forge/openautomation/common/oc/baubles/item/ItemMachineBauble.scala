@@ -98,12 +98,12 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
 }
 
 class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) with IBauble {
-  val hostMap = scala.collection.mutable.Map[Int, MachineBaubleHost]()
+  val hosts = new java.util.ArrayList[MachineBaubleHost]()
 
   override def addInformation(stack: ItemStack, player: EntityPlayer, l: java.util.List[_], bool: Boolean) = {
     val list = l.asInstanceOf[java.util.List[Object]]
     if (stack.getTagCompound.hasKey("id")) {
-      val host = hostMap(stack.getTagCompound.getInteger("id"))
+      val host = hosts.get(stack.getTagCompound.getInteger("id"))
       list.add("Running: " + host.machine.isRunning)
       if (host.machine.lastError() != null) {
         list.add(host.machine.lastError())
@@ -116,7 +116,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
 
   override def onWornTick(stack: ItemStack, player: EntityLivingBase) = {
     if (!player.isClientWorld) {
-      val host = hostMap(stack.getTagCompound.getInteger("id"))
+      val host = hosts.get(stack.getTagCompound.getInteger("id"))
       if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
         host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
       }
@@ -133,7 +133,8 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   override def onEquipped(stack: ItemStack, player: EntityLivingBase) = {
     if (!player.isClientWorld) {
       val host = new MachineBaubleHost(stack, player)
-      hostMap.put(stack.getTagCompound.getInteger("id"), host)
+      stack.getTagCompound.setInteger("id", hosts.size)
+      hosts.add(host)
       host.machine.node.asInstanceOf[Connector].setLocalBufferSize(1000)
       host.machine.start()
     }
@@ -141,7 +142,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
 
   override def onUnequipped(stack: ItemStack, player: EntityLivingBase) = {
     if (!player.isClientWorld) {
-      val host = hostMap(stack.getTagCompound.getInteger("id"))
+      val host = hosts.get(stack.getTagCompound.getInteger("id"))
       host.machine.stop()
       for (i <- 0 until host.components.size) {
         val environment = host.components.get(i)
@@ -150,7 +151,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
         }
       }
       host.markChanged()
-      hostMap.remove(stack.getTagCompound.getInteger("id"))
+      hosts.remove(stack.getTagCompound.getInteger("id"))
       stack.getTagCompound.removeTag("id")
     }
   }

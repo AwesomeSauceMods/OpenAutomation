@@ -49,7 +49,7 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
 
       // Save components to items, first, so the info gets saved with the items.
       val environment = components.get(i)
-      val driver = Driver.driverFor(stack, getClass())
+      val driver = Driver.driverFor(stack, getClass)
       if (stack != null && environment != null && driver != null) {
         environment.save(driver.dataTag(stack))
       }
@@ -100,7 +100,8 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
     if (!host.machine.isRunning)
       onEquipped(stack, player)
     host.machine.update()
-    for (environment: ManagedEnvironment <- host.updatingComponents) {
+    for (i <- host.updatingComponents.size) {
+      val environment = host.updatingComponents.get(i)
       environment.update()
     }
   }
@@ -114,7 +115,8 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
   override def onUnequipped(stack: ItemStack, player: EntityLivingBase) = {
     val host = hostMap(stack.getTagCompound.getInteger("id"))
     host.machine.stop()
-    for (environment: ManagedEnvironment <- host.components) {
+    for (i <- 0 until host.components.size) {
+      val environment = host.components.get(i)
       if (environment != null) {
         environment.node.remove()
       }

@@ -101,7 +101,7 @@ object BaubleAssembler {
     val nbt = new NBTTagCompound
     nbt.setTag("items", items)
     stack.setTagCompound(nbt)
-    Array[AnyRef](stack, Double.valueOf(500))
+    Array[AnyRef](stack, java.lang.Double.valueOf(500))
   }
 
   def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
@@ -131,8 +131,8 @@ object BaubleAssembler {
     componentSlotRAM2.setInteger("tier", 1)
     componentSlotRAM2.setString("type", "memory")
     val componentSlotEEPROM = new NBTTagCompound
-    componentSlotCard1.setInteger("tier", 1)
-    componentSlotCard1.setString("type", "eeprom")
+    componentSlotEEPROM.setInteger("tier", 1)
+    componentSlotEEPROM.setString("type", "eeprom")
 
     val ringTag = new NBTTagCompound()
     ringTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectRing")
@@ -145,8 +145,8 @@ object BaubleAssembler {
     upgradeSlots.appendTag(upgradeSlot1)
     ringTag.setTag("upgradeSlots", upgradeSlots)
     var componentSlots = new NBTTagList
-    componentSlots.appendTag(componentSlotCard1)
-    componentSlots.appendTag(componentSlotCard1)
+    componentSlots.appendTag(new NBTTagCompound)
+    componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(componentSlotCPU2)
     componentSlots.appendTag(componentSlotRAM2)
@@ -159,7 +159,8 @@ object BaubleAssembler {
     amuletTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectAmulet")
     amuletTag.setString("validate", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.validate")
     amuletTag.setString("assemble", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.assemble")
-    amuletTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost") upgradeSlots = new NBTTagList
+    amuletTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost")
+    upgradeSlots = new NBTTagList
     upgradeSlots.appendTag(upgradeSlot2)
     upgradeSlots.appendTag(upgradeSlot2)
     upgradeSlots.appendTag(upgradeSlot1)

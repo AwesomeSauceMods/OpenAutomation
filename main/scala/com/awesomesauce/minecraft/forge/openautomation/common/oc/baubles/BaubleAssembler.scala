@@ -103,6 +103,9 @@ object BaubleAssembler {
         items.appendTag(tag)
       }
     }
+    val nbt = new NBTTagCompound
+    nbt.setTag("items", items)
+    stack.setTagCompound(nbt)
     Array[AnyRef](stack, Integer.valueOf(500))
   }
 

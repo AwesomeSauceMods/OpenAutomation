@@ -96,33 +96,39 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
   override def getBaubleType(stack: ItemStack) = bType
 
   override def onWornTick(stack: ItemStack, player: EntityLivingBase) = {
-    val host = hostMap(stack.getTagCompound.getInteger("id"))
-    if (!host.machine.isRunning)
-      onEquipped(stack, player)
-    host.machine.update()
-    for (i <- 0 until host.updatingComponents.size) {
-      val environment = host.updatingComponents.get(i)
-      environment.update()
+    if (!player.isClientWorld) {
+      val host = hostMap(stack.getTagCompound.getInteger("id"))
+      if (!host.machine.isRunning)
+        onEquipped(stack, player)
+      host.machine.update()
+      for (i <- 0 until host.updatingComponents.size) {
+        val environment = host.updatingComponents.get(i)
+        environment.update()
+      }
     }
   }
 
   override def onEquipped(stack: ItemStack, player: EntityLivingBase) = {
-    val host = new MachineBaubleHost(stack, player)
-    hostMap.put(stack.getTagCompound.getInteger("id"), host)
-    host.machine.start()
+    if (!player.isClientWorld) {
+      val host = new MachineBaubleHost(stack, player)
+      hostMap.put(stack.getTagCompound.getInteger("id"), host)
+      host.machine.start()
+    }
   }
 
   override def onUnequipped(stack: ItemStack, player: EntityLivingBase) = {
-    val host = hostMap(stack.getTagCompound.getInteger("id"))
-    host.machine.stop()
-    for (i <- 0 until host.components.size) {
-      val environment = host.components.get(i)
-      if (environment != null) {
-        environment.node.remove()
+    if (!player.isClientWorld) {
+      val host = hostMap(stack.getTagCompound.getInteger("id"))
+      host.machine.stop()
+      for (i <- 0 until host.components.size) {
+        val environment = host.components.get(i)
+        if (environment != null) {
+          environment.node.remove()
+        }
       }
+      host.markChanged()
+      hostMap.remove(stack.getTagCompound.getInteger("id"))
     }
-    host.markChanged()
-    hostMap.remove(stack.getTagCompound.getInteger("id"))
   }
 
   override def canEquip(stack: ItemStack, player: EntityLivingBase) = true

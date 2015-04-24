@@ -8,6 +8,7 @@ import li.cil.oc.api.machine.MachineHost
 import li.cil.oc.api.network.{ManagedEnvironment, Node}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraftforge.common.util.Constants
 
 
@@ -15,9 +16,9 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
   lazy final val machine = li.cil.oc.api.Machine.create(this)
   val nbt = stack.getTagCompound
   val itemNBT = nbt.getTagList("items", Constants.NBT.TAG_COMPOUND)
-  private val inventory = new util.ArrayList[ItemStack](itemNBT.tagCount())
-  private val components = new util.ArrayList[ManagedEnvironment](inventory.size)
-  private val updatingComponents = new util.ArrayList[ManagedEnvironment](inventory.size)
+  val inventory = new util.ArrayList[ItemStack](itemNBT.tagCount())
+  val components = new util.ArrayList[ManagedEnvironment](inventory.size)
+  val updatingComponents = new util.ArrayList[ManagedEnvironment](inventory.size)
   init()
 
   def init() = {
@@ -41,7 +42,28 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
     }
   }
 
-  def markChanged() = {}
+  def markChanged() = {
+    val itemsNbt = new NBTTagList
+    for (i <- 0 until inventory.size()) {
+      val stack = inventory.get(i)
+
+      // Save components to items, first, so the info gets saved with the items.
+      val environment = components.get(i)
+      val driver = Driver.driverFor(stack, getClass())
+      if (stack != null && environment != null && driver != null) {
+        environment.save(driver.dataTag(stack))
+      }
+
+      // Inventory saving.
+      val stackNbt = new NBTTagCompound
+      if (stack != null) {
+        stack.writeToNBT(stackNbt)
+      }
+      itemsNbt.appendTag(stackNbt)
+    }
+    nbt.setTag("items", itemsNbt)
+
+  }
 
   def internalComponents = inventory
 
@@ -75,7 +97,12 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
 
   override def onWornTick(stack: ItemStack, player: EntityLivingBase) = {
     val host = hostMap(stack.getTagCompound.getInteger("id"))
+    if (!host.machine.isRunning)
+      onEquipped(stack, player)
     host.machine.update()
+    for (environment: ManagedEnvironment <- host.updatingComponents) {
+      environment.update()
+    }
   }
 
   override def onEquipped(stack: ItemStack, player: EntityLivingBase) = {
@@ -87,6 +114,12 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
   override def onUnequipped(stack: ItemStack, player: EntityLivingBase) = {
     val host = hostMap(stack.getTagCompound.getInteger("id"))
     host.machine.stop()
+    for (environment: ManagedEnvironment <- host.components) {
+      if (environment != null) {
+        environment.node.remove()
+      }
+    }
+    host.markChanged()
     hostMap.remove(stack.getTagCompound.getInteger("id"))
   }
 

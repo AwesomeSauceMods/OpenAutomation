@@ -17,6 +17,7 @@ object OpenAutomationOCBaubles extends OAModule {
   var baubleAmulet: Item = null
   var baubleBelt: Item = null
 
+  var baubleModem: Item = null
   def preInit() = {
   }
 
@@ -27,6 +28,7 @@ object OpenAutomationOCBaubles extends OAModule {
     baubleRing = ItemUtil.makeItem(oa, "baubleRing", new ItemMachineBauble(BaubleType.RING))
     baubleAmulet = ItemUtil.makeItem(oa, "baubleAmulet", new ItemMachineBauble(BaubleType.AMULET))
     baubleBelt = ItemUtil.makeItem(oa, "baubleBelt", new ItemMachineBauble(BaubleType.BELT))
+    baubleModem = ItemUtil.makeItem(oa, "baubleModem")
     BaubleAssembler.register()
   }
 

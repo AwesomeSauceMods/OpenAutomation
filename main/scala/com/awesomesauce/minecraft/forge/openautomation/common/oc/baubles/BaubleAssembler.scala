@@ -101,7 +101,7 @@ object BaubleAssembler {
     val nbt = new NBTTagCompound
     nbt.setTag("items", items)
     stack.setTagCompound(nbt)
-    Array[AnyRef](stack, Integer.valueOf(500))
+    Array[AnyRef](stack, Double.valueOf(500))
   }
 
   def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
@@ -138,6 +138,7 @@ object BaubleAssembler {
     ringTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectRing")
     ringTag.setString("validate", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.validate")
     ringTag.setString("assemble", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.assemble")
+    ringTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost")
     var upgradeSlots = new NBTTagList
     upgradeSlots.appendTag(upgradeSlot1)
     upgradeSlots.appendTag(upgradeSlot1)
@@ -158,7 +159,7 @@ object BaubleAssembler {
     amuletTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectAmulet")
     amuletTag.setString("validate", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.validate")
     amuletTag.setString("assemble", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.assemble")
-    upgradeSlots = new NBTTagList
+    amuletTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost") upgradeSlots = new NBTTagList
     upgradeSlots.appendTag(upgradeSlot2)
     upgradeSlots.appendTag(upgradeSlot2)
     upgradeSlots.appendTag(upgradeSlot1)

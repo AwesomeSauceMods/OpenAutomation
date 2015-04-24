@@ -80,12 +80,15 @@ object BaubleAssembler {
   def assemble(inventory: IInventory): Array[AnyRef] = {
     var stack: ItemStack = null
     if (selectRing(inventory.getStackInSlot(0))) {
+      println("Assembling Ring.")
       stack = new ItemStack(OpenAutomationOCBaubles.baubleRing)
     }
     else if (selectAmulet(inventory.getStackInSlot(0))) {
+      println("Assembling Amulet.")
       stack = new ItemStack(OpenAutomationOCBaubles.baubleAmulet)
     }
     else if (selectBelt(inventory.getStackInSlot(0))) {
+      println("Assembling Belt.")
       stack = new ItemStack(OpenAutomationOCBaubles.baubleBelt)
     }
     else {

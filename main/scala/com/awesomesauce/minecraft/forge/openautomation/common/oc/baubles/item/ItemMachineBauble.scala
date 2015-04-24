@@ -112,18 +112,23 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   override def getBaubleType(stack: ItemStack) = bType
 
   override def onWornTick(stack: ItemStack, player: EntityLivingBase) = {
-    if (!player.worldObj.isRemote) {
-      val host = hosts.get(stack.getTagCompound.getInteger("id"))
-      if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
-        host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
+    try {
+      if (!player.worldObj.isRemote) {
+        val host = hosts.get(stack.getTagCompound.getInteger("id"))
+        if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
+          host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
+        }
+        if (!host.machine.isRunning)
+          onEquipped(stack, player)
+        host.machine.update()
+        for (i <- 0 until host.updatingComponents.size) {
+          val environment = host.updatingComponents.get(i)
+          environment.update()
+        }
       }
-      if (!host.machine.isRunning)
-        onEquipped(stack, player)
-      host.machine.update()
-      for (i <- 0 until host.updatingComponents.size) {
-        val environment = host.updatingComponents.get(i)
-        environment.update()
-      }
+    }
+    catch {
+      case _: IndexOutOfBoundsException => onEquipped(stack, player)
     }
   }
 

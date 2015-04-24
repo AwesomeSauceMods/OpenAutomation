@@ -41,6 +41,9 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
         }
       }
     }
+    if (nbt.hasKey("machine")) {
+      machine.load(nbt.getCompoundTag("machine"))
+    }
   }
 
   def markChanged() = {
@@ -63,7 +66,9 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
       itemsNbt.appendTag(stackNbt)
     }
     nbt.setTag("items", itemsNbt)
-
+    val machineTag = new NBTTagCompound
+    machine.save(machineTag)
+    nbt.setTag("machine", machineTag)
   }
 
   def internalComponents = inventory
@@ -104,6 +109,7 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnerg
   def receiveEnergy(stack: ItemStack, maxInsert: Int, simulate: Boolean) = {
     val host = hostMap(stack.getTagCompound.getInteger("id"))
     maxInsert - (host.machine.node.asInstanceOf[Connector].changeBuffer(maxInsert / 10) * 10).toInt
+    host.markChanged()
   }
 
   def getMaxEnergyStored(stack: ItemStack): Int = {

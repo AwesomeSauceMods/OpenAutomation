@@ -88,6 +88,10 @@ object BaubleAssembler {
     else if (selectBelt(inventory.getStackInSlot(0))) {
       stack = new ItemStack(OpenAutomationOCBaubles.baubleBelt)
     }
+    else {
+      println("WHAT THE FUUCK?")
+      return Array[AnyRef](null, Integer.valueOf(0))
+    }
     val items = new NBTTagList
     for (i <- 1 until inventory.getSizeInventory) {
       if (inventory.getStackInSlot(i) != null) {

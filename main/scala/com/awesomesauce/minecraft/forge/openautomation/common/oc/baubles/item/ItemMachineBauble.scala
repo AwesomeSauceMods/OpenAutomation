@@ -108,8 +108,9 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble with IEnerg
 
   def receiveEnergy(stack: ItemStack, maxInsert: Int, simulate: Boolean) = {
     val host = hostMap(stack.getTagCompound.getInteger("id"))
-    maxInsert - (host.machine.node.asInstanceOf[Connector].changeBuffer(maxInsert / 10) * 10).toInt
+    val r = maxInsert - (host.machine.node.asInstanceOf[Connector].changeBuffer(maxInsert / 10) * 10).toInt
     host.markChanged()
+    r
   }
 
   def getMaxEnergyStored(stack: ItemStack): Int = {

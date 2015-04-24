@@ -103,6 +103,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   override def addInformation(stack: ItemStack, player: EntityPlayer, l: java.util.List[_], bool: Boolean) = {
     val list = l.asInstanceOf[java.util.List[Object]]
     if (stack.getTagCompound.hasKey("id")) {
+      list.add("id")
       val host = hosts.get(stack.getTagCompound.getInteger("id"))
       list.add("Running: " + host.machine.isRunning)
       if (host.machine.lastError() != null) {
@@ -131,7 +132,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   }
 
   override def onEquipped(stack: ItemStack, player: EntityLivingBase) = {
-    if (!player.isClientWorld) {
+    if (!player.worldObj.isRemote) {
       val host = new MachineBaubleHost(stack, player)
       stack.getTagCompound.setInteger("id", hosts.size)
       hosts.add(host)
@@ -141,7 +142,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
   }
 
   override def onUnequipped(stack: ItemStack, player: EntityLivingBase) = {
-    if (!player.isClientWorld) {
+    if (!player.worldObj.isRemote) {
       val host = hosts.get(stack.getTagCompound.getInteger("id"))
       host.machine.stop()
       for (i <- 0 until host.components.size) {

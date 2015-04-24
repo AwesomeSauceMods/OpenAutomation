@@ -100,7 +100,7 @@ class ItemMachineBauble(bType: BaubleType) extends Item with IBauble {
     if (!host.machine.isRunning)
       onEquipped(stack, player)
     host.machine.update()
-    for (i <- host.updatingComponents.size) {
+    for (i <- 0 until host.updatingComponents.size) {
       val environment = host.updatingComponents.get(i)
       environment.update()
     }

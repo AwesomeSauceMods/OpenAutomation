@@ -52,6 +52,7 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
       if (environment != null) {
         environment.load(driver.dataTag(stack))
         components.add(environment)
+        machine.node.connect(environment.node)
         if (components.get(components.size() - 1).canUpdate) {
           updatingComponents.add(components.get(components.size() - 1))
         }

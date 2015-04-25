@@ -39,7 +39,7 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
 
   def createComponent(slot:Int, stack:ItemStack) {
     // This check is just needed to make it simpler to use in onConnect.
-    if (stack == null || components.get(slot) != null) return
+    if (stack == null) return
 
     // Get the driver for the component, so we can create an environment.
     // You don't have to pass the host class here, but it's the preferred

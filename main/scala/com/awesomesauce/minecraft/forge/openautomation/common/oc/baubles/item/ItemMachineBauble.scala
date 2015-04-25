@@ -30,20 +30,30 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
       val stackNbt = itemNBT.getCompoundTagAt(in)
       val stack = ItemStack.loadItemStackFromNBT(stackNbt)
       inventory.add(stack)
-      val driver = Driver.driverFor(stack, getClass)
-      if (stack != null && driver != null) {
-        val environment = driver.createEnvironment(stack, this)
-        if (environment != null) {
-          environment.load(driver.dataTag(stack))
-        }
-        components.add(environment)
-        if (environment != null && environment.canUpdate) {
-          updatingComponents.add(environment)
-        }
-      }
+      createComponent(in, stack)
     }
     if (nbt.hasKey("machine")) {
       machine.load(nbt.getCompoundTag("machine"))
+    }
+  }
+
+  def createComponent(slot:Int, stack:ItemStack) {
+    // This check is just needed to make it simpler to use in onConnect.
+    if (stack == null || components.get(slot) != null) return
+
+    // Get the driver for the component, so we can create an environment.
+    // You don't have to pass the host class here, but it's the preferred
+    // way, since that allows for component blacklisting by host.
+    val driver = Driver.driverFor(stack, getClass)
+    if (driver != null) {
+      val environment = driver.createEnvironment(stack, this)
+      if (environment != null) {
+        environment.load(driver.dataTag(stack))
+        components.add(environment)
+        if (components.get(slot).canUpdate) {
+          updatingComponents.add(components.get(slot))
+        }
+      }
     }
   }
 

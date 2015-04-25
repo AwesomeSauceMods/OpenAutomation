@@ -61,22 +61,27 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
 
   def markChanged() = {
     val itemsNbt = new NBTTagList
-    for (i <- 0 until inventory.size()) {
-      val stack = inventory.get(i)
+    try {
+      for (i <- 0 until inventory.size()) {
+        val stack = inventory.get(i)
 
-      // Save components to items, first, so the info gets saved with the items.
-      val environment = components.get(i)
-      val driver = Driver.driverFor(stack, getClass)
-      if (stack != null && environment != null && driver != null) {
-        environment.save(driver.dataTag(stack))
-      }
+        // Save components to items, first, so the info gets saved with the items.
+        val environment = components.get(i)
+        val driver = Driver.driverFor(stack, getClass)
+        if (stack != null && environment != null && driver != null) {
+          environment.save(driver.dataTag(stack))
+        }
 
-      // Inventory saving.
-      val stackNbt = new NBTTagCompound
-      if (stack != null) {
-        stack.writeToNBT(stackNbt)
+        // Inventory saving.
+        val stackNbt = new NBTTagCompound
+        if (stack != null) {
+          stack.writeToNBT(stackNbt)
+        }
+        itemsNbt.appendTag(stackNbt)
       }
-      itemsNbt.appendTag(stackNbt)
+    }
+    catch {
+      case e: IndexOutOfBoundsException =>
     }
     nbt.setTag("items", itemsNbt)
     val machineTag = new NBTTagCompound

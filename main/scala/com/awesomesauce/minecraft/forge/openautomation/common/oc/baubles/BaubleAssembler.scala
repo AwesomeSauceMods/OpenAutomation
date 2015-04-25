@@ -72,6 +72,12 @@ object BaubleAssembler {
       0
   }
 
+  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
+
+  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
+
+  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
+
   def assemble(inventory: IInventory): Array[AnyRef] = {
     var stack: ItemStack = null
     if (selectRing(inventory.getStackInSlot(0))) {
@@ -104,12 +110,6 @@ object BaubleAssembler {
     Array[AnyRef](stack, java.lang.Double.valueOf(500))
   }
 
-  def selectRing(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleRingBase
-
-  def selectAmulet(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleAmuletBase
-
-  def selectBelt(stack: ItemStack) = stack.getItem == OpenAutomationOCBaubles.baubleBeltBase
-
   def register() = {
 
     val upgradeSlot1 = new NBTTagCompound
@@ -124,12 +124,12 @@ object BaubleAssembler {
     val componentSlotCard2 = new NBTTagCompound
     componentSlotCard2.setInteger("tier", 1)
     componentSlotCard2.setString("type", "card")
-    val componentSlotCPU2 = new NBTTagCompound
-    componentSlotCPU2.setInteger("tier", 1)
-    componentSlotCPU2.setString("type", "cpu")
-    val componentSlotRAM2 = new NBTTagCompound
-    componentSlotRAM2.setInteger("tier", 1)
-    componentSlotRAM2.setString("type", "memory")
+    val componentSlotCPU1 = new NBTTagCompound
+    componentSlotCPU1.setInteger("tier", 0)
+    componentSlotCPU1.setString("type", "cpu")
+    val componentSlotRAM1 = new NBTTagCompound
+    componentSlotRAM1.setInteger("tier", 0)
+    componentSlotRAM1.setString("type", "memory")
     val componentSlotEEPROM = new NBTTagCompound
     componentSlotEEPROM.setInteger("tier", 1)
     componentSlotEEPROM.setString("type", "eeprom")
@@ -140,7 +140,7 @@ object BaubleAssembler {
     ringTag.setString("assemble", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.assemble")
     ringTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost")
     var upgradeSlots = new NBTTagList
-    upgradeSlots.appendTag(upgradeSlot1)
+    upgradeSlots.appendTag(upgradeSlot2)
     upgradeSlots.appendTag(upgradeSlot1)
     upgradeSlots.appendTag(upgradeSlot1)
     ringTag.setTag("upgradeSlots", upgradeSlots)
@@ -148,8 +148,8 @@ object BaubleAssembler {
     componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(new NBTTagCompound)
-    componentSlots.appendTag(componentSlotCPU2)
-    componentSlots.appendTag(componentSlotRAM2)
+    componentSlots.appendTag(componentSlotCPU1)
+    componentSlots.appendTag(componentSlotRAM1)
     componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(componentSlotEEPROM)
     ringTag.setTag("componentSlots", componentSlots)
@@ -168,15 +168,39 @@ object BaubleAssembler {
     upgradeSlots.appendTag(upgradeSlot1)
     amuletTag.setTag("upgradeSlots", upgradeSlots)
     componentSlots = new NBTTagList
-    componentSlots.appendTag(componentSlotCard2)
-    componentSlots.appendTag(componentSlotCard1)
     componentSlots.appendTag(componentSlotCard1)
     componentSlots.appendTag(new NBTTagCompound)
-    componentSlots.appendTag(componentSlotCPU2)
-    componentSlots.appendTag(componentSlotRAM2)
+    componentSlots.appendTag(componentSlotCPU1)
+    componentSlots.appendTag(componentSlotRAM1)
     componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(componentSlotEEPROM)
     amuletTag.setTag("componentSlots", componentSlots)
     FMLInterModComms.sendMessage("OpenComputers", "registerAssemblerTemplate", amuletTag)
+
+    val beltTag = new NBTTagCompound()
+    beltTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectAmulet")
+    beltTag.setString("validate", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.validate")
+    beltTag.setString("assemble", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.assemble")
+    beltTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost")
+    upgradeSlots = new NBTTagList
+    upgradeSlots.appendTag(upgradeSlot3)
+    upgradeSlots.appendTag(upgradeSlot2)
+    upgradeSlots.appendTag(upgradeSlot2)
+    upgradeSlots.appendTag(upgradeSlot2)
+    upgradeSlots.appendTag(upgradeSlot1)
+    upgradeSlots.appendTag(upgradeSlot1)
+    upgradeSlots.appendTag(upgradeSlot1)
+    upgradeSlots.appendTag(upgradeSlot1)
+    beltTag.setTag("upgradeSlots", upgradeSlots)
+    componentSlots = new NBTTagList
+    componentSlots.appendTag(componentSlotCard2)
+    componentSlots.appendTag(componentSlotCard1)
+    componentSlots.appendTag(new NBTTagCompound)
+    componentSlots.appendTag(componentSlotCPU1)
+    componentSlots.appendTag(componentSlotRAM1)
+    componentSlots.appendTag(new NBTTagCompound)
+    componentSlots.appendTag(componentSlotEEPROM)
+    beltTag.setTag("componentSlots", componentSlots)
+    FMLInterModComms.sendMessage("OpenComputers", "registerAssemblerTemplate", beltTag)
   }
 }

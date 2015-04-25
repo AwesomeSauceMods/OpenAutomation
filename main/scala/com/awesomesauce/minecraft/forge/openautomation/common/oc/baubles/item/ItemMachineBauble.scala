@@ -118,8 +118,6 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
         if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
           host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
         }
-        if (!host.machine.isRunning)
-          onEquipped(stack, player)
         host.machine.update()
         for (i <- 0 until host.updatingComponents.size) {
           val environment = host.updatingComponents.get(i)

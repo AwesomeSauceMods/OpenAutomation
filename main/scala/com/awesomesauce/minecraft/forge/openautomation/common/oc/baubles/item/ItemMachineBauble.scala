@@ -129,6 +129,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
       val host = hosts.get(stack.getTagCompound.getInteger("id"))
     }
     list.add("" + getEnergyStored(stack) + "/" + getMaxEnergyStored(stack) + "RF")
+    list.add("" + stack.getTagCompound.getString("lastError"))
   }
 
   override def getBaubleType(stack: ItemStack) = bType
@@ -178,6 +179,8 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
       host.markChanged()
       hosts.set(stack.getTagCompound.getInteger("id"), null)
       stack.getTagCompound.removeTag("id")
+      if (host.machine.lastError() != null)
+        stack.getTagCompound.setString("lastError", host.machine.lastError().toString)
     }
   }
 

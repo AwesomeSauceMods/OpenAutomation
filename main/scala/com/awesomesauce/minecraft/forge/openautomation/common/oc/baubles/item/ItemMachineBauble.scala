@@ -56,7 +56,7 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
         if (components.get(components.size() - 1).canUpdate) {
           updatingComponents.add(components.get(components.size() - 1))
         }
-        machine.node.connect(environment.node)
+        environment.node.connect(machine.node())
       }
     }
   }

@@ -4,9 +4,9 @@ import java.util
 
 import baubles.api.{BaubleType, IBauble}
 import cofh.api.energy.ItemEnergyContainer
-import li.cil.oc.api.Driver
 import li.cil.oc.api.machine.MachineHost
 import li.cil.oc.api.network.{Connector, ManagedEnvironment, Node}
+import li.cil.oc.api.{Driver, Network}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -24,6 +24,7 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
   init()
 
   def init() = {
+    Network.joinNewNetwork(machine.node)
     for (i <- Range(0, itemNBT.tagCount())) {
       val in = i
       // Inventory loading.
@@ -52,10 +53,10 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
       if (environment != null) {
         environment.load(driver.dataTag(stack))
         components.add(environment)
-        machine.node.connect(environment.node)
         if (components.get(components.size() - 1).canUpdate) {
           updatingComponents.add(components.get(components.size() - 1))
         }
+        machine.node.connect(environment.node)
       }
     }
   }

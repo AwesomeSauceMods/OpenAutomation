@@ -24,7 +24,6 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
   init()
 
   def init() = {
-    Network.joinNewNetwork(machine.node)
     for (i <- Range(0, itemNBT.tagCount())) {
       val in = i
       // Inventory loading.
@@ -35,6 +34,11 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
     }
     if (nbt.hasKey("machine")) {
       machine.load(nbt.getCompoundTag("machine"))
+    }
+    for (i <- 0 until components.size()) {
+      val environment = components.get(i)
+      Network.joinNewNetwork(machine.node)
+      machine.node.connect(environment.node)
     }
   }
 
@@ -56,7 +60,6 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
         if (components.get(components.size() - 1).canUpdate) {
           updatingComponents.add(components.get(components.size() - 1))
         }
-        environment.node.connect(machine.node())
       }
     }
   }

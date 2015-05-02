@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
+import net.minecraft.util.StatCollector
 import net.minecraftforge.common.util.Constants
 
 
@@ -29,6 +30,7 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
       // Inventory loading.
       val stackNbt = itemNBT.getCompoundTagAt(in)
       val stack = ItemStack.loadItemStackFromNBT(stackNbt)
+      println("Adding item: " + stack.getDisplayName)
       inventory.add(stack)
       createComponent(in, stack)
     }
@@ -129,7 +131,7 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
       val host = hosts.get(stack.getTagCompound.getInteger("id"))
     }
     list.add("" + getEnergyStored(stack) + "/" + getMaxEnergyStored(stack) + "RF")
-    list.add("" + stack.getTagCompound.getString("lastError"))
+    list.add("" + StatCollector.translateToLocal(stack.getTagCompound.getString("lastError")))
   }
 
   override def getBaubleType(stack: ItemStack) = bType

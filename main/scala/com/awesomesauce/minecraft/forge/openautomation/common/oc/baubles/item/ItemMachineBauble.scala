@@ -164,6 +164,9 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
       stack.getTagCompound.setInteger("id", hosts.size)
       hosts.add(host)
       host.machine.node.asInstanceOf[Connector].setLocalBufferSize(1000)
+      if (host.machine.node.asInstanceOf[Connector].localBuffer < 200) {
+        host.machine.node.asInstanceOf[Connector].changeBuffer(extractEnergy(stack, 1000, false).toDouble / 10)
+      }
       host.machine.start()
     }
   }

@@ -39,8 +39,10 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
     }
     for (i <- 0 until components.size()) {
       val environment = components.get(i)
-      Network.joinNewNetwork(machine.node)
-      machine.node.connect(environment.node)
+      if (environment != null) {
+        Network.joinNewNetwork(machine.node)
+        machine.node.connect(environment.node)
+      }
     }
   }
 

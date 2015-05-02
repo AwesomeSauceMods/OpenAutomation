@@ -156,7 +156,8 @@ class ItemMachineBauble(bType: BaubleType) extends ItemEnergyContainer(100000) w
         host.machine.update()
         for (i <- 0 until host.components.size) {
           val environment = host.components.get(i)
-          environment.update()
+          if (environment != null)
+            environment.update()
         }
       }
     }

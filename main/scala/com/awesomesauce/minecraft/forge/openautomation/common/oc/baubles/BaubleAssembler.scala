@@ -170,6 +170,7 @@ object BaubleAssembler {
     componentSlots = new NBTTagList
     componentSlots.appendTag(componentSlotCard1)
     componentSlots.appendTag(new NBTTagCompound)
+    componentSlots.appendTag(new NBTTagCompound)
     componentSlots.appendTag(componentSlotCPU1)
     componentSlots.appendTag(componentSlotRAM1)
     componentSlots.appendTag(new NBTTagCompound)
@@ -178,7 +179,7 @@ object BaubleAssembler {
     FMLInterModComms.sendMessage("OpenComputers", "registerAssemblerTemplate", amuletTag)
 
     val beltTag = new NBTTagCompound()
-    beltTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectAmulet")
+    beltTag.setString("select", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.selectBelt")
     beltTag.setString("validate", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.validate")
     beltTag.setString("assemble", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.BaubleAssembler.assemble")
     beltTag.setString("hostClass", "com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.item.MachineBaubleHost")

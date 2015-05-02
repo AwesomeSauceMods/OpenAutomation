@@ -63,6 +63,14 @@ class MachineBaubleHost(stack: ItemStack, player: EntityLivingBase) extends Mach
           updatingComponents.add(components.get(components.size() - 1))
         }
       }
+      else {
+        components.add(null);
+        return
+      }
+    }
+    else {
+      components.add(null);
+      return
     }
   }
 

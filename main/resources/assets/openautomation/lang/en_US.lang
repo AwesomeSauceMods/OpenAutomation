@@ -34,9 +34,9 @@ item.openautomation.laserEmitter.name=Laser Emitter
 item.openautomation.laserReceptor.name=Laser Receptor
 item.openautomation.laserMirrorCrafting.name=Laser Reflective Mirror
 
-item.openautomation.baubleRingBase=Smart Ring (Frame)
-item.openautomation.baubleRing=Smart Ring
-item.openautomation.baubleAmuletBase=Smart Necklace (Frame)
-item.openautomation.baubleAmuletBase=Smart Necklace
-item.openautomation.baubleBeltBase=Smart Belt (Frame)
-item.openautomation.baubleBelt=Smart Belt
+item.openautomation.baubleRingBase.name=Smart Ring (Frame)
+item.openautomation.baubleRing.name=Smart Ring
+item.openautomation.baubleAmuletBase.name=Smart Necklace (Frame)
+item.openautomation.baubleAmulet.name=Smart Necklace
+item.openautomation.baubleBeltBase.name=Smart Belt (Frame)
+item.openautomation.baubleBelt.name=Smart Belt

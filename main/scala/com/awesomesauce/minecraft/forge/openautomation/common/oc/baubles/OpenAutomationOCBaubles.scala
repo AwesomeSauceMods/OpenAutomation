@@ -22,13 +22,13 @@ object OpenAutomationOCBaubles extends OAModule {
   }
 
   def init() = {
-    baubleRingBase = ItemUtil.makeItem(oa, "baubleRingBase")
-    baubleAmuletBase = ItemUtil.makeItem(oa, "baubleAmuletBase")
-    baubleBeltBase = ItemUtil.makeItem(oa, "baubleBeltBase")
+    baubleRingBase = ItemUtil.makeItem(oa, "baubleRingBase").indev.asInstanceOf[Item]
+    baubleAmuletBase = ItemUtil.makeItem(oa, "baubleAmuletBase").indev.asInstanceOf[Item]
+    baubleBeltBase = ItemUtil.makeItem(oa, "baubleBeltBase").indev.asInstanceOf[Item]
     baubleRing = ItemUtil.makeItem(oa, "baubleRing", new ItemMachineBauble(BaubleType.RING))
     baubleAmulet = ItemUtil.makeItem(oa, "baubleAmulet", new ItemMachineBauble(BaubleType.AMULET))
     baubleBelt = ItemUtil.makeItem(oa, "baubleBelt", new ItemMachineBauble(BaubleType.BELT))
-    baubleModem = ItemUtil.makeItem(oa, "baubleModem")
+    //baubleModem = ItemUtil.makeItem(oa, "baubleModem")
     BaubleAssembler.register()
   }
 

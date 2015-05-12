@@ -4,12 +4,10 @@ import com.awesomesauce.minecraft.forge.core.lib.item.Description
 import com.awesomesauce.minecraft.forge.core.lib.util.ItemUtil
 import com.awesomesauce.minecraft.forge.openautomation.api.lasers.LaserAPI
 import com.awesomesauce.minecraft.forge.openautomation.common.OAModule
-import com.awesomesauce.minecraft.forge.openautomation.common.oc.baubles.OpenAutomationOCBaubles
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.callbacks._
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.driver._
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.oalang.DriverOAlangProcessor
 import com.awesomesauce.minecraft.forge.openautomation.common.oc.te._
-import cpw.mods.fml.common.Loader
 import li.cil.oc.api.{API, Driver, Items}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -34,8 +32,8 @@ object OpenAutomationOC extends OAModule {
   var ocLaser: Block = null
 
   def preInit() = {
-    if (Loader.isModLoaded("Baubles"))
-      oa.addModule(OpenAutomationOCBaubles)
+    //if (Loader.isModLoaded("Baubles"))
+    //oa.addModule(OpenAutomationOCBaubles)
   }
 
   def init() = {

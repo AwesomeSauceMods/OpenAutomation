@@ -10,7 +10,7 @@ import net.minecraft.tileentity.{TileEntity, TileEntityFurnace}
 import net.minecraftforge.common.util.ForgeDirection
 
 
-class TileEntityLaserEnergiser extends TileEntity with LaserReciever with IInventory {
+class TileEntityEnergiserFuel extends TileEntity with LaserReciever with IInventory {
   var stack: ItemStack = null
 
   def decrStackSize(s: Int, a: Int) = null

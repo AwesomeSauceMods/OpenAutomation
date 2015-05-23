@@ -15,15 +15,21 @@ import net.minecraftforge.oredict.{OreDictionary, ShapedOreRecipe, ShapelessOreR
 object OpenAutomationPower extends OAModule {
   val name = "Power Generation"
   var laserEnergiser: Block = null
+  var laserEnergiserXP: Block = null
   var laserEnergiserEmitter: Block = null
   var energisableRate = 200
   var fuelOutputModifier = 20
+  var xpMaxUse = 30
+  var xpModifier = 20
 
   def preInit() = {
-    laserEnergiser = ItemUtil.makeBlock(oa, "laserEnergiser", Material.iron, () => new TileEntityLaserEnergiser)
+    laserEnergiser = ItemUtil.makeBlock(oa, "laserEnergiser", Material.iron, () => new TileEntityEnergiserFuel)
+    laserEnergiserXP = ItemUtil.makeBlock(oa, "laserEnergiserXP", Material.iron, () => new TileEntityEnergiserXP)
     laserEnergiserEmitter = ItemUtil.makeBlock(oa, "laserEnergisableEmitter", Material.iron, () => new TileEntityLaserEnergisableEmitter)
     energisableRate = oa.config.get(Configuration.CATEGORY_GENERAL, "power:energisableRate", 200, "Rate of sending energisable packets.").getInt
     fuelOutputModifier = oa.config.get(Configuration.CATEGORY_GENERAL, "power:fuelOutputModifier", 20, "Multiplier for fuel output in RF.").getInt
+    xpMaxUse = oa.config.get(Configuration.CATEGORY_GENERAL, "power:xpMaxUse", 30, "The maximum amount of experience one energiser can drain.").getInt
+    xpModifier = oa.config.get(Configuration.CATEGORY_GENERAL, "power:xpModifier", 20, "The multiplier for XP in RF.").getInt
   }
 
   def init() = {

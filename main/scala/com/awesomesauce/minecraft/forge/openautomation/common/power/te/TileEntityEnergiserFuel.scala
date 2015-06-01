@@ -25,8 +25,8 @@ class TileEntityEnergiserFuel extends TileEntity with LaserReciever with IInvent
 
   def arrive(from: ForgeDirection, laser: LaserPacket) = {
     if (stack != null && laser.isInstanceOf[EnergyPacket] && laser.getCompound.hasKey("supportsEnergiser") && laser.getCompound.getBoolean("supportsEnergiser")) {
-      if (laser.asInstanceOf[EnergyPacket].amount >= TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate) {
-        laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.energisableRate
+      if (laser.asInstanceOf[EnergyPacket].amount >= TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.fuelOutputModifier) {
+        laser.asInstanceOf[EnergyPacket].amount += TileEntityFurnace.getItemBurnTime(stack) * OpenAutomationPower.fuelOutputModifier
         stack.stackSize -= 1
       }
     }

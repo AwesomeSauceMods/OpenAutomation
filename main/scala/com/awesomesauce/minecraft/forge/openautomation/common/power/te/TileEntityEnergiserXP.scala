@@ -20,7 +20,7 @@ class TileEntityEnergiserXP extends TileEntity with LaserReciever {
           case p: EntityPlayer => {
             val amount = Math.max(p.experience + 0.03F, OpenAutomationPower.xpMaxUse)
             p.addExperience(-Math.round(amount))
-            buffer += amount * OpenAutomationPower.xpModifier
+            buffer += (amount * OpenAutomationPower.xpModifier).toInt
           }
         }
       case e: EnergyPacket =>
